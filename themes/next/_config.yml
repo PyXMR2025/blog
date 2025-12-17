@@ -47,7 +47,7 @@ darkmode: false
 
 # Light-Dark Mode
 lightdark:
-  enable: false
+  enable: true
   # Add @supports (color: light-dark(red, red)) check
   check_supports: true
 
@@ -57,10 +57,10 @@ lightdark:
 # ---------------------------------------------------------------
 
 favicon:
-  small: /images/favicon-16x16-next.png
-  medium: /images/favicon-32x32-next.png
-  apple_touch_icon: /images/apple-touch-icon-next.png
-  safari_pinned_tab: /images/logo.svg
+  small: /png/favicon/16.png
+  medium: /png/favicon/32.png
+  apple_touch_icon: /png/favicon/apple.png
+  safari_pinned_tab: /png/favicon/logo.svg
   #android_manifest: /manifest.json
 
 # Custom Logo (Warning: Do not support scheme Mist)
@@ -102,11 +102,11 @@ open_graph:
 # Value before `||` delimiter is the target link, value after `||` delimiter is the name of Font Awesome icon.
 # External url should start with http:// or https://
 menu:
-  #home: / || fa fa-home
-  #about: /about/ || fa fa-user
-  #tags: /tags/ || fa fa-tags
-  #categories: /categories/ || fa fa-th
-  #archives: /archives/ || fa fa-archive
+  首页: / || fa fa-home
+  关于: /about/ || fa fa-user
+  标签: /tags/ || fa fa-tags
+  #分类: /categories/ || fa fa-th
+  归档: /archives/ || fa fa-archive
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || fa fa-heartbeat
@@ -185,7 +185,8 @@ links_settings:
   layout: block
 
 links:
-  #Title: https://example.com
+  新毛博客: https://blog.xmb505.top
+  lololowe的博客: https://blog.lololowe.com
 
 # Table of Contents in the Sidebar
 # Front-matter variable (nonsupport wrap expand_all).
@@ -265,8 +266,9 @@ post_meta:
 # Post wordcount display settings
 # Dependencies: https://github.com/next-theme/hexo-word-counter
 symbols_count_time:
-  separated_meta: true
-  item_text_total: false
+  separated_meta: false # 是否另起一行显示（即不和发表时间等同一行显示）
+  item_text_post: true # 首页文章统计数量前是否显示文字描述（本文字数、阅读时长）
+  item_text_total: false # 页面底部统计数量前是否显示文字描述（站点总字数、站点阅读时长）
 
 # Use icon instead of the symbol # to indicate the tag at the bottom of the post
 tag_icon: false
@@ -279,10 +281,10 @@ reward_settings:
   animation: true
 
 reward:
-  wechatpay: /images/wechatpay.png
-  alipay: /images/alipay.png
-  paypal: /images/paypal.png
-  bitcoin: /images/bitcoin.png
+  wechatpay: /png/reward/wechatpay.png
+  alipay: /png/reward/alipay.png
+  #paypal: /images/paypal.png
+  bitcoin: /png/reward/bitcoin.png
 
 # Subscribe through Telegram Channel, Twitter, etc.
 # Usage: `Key: permalink || icon` (Font Awesome)
@@ -296,7 +298,7 @@ follow_me:
 # Dependencies: https://github.com/next-theme/hexo-posts-embedding
 # Or: https://github.com/sergeyzwezdin/hexo-related-posts
 related_posts:
-  enable: false
+  enable: true
   icon: fa fa-signs-post
 
 # Post edit
@@ -528,7 +530,7 @@ tabs:
   # Make the nav bar of tabs with long content stick to the top.
   sticky: false
   transition:
-    tabs: false
+    tabs: true
     labels: true
 
 # PDF tag
@@ -536,13 +538,13 @@ tabs:
 # So, you have to install the dependency of pdf.js if you want to use pdf tag and make it available to all browsers.
 # Dependencies: https://github.com/next-theme/theme-next-pdf
 pdf:
-  enable: false
+  enable: true
   # Default height
   height: 500px
 
 # Mermaid tag
 mermaid:
-  enable: false
+  enable: true
   # Available themes: default | dark | forest | neutral
   theme:
     light: default
@@ -550,7 +552,7 @@ mermaid:
 
 # WaveDrom tag
 wavedrom:
-  enable: false
+  enable: true
 
 # ---------------------------------------------------------------
 # Third Party Plugins & Services Settings
@@ -681,11 +683,11 @@ comments:
   style: tabs
   # Choose a comment system to be displayed by default.
   # Available values: disqus | disqusjs | livere | gitalk | utterances | isso
-  active:
+  active: 
   # Setting `true` means remembering the comment system selected by the visitor.
   storage: true
   # Lazyload all comment systems.
-  lazyload: false
+  lazyload: true
   # Modify texts or order for any naves, here are some examples.
   nav:
     #disqus:
@@ -721,32 +723,32 @@ livere_uid: # <your_uid>
 # For more information: https://gitalk.github.io
 gitalk:
   enable: false
-  github_id: # GitHub repo owner
-  repo: # Repository name to store issues
-  client_id: # GitHub Application Client ID
-  client_secret: # GitHub Application Client Secret
-  admin_user: # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
+  github_id: PyXMR2025
+  repo: gitalk
+  client_id: Ov23lihdF52ZHRaY4sm3
+  client_secret: ???
+  admin_user: PyXMR2025
   distraction_free_mode: true # Facebook-like distraction free mode
   # When the official proxy is not available, you can change it to your own proxy address
-  proxy: https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token # This is official proxy address
+  proxy: https://github.com/login/oauth/access_token # This is official proxy address
   # Gitalk's display language depends on user's browser or system environment
   # If you want everyone visiting your site to see a uniform language, you can set a force language value
   # Available values: en | es-ES | fr | ru | zh-CN | zh-TW
-  language:
+  language: zh-CN
 
 # Utterances
 # For more information: https://utteranc.es
 utterances:
   enable: false
-  repo: user-name/repo-name # Github repository owner and name
+  repo: PyXMR2025/blog # Github repository owner and name
   # Available values: pathname | url | title | og:title
   issue_term: pathname
   # Available values: github-light | github-dark | preferred-color-scheme | github-dark-orange | icy-dark | dark-blue | photon-dark | boxy-light
-  theme: github-light
+  theme: preferred-color-scheme
 
 # Isso
 # For more information: https://isso-comments.de
-isso: # <data_isso>
+isso: # <data_issho>
 
 
 # ---------------------------------------------------------------
@@ -909,3 +911,10 @@ vendors:
 css: css
 js: js
 images: images
+
+post_wordcount: 		# 字数统计
+  item_text: true		# 是否显示文字
+  wordcount: true		# 显示字数
+  min2read: true		# 显示阅读时间
+  totalcount: true		# 显示总数
+  separated_meta: true	# 是否分开

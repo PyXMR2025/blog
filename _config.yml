@@ -119,3 +119,34 @@ prism_plugin:
 permalink_pinyin:
   enable: true
   separator: '-' # default: '-'
+
+feed:
+  type: atom
+  path: atom.xml  # RSS 文件路径：/atom.xml（即 /rss 需映射到 /atom.xml）
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: icon.png
+  autodiscovery: true
+  template:
+
+tag_generator:
+  per_page: 10 # 每页显示的文章数量
+  enable_index_page: true # 是否生成标签索引页
+  enable_tagcloud: true # 是否生成标签云（需安装 hexo-tag-cloud 插件）
+
+tagcloud:
+  min_font_size: 16 # 最小字体大小
+  max_font_size: 26 # 最大字体大小
+  text_font_weight: normal # 字体粗细
+  amount: 50 # 显示的标签数量
+
+symbols_count_time:
+  symbols: true                # 文章字数统计
+  time: true                   # 文章阅读时长
+  total_symbols: true          # 站点总字数统计
+  total_time: true             # 站点总阅读时长
+  exclude_codeblock: false     # 排除代码字数统计
