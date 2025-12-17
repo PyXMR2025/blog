@@ -43,11 +43,11 @@ DNS（Domain Name System）是互联网的“电话簿”，负责将我们输�
 ### 结果判断
 *   **未发生泄露**：如果检测结果中显示的所有 DNS 服务器 IP 地址都属于你所使用的 **VPN 服务提供商** 或你 **手动配置的公共 DNS**（如 Google DNS 8.8.8.8、Cloudflare 1.1.1.1 等），那么大概率没有发生 DNS 泄露。
 
-![未发生 DNS 泄露](https://img2024.cnblogs.com/blog/3706005/202509/3706005-20250920221920072-423558761.png)
+![未发生 DNS 泄露](https://jackie.openenet.cn/png/find-dns-leak/1.png)
 
 *   **可能发生泄露**：如果检测结果中出现了你所在地区 **ISP（互联网服务提供商）的 DNS 服务器 IP**，这意味着你的 DNS 查询请求绕过了 VPN，直接暴露给了你的 ISP，这就发生了 DNS 泄露。
 
-![可能发生 DNS 泄露](https://img2024.cnblogs.com/blog/3706005/202509/3706005-20250920221956161-886339642.png)
+![可能发生 DNS 泄露](https://jackie.openenet.cn/png/find-dns-leak/2.png)
 
 
 ### 结尾
