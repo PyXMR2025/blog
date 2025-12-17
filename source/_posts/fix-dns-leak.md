@@ -13,7 +13,7 @@ category: 网络安全
 ---
 
 > 本文部分（图片）由AI辅助创作，请仔细辨别！
-> [上回][https://jackie.openenet.cn/find-dns-leak/]我们讲解了什么是 DNS 泄露，现在我们来讲讲如何预防与修复 DNS 泄露。
+> [上回](https://jackie.openenet.cn/find-dns-leak/)我们讲解了什么是 DNS 泄露，现在我们来讲讲如何预防与修复 DNS 泄露。
 
 # 如何预防与修复 DNS 泄露？
 
@@ -21,7 +21,7 @@ category: 网络安全
 
 预防 DNS 泄露是保障网络隐私的关键第一步。以下是几种有效的预防方法，下图清晰地展示了主要的决策路径。
 
-![决策路径][https://jackie.openenet.cn/png/fix-dns-leak/1.png]
+![决策路径](https://jackie.openenet.cn/png/fix-dns-leak/1.png)
 
 ### 使用加密的DNS协议
 采用 DNS over HTTPS (DoH) 或 DNS over TLS (DoT) 可以加密你的DNS查询，防止第三方窥探或篡改，即使在非VPN环境下也能提升基础安全性。许多现代浏览器和操作系统都内置了对这些协议的支持。
