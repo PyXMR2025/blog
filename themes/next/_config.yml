@@ -683,7 +683,7 @@ comments:
   style: tabs
   # Choose a comment system to be displayed by default.
   # Available values: disqus | disqusjs | livere | gitalk | utterances | isso
-  active: gitalk
+  active: 
   # Setting `true` means remembering the comment system selected by the visitor.
   storage: true
   # Lazyload all comment systems.
@@ -722,11 +722,11 @@ livere_uid: # <your_uid>
 # Gitalk
 # For more information: https://gitalk.github.io
 gitalk:
-  enable: true
+  enable: false
   github_id: PyXMR2025
   repo: gitalk
   client_id: Ov23lihdF52ZHRaY4sm3
-  client_secret: 11919343b75a835f268e9b88024dfc219039103a
+  client_secret: ???
   admin_user: PyXMR2025
   distraction_free_mode: true # Facebook-like distraction free mode
   # When the official proxy is not available, you can change it to your own proxy address
