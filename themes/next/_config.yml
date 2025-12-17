@@ -268,12 +268,7 @@ post_meta:
 symbols_count_time:
   separated_meta: false # 是否另起一行显示（即不和发表时间等同一行显示）
   item_text_post: true # 首页文章统计数量前是否显示文字描述（本文字数、阅读时长）
-  item_text_total: true # 页面底部统计数量前是否显示文字描述（站点总字数、站点阅读时长）
-  symbols: true # 文章字数统计
-  time: true # 文章阅读时长
-  total_symbols: true # 站点总字数统计
-  total_time: true # 站点总阅读时长
-  exclude_codeblock: false # 排除代码字数统计
+  item_text_total: false # 页面底部统计数量前是否显示文字描述（站点总字数、站点阅读时长）
 
 # Use icon instead of the symbol # to indicate the tag at the bottom of the post
 tag_icon: false
