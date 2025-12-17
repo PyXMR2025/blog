@@ -730,7 +730,7 @@ gitalk:
   admin_user: PyXMR2025
   distraction_free_mode: true # Facebook-like distraction free mode
   # When the official proxy is not available, you can change it to your own proxy address
-  proxy: https://ghproxy.com/https://github.com/login/oauth/access_token # This is official proxy address
+  proxy: https://github.com/login/oauth/access_token # This is official proxy address
   # Gitalk's display language depends on user's browser or system environment
   # If you want everyone visiting your site to see a uniform language, you can set a force language value
   # Available values: en | es-ES | fr | ru | zh-CN | zh-TW
