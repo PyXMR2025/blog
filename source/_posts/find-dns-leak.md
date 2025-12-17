@@ -2,7 +2,14 @@
 title: DNS 安全：如何发现 DNS 泄露？
 date: 2025-12-17 11:57:36
 updated: 2025-12-17 11:57:36
-tags: dns, DNS泄露, 安全, IT, 漏洞, VPN
+tags: 
+- dns
+- DNS泄露
+- 安全
+- IT
+- 漏洞
+- VPN
+category: 网络安全
 ---
 
 # 如何发现 DNS 泄露？
