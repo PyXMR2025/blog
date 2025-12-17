@@ -57,7 +57,8 @@ blog/
 
 ## 许可证
 
-本项目代码部分采用 Apache License Version 2.0 开源协议，文字及图片类部分采用 CC BY-SA 4.0 开源协议。
+代码协议：Apache License 2.0
+内容协议：CC BY-SA 4.0
 
 ## 贡献
 
