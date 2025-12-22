@@ -323,14 +323,6 @@ post_navigation: left
 # See: https://theme-next.js.org/docs/theme-settings/custom-pages
 # ---------------------------------------------------------------
 
-# TagCloud settings for tags page.
-tagcloud:
-  min: 12 # Minimum font size in px
-  max: 30 # Maximum font size in px
-  amount: 200 # Total amount of tags
-  orderby: name # Order of tags
-  order: 1 # Sort order
-
 # Google Calendar
 # Share your recent schedule to others via calendar page.
 calendar:
@@ -853,13 +845,13 @@ algolia_search:
 # Local Search
 # Dependencies: https://github.com/next-theme/hexo-generator-searchdb
 local_search:
-  enable: false
+  enable: true
   # Show top n results per article, show all results by setting to -1
   top_n_per_article: 1
   # Unescape html strings to the readable one.
   unescape: false
   # Preload the search data when the page loads.
-  preload: false
+  preload: true
 
 
 # ---------------------------------------------------------------
