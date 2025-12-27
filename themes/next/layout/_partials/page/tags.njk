@@ -4,11 +4,11 @@
   </div>
   <div class="tag-cloud-tags">
     {{ tagcloud({
-      min_font: theme.tagcloud.min,
-      max_font: theme.tagcloud.max,
-      amount  : theme.tagcloud.amount,
-      orderby : theme.tagcloud.orderby,
-      order   : theme.tagcloud.order,
+      min_font: theme.tagcloud.min_font_size | default(16),
+      max_font: theme.tagcloud.max_font_size | default(26),
+      amount  : theme.tagcloud.amount | default(50),
+      orderby : theme.tagcloud.orderby | default('name'),
+      order   : theme.tagcloud.order | default(1),
       class   : 'tag-cloud'
       })
     }}
