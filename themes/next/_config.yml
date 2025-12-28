@@ -104,8 +104,8 @@ open_graph:
 menu:
   首页: / || fa fa-home
   关于: /about/ || fa fa-user
-  #标签: /tags/ || fa fa-tags
-  分类: /categories/ || fa fa-th
+  标签: /tags/ || fa fa-tags
+  #分类: /categories/ || fa fa-th
   归档: /archives/ || fa fa-archive
   #schedule: /schedule/ || fa fa-calendar
   #sitemap: /sitemap.xml || fa fa-sitemap
@@ -680,9 +680,9 @@ comments:
   style: tabs
   # Choose a comment system to be displayed by default.
   # Available values: disqus | disqusjs | livere | gitalk | utterances | isso
-  active: 
+  active: utterances
   # Setting `true` means remembering the comment system selected by the visitor.
-  storage: true
+  storage: false
   # Lazyload all comment systems.
   lazyload: true
   # Modify texts or order for any naves, here are some examples.
@@ -692,6 +692,9 @@ comments:
     #  order: -1
     #gitalk:
     #  order: -2
+    utterances:
+      text: Utterances评论
+      order: -1
 
 # Disqus
 # For more information: https://disqus.com
@@ -736,10 +739,10 @@ gitalk:
 # Utterances
 # For more information: https://utteranc.es
 utterances:
-  enable: false
-  repo: PyXMR2025/blog # Github repository owner and name
+  enable: true
+  repo: PyXMR2025/blog-talk # Github repository owner and name
   # Available values: pathname | url | title | og:title
-  issue_term: pathname
+  issue_term: og:title
   # Available values: github-light | github-dark | preferred-color-scheme | github-dark-orange | icy-dark | dark-blue | photon-dark | boxy-light
   theme: preferred-color-scheme
 
