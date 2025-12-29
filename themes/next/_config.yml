@@ -57,10 +57,10 @@ lightdark:
 # ---------------------------------------------------------------
 
 favicon:
-  small: /png/favicon/16.png
-  medium: /png/favicon/32.png
-  apple_touch_icon: /png/favicon/apple.png
-  safari_pinned_tab: /png/favicon/logo.svg
+  small: /img/favicon/16.png
+  medium: /img/favicon/32.png
+  apple_touch_icon: /img/favicon/apple.png
+  safari_pinned_tab: /img/favicon/logo.svg
   #android_manifest: /manifest.json
 
 # Custom Logo (Warning: Do not support scheme Mist)
@@ -281,14 +281,14 @@ reward_settings:
   animation: true
 
 reward:
-  wechatpay: /png/reward/wxp.png
-  alipay: /png/reward/alp.png
+  wechatpay: /img/reward/wxp.png
+  alipay: /img/reward/alp.png
   #paypal: /images/paypal.png
-  bitcoin: /png/reward/btc.png
-  ethereum: /png/reward/eth.png
-  tron: /png/reward/trx.png
-  arbitrum: /png/reward/arb.png
-  bnbsmartchain: /png/reward/bsc.png
+  bitcoin: /img/reward/btc.png
+  ethereum: /img/reward/eth.png
+  tron: /img/reward/trx.png
+  arbitrum: /img/reward/arb.png
+  bnbsmartchain: /img/reward/bsc.png
 
 
 # Subscribe through Telegram Channel, Twitter, etc.
