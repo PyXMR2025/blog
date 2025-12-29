@@ -1,5 +1,5 @@
 ---
-title: DNS 安全：怎样预防及修复 DNS 泄露？
+title: 预防及修复 DNS 泄露
 date: 2025-12-18 01:47:39
 updated: 2025-12-18 01:47:39
 tags: 
@@ -12,7 +12,6 @@ tags:
 category: 网络安全
 ---
 
-> 本文部分（图片）由AI辅助创作，请仔细辨别！
 > [上回](https://jackie.openenet.cn/find-dns-leak/)我们讲解了什么是 DNS 泄露，现在我们来讲讲如何预防与修复 DNS 泄露。
 
 # 如何预防与修复 DNS 泄露？
