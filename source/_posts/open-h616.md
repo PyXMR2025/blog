@@ -40,27 +40,42 @@ category: 硬件研究
 
 > 实拍 ![LCPI-H616-ZERO开发板实拍](https://jackie.openenet.cn/img/open-h616/1.png)
 
-## 二、系统烧录（Ubuntu/Debian优先）
-开发板支持TF卡启动，**⚠️ 提示：LCPI官方Ubuntu Server版存在部分服务无法启动问题，建议先安装Ubuntu Xfce版，后续手动禁用桌面环境**。
+## 二、系统烧录教程（重点：Ubuntu/Debian）
+开发板支持TF卡启动，以下为两种系统烧录教程。
+> ⚠️ 提示：LCPI官方Ubuntu Server版存在部分服务无法启动问题，建议先安装Ubuntu Xfce版，后续手动禁用桌面环境。
 
 ### 2.1 准备工具
-- 硬件：32GB-64GB Class 10/U3 TF卡、Type-C数据线、电脑
-- 软件：BalenaEtcher（跨平台，推荐）/ Win32DiskImager（Windows）
-- 系统镜像：[官方百度网盘](https://pan.baidu.com/s/1a3RBBUYjvaXJTyvN9vxBLw)（提取码：tdfb），含Ubuntu Server/Xfce/Gnome/Android10等版本及对应工具
+- 硬件：TF卡（32GB-64GB最佳，64GB以上不兼容，Class 10/U3级别，博主使用aigo T1高速卡）、Type-C数据线、电脑
+- 软件：
+  - 安卓系统：PhonixCard 4.2.8（官方推荐）
+  - Ubuntu/Debian系统：Win32DiskImager（Windows）/ BalenaEtcher（跨平台，更稳定）
+- 系统镜像：[官方百度网盘](https://pan.baidu.com/s/1a3RBBUYjvaXJTyvN9vxBLw)（提取码：tdfb），含Ubuntu Server/Xfce/Gnome/Android10多个版本系统及工具
 
 > ⚠️ 镜像必看：Xfce/Gnome桌面版仅适合临时调试（卡顿明显），最终需通过命令禁用桌面；项目开发首选「Server版逻辑」（Xfce版禁用桌面后等效）。
 
-### 2.2 烧录步骤（BalenaEtcher为例）
-1. 下载安装BalenaEtcher（[官网](https://www.balena.io/etcher/)）；
-2. 依次操作：「Flash from file」→ 选择「Ubuntu Xfce镜像」（因Server版有问题）→「Select target」（选择TF卡）→「Flash!」；
-3. 等待烧录+校验完成，安全弹出TF卡插入开发板SD卡槽。
+### 2.2 烧录安卓系统（流程参考）
+1. TF卡插入电脑，打开PhonixCard 4.2.8；
+2. 点击「固件」选择安卓系统镜像（.img格式）；
+3. 模式务必选择「启动卡」（否则无法引导）；
+4. 点击「烧卡」，等待进度完成（期间勿拔卡）；
+5. 烧录完成后，TF卡插入开发板SD卡槽，上电即可启动。
 
-### 2.3 安卓系统烧录（参考）
-1. 打开PhonixCard 4.2.8，选择安卓镜像；
-2. 模式设为「启动卡」（否则无法引导），点击「烧卡」；
-3. 烧录完成后插入开发板，上电启动。
+> 截图 ![烧录安卓系统至TF卡步骤](https://jackie.openenet.cn/img/open-h616/2.png)
 
-> 截图 ![烧录步骤](https://jackie.openenet.cn/img/open-h616/2.png)
+### 2.3 烧录Ubuntu/Debian系统（实操重点）
+#### 方法1：Win32DiskImager（Windows）
+1. 插入TF卡，以管理员模式打开Win32DiskImager；
+2. 点击「文件夹图标」选择目标镜像（.img格式）；
+3. 设备选择TF卡对应盘符（务必核对，避免误写其他磁盘）；
+4. 点击「Write」开始烧录，提示「Write Successful」即完成；
+5. 安全弹出TF卡，插入开发板SD卡槽，上电启动。
+
+> 截图 ![烧录Ubuntu/Debian系统至TF卡步骤](https://jackie.openenet.cn/img/open-h616/3.png)
+
+#### 方法2：BalenaEtcher（跨平台，推荐）
+1. 下载安装BalenaEtcher（[官网链接](https://www.balena.io/etcher/)），支持Windows/Mac/Linux；
+2. 依次操作：「Flash from file」（选镜像）→「Select target」（选TF卡）→「Flash!」；
+3. 等待烧录+校验完成，弹出TF卡后插入开发板。
 
 ## 三、基础环境配置（Ubuntu Xfce）
 ### 3.1 连接方式
