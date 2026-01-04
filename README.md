@@ -18,7 +18,7 @@
 
 - **博客地址**: https://jackie.openenet.cn
 - **博客内容**: [探索区块链、自动化与开源技术](https://jackie.openenet.cn)
-- [[在vercel上部署](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/pyxmr2025/blog/tree/main&template=hexo)
+- [![在vercel上部署](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/pyxmr2025/blog/tree/main&template=hexo)
 
 ## 本地开发
 
