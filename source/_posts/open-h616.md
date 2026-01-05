@@ -38,7 +38,7 @@ category: 硬件研究
 - 3D打印外壳（含螺丝，非原厂）
 - IPEX天线
 
-> 实拍 ![LCPI-H616-ZERO开发板实拍](https://jackie.openenet.cn/img/open-h616/1.png)
+> LCPI-H616-ZERO实拍 ![LCPI-H616-ZERO开发板实拍](/img/open-h616/1.png)
 
 ## 二、系统烧录教程（重点：Ubuntu/Debian）
 开发板支持TF卡启动，以下为两种系统烧录教程。
@@ -60,7 +60,7 @@ category: 硬件研究
 4. 点击「烧卡」，等待进度完成（期间勿拔卡）；
 5. 烧录完成后，TF卡插入开发板SD卡槽，上电即可启动。
 
-> 截图 ![烧录安卓系统至TF卡步骤](https://jackie.openenet.cn/img/open-h616/2.png)
+> 安卓烧录截图 ![烧录安卓系统至TF卡步骤](/img/open-h616/2.png)
 
 ### 2.3 烧录Ubuntu/Debian系统（实操重点）
 #### 方法1：Win32DiskImager（Windows）
@@ -70,7 +70,7 @@ category: 硬件研究
 4. 点击「Write」开始烧录，提示「Write Successful」即完成；
 5. 安全弹出TF卡，插入开发板SD卡槽，上电启动。
 
-> 截图 ![烧录Ubuntu/Debian系统至TF卡步骤](https://jackie.openenet.cn/img/open-h616/3.png)
+> Ubuntu烧录截图 ![烧录Ubuntu/Debian系统至TF卡步骤](/img/open-h616/3.png)
 
 #### 方法2：BalenaEtcher（跨平台，推荐）
 1. 下载安装BalenaEtcher（[官网链接](https://www.balena.io/etcher/)），支持Windows/Mac/Linux；
