@@ -19,6 +19,7 @@
 - **博客地址**: https://jackie.openenet.cn
 - **博客内容**: [探索区块链、自动化与开源技术](https://jackie.openenet.cn)
 - [![在vercel上部署](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/pyxmr2025/blog/tree/main&template=hexo)
+- Github Actions & gh-pages分支构建状态：![构建状态](https://github.com/PyXMR2025/blog/actions/workflows/gh-pages.yml/badge.svg)
 
 ## 本地开发
 
