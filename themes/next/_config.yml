@@ -107,7 +107,7 @@ menu:
   标签: /tags/ || fa fa-tags
   #分类: /categories/ || fa fa-th
   归档: /archives/ || fa fa-archive
-  #schedule: /schedule/ || fa fa-calendar
+  友链: /links/ || fa fa-link
   #sitemap: /sitemap.xml || fa fa-sitemap
   #commonweal: /404/ || fa fa-heartbeat
 
@@ -185,9 +185,7 @@ links_settings:
   layout: block
 
 links:
-  新毛博客: https://blog.xmb505.top
-  lololowe的博客: https://blog.lololowe.com
-  
+
 # Table of Contents in the Sidebar
 # Front-matter variable (nonsupport wrap expand_all).
 toc:
