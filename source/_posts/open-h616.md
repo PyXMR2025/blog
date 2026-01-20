@@ -51,6 +51,12 @@ category: 硬件研究
   - Ubuntu/Debian系统：Win32DiskImager（Windows）/ BalenaEtcher（跨平台，更稳定）
 - 系统镜像：[官方百度网盘](https://pan.baidu.com/s/1a3RBBUYjvaXJTyvN9vxBLw)（提取码：tdfb），含Ubuntu Server/Xfce/Gnome/Android10多个版本系统及工具
 
+> 官方镜像在不同版本的板子上可能会有不同的问题
+> 优先选择/LC-PI-H616/Images下的镜像
+> 1.LCPI-H616_3.1.0_ubuntu_jammy_desktop_xfce_linux6.1.31.img
+> 2.lcpi-h616_ubuntu_focal_desktop_linux4.9.170-2023-05-26.7z
+> 如果上述镜像均不能开机可以尝试其他镜像
+
 > ⚠️ 镜像必看：Xfce/Gnome桌面版仅适合临时调试（卡顿明显），最终需通过命令禁用桌面；项目开发首选「Server版逻辑」（Xfce版禁用桌面后等效）。
 
 ### 2.2 烧录安卓系统（流程参考）
