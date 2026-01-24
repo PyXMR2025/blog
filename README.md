@@ -75,7 +75,7 @@ blog/
 
 ## 许可证
 
-- 代码协议：Apache License 2.0
+- 代码协议：MIT License
 - 内容协议：CC BY-SA 4.0
 
 ## 贡献
