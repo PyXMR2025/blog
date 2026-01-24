@@ -1,0 +1,23 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"  
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 20 
+    target-branch: "master" 
+    commit-message:
+      prefix: "📦 Dependencies"  
+    labels:
+      - "📦 Dependencies"  
+
+  - package-ecosystem: "github-actions"
+    directory: ".github/workflows/"  
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10
+    target-branch: "master"
+    commit-message:
+      prefix: "Actions"  
+    labels:
+      - "Actions"
