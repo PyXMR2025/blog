@@ -18,7 +18,7 @@
   <script defer src="/_vercel/insights/script.js"></script>
   <meta name="baidu-site-verification" content="codeva-FuIvtGJoyJ" />
   <meta name="360-site-verification" content="0b6524e504a2c1865c05f4b983107d7c" />
-
+  
   <!-- 新增：运行时长统计的样式 -->
   <style>
     /* 运行时长数字高亮 */
@@ -60,8 +60,8 @@
     <div class="footer-inner">
       {%- include '_partials/languages.njk' -%}
       {{ partial('_partials/footer.njk', {}, {cache: theme.cache.enable}) }}
-    </div>
-     <!-- 新增：运行时长统计行 -->
+      
+      <!-- 新增：运行时长统计行 -->
       <div class="uptime-row">
         本站已经稳定运行了 <span class="uptime-num" id="days">0</span> 天 
         <span class="uptime-num" id="hours">0</span> 小时 
@@ -72,8 +72,11 @@
       <a href="https://icp.gov.moe/?keyword=20260177" target="_blank">萌ICP备20260177号</a>
     </div>
   </footer>
+
   {{ partial('_partials/widgets.njk', {}, {cache: theme.cache.enable}) }}
+
   {{- next_inject('bodyEnd') }}
+
   <!-- 新增：运行时长统计 -->
   <script>
     // 定义起始时间（GMT+8 2025-12-15 10:47:19）
@@ -83,6 +86,7 @@
     function updateUptime() {
         const now = new Date();
         const diffMs = now - startTime;
+
         // 处理当前时间早于起始时间的情况
         if (diffMs < 0) {
             document.getElementById('days').textContent = '0';
@@ -90,28 +94,23 @@
             document.getElementById('seconds').textContent = '0';
             return;
         }
+
         // 时间单位转换
         const totalSeconds = Math.floor(diffMs / 1000);
         const days = Math.floor(totalSeconds / (24 * 60 * 60));
         const remainingSeconds = totalSeconds % (24 * 60 * 60);
         const hours = Math.floor(remainingSeconds / (60 * 60));
         const seconds = Math.floor(remainingSeconds % (60 * 60));
+
         // 更新页面显示
         document.getElementById('days').textContent = days;
         document.getElementById('hours').textContent = hours;
         document.getElementById('seconds').textContent = seconds;
     }
+
     // 初始化+每秒更新
     updateUptime();
     setInterval(updateUptime, 1000);
   </script>
-  <div style="text-align: center; /* 实现水平居中 */">
-  <a href="https://icp.gov.moe/?keyword=20260177" target="_blank">萌ICP备20260177号</a>
-</div>
-  </footer>
-
-  {{ partial('_partials/widgets.njk', {}, {cache: theme.cache.enable}) }}
-
-  {{- next_inject('bodyEnd') }}
 </body>
 </html>
