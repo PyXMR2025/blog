@@ -18,6 +18,22 @@
   <script defer src="/_vercel/insights/script.js"></script>
   <meta name="baidu-site-verification" content="codeva-FuIvtGJoyJ" />
   <meta name="360-site-verification" content="0b6524e504a2c1865c05f4b983107d7c" />
+
+  <!-- 新增：运行时长统计的样式 -->
+  <style>
+    /* 运行时长数字高亮 */
+    .uptime-num {
+        color: #e63946;
+        font-weight: bold;
+    }
+    /* 页脚统计行样式，保持居中 */
+    .uptime-row {
+        margin: 8px 0;
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+    }
+  </style>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage"{% if theme.motion.enable %} class="use-motion"{% endif %}>
@@ -45,7 +61,51 @@
       {%- include '_partials/languages.njk' -%}
       {{ partial('_partials/footer.njk', {}, {cache: theme.cache.enable}) }}
     </div>
-<div style="text-align: center; /* 实现水平居中 */">
+     <!-- 新增：运行时长统计行 -->
+      <div class="uptime-row">
+        本站已经稳定运行了 <span class="uptime-num" id="days">0</span> 天 
+        <span class="uptime-num" id="hours">0</span> 小时 
+        <span class="uptime-num" id="seconds">0</span> 秒
+      </div>
+    </div>
+    <div style="text-align: center; /* 实现水平居中 */">
+      <a href="https://icp.gov.moe/?keyword=20260177" target="_blank">萌ICP备20260177号</a>
+    </div>
+  </footer>
+  {{ partial('_partials/widgets.njk', {}, {cache: theme.cache.enable}) }}
+  {{- next_inject('bodyEnd') }}
+  <!-- 新增：运行时长统计 -->
+  <script>
+    // 定义起始时间（GMT+8 2025-12-15 10:47:19）
+    const startTime = new Date('2025-12-15T10:47:19+08:00');
+
+    // 计算并更新运行时长
+    function updateUptime() {
+        const now = new Date();
+        const diffMs = now - startTime;
+        // 处理当前时间早于起始时间的情况
+        if (diffMs < 0) {
+            document.getElementById('days').textContent = '0';
+            document.getElementById('hours').textContent = '0';
+            document.getElementById('seconds').textContent = '0';
+            return;
+        }
+        // 时间单位转换
+        const totalSeconds = Math.floor(diffMs / 1000);
+        const days = Math.floor(totalSeconds / (24 * 60 * 60));
+        const remainingSeconds = totalSeconds % (24 * 60 * 60);
+        const hours = Math.floor(remainingSeconds / (60 * 60));
+        const seconds = Math.floor(remainingSeconds % (60 * 60));
+        // 更新页面显示
+        document.getElementById('days').textContent = days;
+        document.getElementById('hours').textContent = hours;
+        document.getElementById('seconds').textContent = seconds;
+    }
+    // 初始化+每秒更新
+    updateUptime();
+    setInterval(updateUptime, 1000);
+  </script>
+  <div style="text-align: center; /* 实现水平居中 */">
   <a href="https://icp.gov.moe/?keyword=20260177" target="_blank">萌ICP备20260177号</a>
 </div>
   </footer>
