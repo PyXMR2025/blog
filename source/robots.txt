@@ -1,2 +1,6 @@
 User-agent: *
 Disallow:
+Sitemap: https://jackie.openenet.cn/sitemap.xml
+Sitemap: https://jackie.openenet.cn/sitemap.txt
+Sitemap: https://jackie.openenet.cn/baidusitemap.xml
+Sitemap: https://jackie.openenet.cn/atom.xml
