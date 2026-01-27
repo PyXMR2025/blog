@@ -1,4 +1,14 @@
 (function($){
+  // Simple HTML-escaping helper to prevent XSS when interpolating text into HTML strings
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   // Search
   var $searchWrap = $('#search-form-wrap'),
     isSearchAnim = false,
@@ -120,11 +130,13 @@
     $(this).find('img').each(function(){
       if ($(this).parent().hasClass('fancybox') || $(this).parent().is('a')) return;
 
-      var alt = this.alt;
+      var alt = this.alt || '';
+      var escapedAlt = escapeHtml(alt);
+      var escapedSrc = escapeHtml(this.src || '');
 
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      if (alt) $(this).after('<span class="caption">' + escapedAlt + '</span>');
 
-      $(this).wrap('<a href="' + this.src + '" data-fancybox=\"gallery\" data-caption="' + alt + '"></a>')
+      $(this).wrap('<a href="' + escapedSrc + '" data-fancybox="gallery" data-caption="' + escapedAlt + '"></a>')
     });
 
     $(this).find('.fancybox').each(function(){
