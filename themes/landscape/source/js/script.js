@@ -52,19 +52,48 @@
         return;
       }
     } else {
-      var html = [
-        '<div id="' + id + '" class="article-share-box">',
-          '<input class="article-share-input" value="' + url + '">',
-          '<div class="article-share-links">',
-            '<a href="https://twitter.com/intent/tweet?text=' + encodeURIComponent(title) + '&url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
-            '<a href="https://www.linkedin.com/shareArticle?mini=true&url=' + encodedUrl + '" class="article-share-linkedin" target="_blank" title="LinkedIn"></a>',
-          '</div>',
-        '</div>'
-      ].join('');
+      var box = $('<div></div>').addClass('article-share-box');
+      box.attr('id', id);
 
-      var box = $(html);
+      var input = $('<input>')
+        .addClass('article-share-input')
+        .val(url);
+
+      var links = $('<div></div>').addClass('article-share-links');
+
+      var twitterLink = $('<a></a>')
+        .addClass('article-share-twitter')
+        .attr('href', 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(title) + '&url=' + encodedUrl)
+        .attr('target', '_blank')
+        .attr('title', 'Twitter');
+
+      var facebookLink = $('<a></a>')
+        .addClass('article-share-facebook')
+        .attr('href', 'https://www.facebook.com/sharer.php?u=' + encodedUrl)
+        .attr('target', '_blank')
+        .attr('title', 'Facebook');
+
+      var pinterestLink = $('<a></a>')
+        .addClass('article-share-pinterest')
+        .attr('href', 'http://pinterest.com/pin/create/button/?url=' + encodedUrl)
+        .attr('target', '_blank')
+        .attr('title', 'Pinterest');
+
+      var linkedinLink = $('<a></a>')
+        .addClass('article-share-linkedin')
+        .attr('href', 'https://www.linkedin.com/shareArticle?mini=true&url=' + encodedUrl)
+        .attr('target', '_blank')
+        .attr('title', 'LinkedIn');
+
+      links
+        .append(twitterLink)
+        .append(facebookLink)
+        .append(pinterestLink)
+        .append(linkedinLink);
+
+      box
+        .append(input)
+        .append(links);
 
       $('body').append(box);
     }
