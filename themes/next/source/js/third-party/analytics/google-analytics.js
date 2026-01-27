@@ -18,9 +18,19 @@ if (!CONFIG.google_analytics.only_pageview) {
     });
   }
 } else {
+  const generateSecureUid = () => {
+    if (window.crypto && window.crypto.getRandomValues) {
+      const bytes = new Uint8Array(16);
+      window.crypto.getRandomValues(bytes);
+      return Array.from(bytes).map(b => ('0' + b.toString(16)).slice(-2)).join('');
+    }
+    // Fallback for environments without crypto; retains previous behavior
+    return Math.random() + '.' + Math.random();
+  };
+
   const sendPageView = () => {
     if (CONFIG.hostname !== location.hostname) return;
-    const uid = localStorage.getItem('uid') || (Math.random() + '.' + Math.random());
+    const uid = localStorage.getItem('uid') || generateSecureUid();
     localStorage.setItem('uid', uid);
     fetch(
       'https://www.google-analytics.com/mp/collect?' + new URLSearchParams({
