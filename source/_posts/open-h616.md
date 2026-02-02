@@ -23,18 +23,18 @@ category: 硬件研究
 | 处理器   | 全志H616 64位四核Cortex-A53（最高1.5GHz） |
 | 图形处理器 | Mali G31 MP2（支持OpenGLES/Vulkan/OpenCL） |
 | 内存     | 1GB/512MB DDR3共享内存 |
-| 存储     | 支持Class 10及以上TF卡扩展 |
-| 无线连接 | 双频WiFi（802.11a/b/g/n/ac）+ 蓝牙5.0（IPEX天线接口） |
-| 接口     | Type-C OTG ×1、Type-C USB 2.0 Host ×1、2×20Pin GPIO排针 |
-| 视频输出 | MINI HDMI（需转接头） |
+| 存储     | 支持64GB及以下TF卡 |
+| 无线连接 | CDW-20U5622-00 双频WiFi（802.11a/b/g/n/ac）+ 蓝牙5.0（IPEX天线接口） |
+| 接口     | Type-C OTG ×1、Type-C USB 2.0 Host ×1、2×20Pin 2.54mm GPIO引出排针 |
+| 视频输出 | HDMI 2.0a 4K@60fps（接口为MINI HDMI） |
 | 供电     | Type-C 5V/2A及以上（AXP305电源管理芯片） |
 | 兼容系统 | Android TV 10、Ubuntu、Debian |
 | 尺寸重量 | 65mm×38mm，14g |
 
 ### 1.2 开箱清单
 - LCPI H616 ZERO开发板 ×1
-- 1×20Pin双排针 ×1（需自行焊接）
-- 爱国者T1 TF卡（建议32GB+）
+- 1×20Pin双排针 ×1
+- 爱国者T1 TF卡（请选择64GB及以下TF卡）
 - 3D打印外壳（含螺丝，非原厂）
 - IPEX天线
 
@@ -48,7 +48,7 @@ category: 硬件研究
 - 硬件：TF卡（32GB-64GB最佳，64GB以上不兼容，Class 10/U3级别，博主使用aigo T1高速卡）、Type-C数据线、电脑
 - 软件：
   - 安卓系统：PhonixCard 4.2.8（官方推荐）
-  - Ubuntu/Debian系统：Win32DiskImager（Windows）/ BalenaEtcher（跨平台，更稳定）
+  - Ubuntu/Debian系统：Win32DiskImager（Windows）/ BalenaEtcher（跨平台）
 - 系统镜像：[官方百度网盘](https://pan.baidu.com/s/1a3RBBUYjvaXJTyvN9vxBLw)（提取码：tdfb），含Ubuntu Server/Xfce/Gnome/Android10多个版本系统及工具
 
 > 官方镜像在不同版本的板子上可能会有不同的问题
@@ -57,7 +57,7 @@ category: 硬件研究
 > 2.lcpi-h616_ubuntu_focal_desktop_linux4.9.170-2023-05-26.7z
 > 如果上述镜像均不能开机可以尝试其他镜像
 
-> ⚠️ 镜像必看：Xfce/Gnome桌面版仅适合临时调试（卡顿明显），最终需通过命令禁用桌面；项目开发首选「Server版逻辑」（Xfce版禁用桌面后等效）。
+> ⚠️ 镜像必看：Xfce/Gnome桌面版仅适合临时调试（卡顿明显），最终需通过命令（sudo lcpi-config/sudo orangepi-config）禁用桌面；项目开发首选「Server版逻辑」（Xfce版禁用桌面后等效）。
 
 ### 2.2 烧录安卓系统（流程参考）
 1. TF卡插入电脑，打开PhonixCard 4.2.8；
@@ -96,7 +96,7 @@ category: 硬件研究
 3. 上电后通过终端登录。
 
 ### 3.2 禁用桌面
-1. 禁用桌面环境：`sudo lcpi-config`；
+1. 禁用桌面环境：`sudo lcpi-config`（部分版本命令为`sudo orangepi-config`）；
 2. 在图形化界面中依次选择：System（系统选项）→ Desktop（桌面配置）；
 3. 回车后禁用。
 
@@ -114,7 +114,7 @@ category: 硬件研究
 
 3. **系统卡顿**：
    - 卸载桌面环境：`sudo apt remove -y xfce4 gnome-shell && sudo apt autoremove -y`；
-   - 禁用桌面环境：`sudo lcpi-config`，在图形化界面中依次选择：System（系统选项）→ Desktop（桌面配置）；
+   - 禁用桌面环境：`sudo lcpi-config`（部分版本命令为`sudo orangepi-config`），在图形化界面中依次选择：System（系统选项）→ Desktop（桌面配置）；
    - 重启后保留Server核心，降低资源占用。
 
 ## 五、开发方向与替代产品
