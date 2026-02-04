@@ -1,9 +1,10 @@
 ---
-title: AIGC使用说明
+title: AIGC创作说明
 type: aigc
 layout: aigc
-date: 2026-1-20 18:06:39
-update: 2026-1-20 18:06:39
+date: 2026-2-4 09:32:30
+update: 2026-2-4 09:32:30
+comments: false
 toc:
   enable: false
 ---
