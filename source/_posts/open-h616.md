@@ -127,6 +127,7 @@ category: 硬件研究
 ### 同类替代
 - [Orange Pi Zero2](http://www.orangepi.cn/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-Zero-2.html)：生态成熟，硬件配置相近，新手友好。
 
-> 广告：[雨云服务器](https://www.rainyun.com/jackie_)，高性价比之选！后续技术教程均可在该服务器上实现。
-
 LCPI H616 ZERO以高性价比展现了国产芯片的潜力，适合有基础的开发者探索。后续将更新实战项目，欢迎关注！
+
+> ⚠️ 申明：本文内容由作者结合实际实操经验撰写，部分技术细节（如步骤优化、参数核对、问题排查补充）借助 AIGC 工具辅助整理，所有实操流程、命令及测试结果均经过作者亲自验证，确保准确可用。
+> 广告：[雨云服务器](https://www.rainyun.com/jackie_)，高性价比之选！后续技术教程均可在该服务器上实现。
