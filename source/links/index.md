@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     {name: "lololowe的博客", url: "https://blog.lololowe.com/", desc: "计网，网安知识分享"},
     {name: "博客之家", url: "https://www.perass.com/", desc: "个人博客导航网站"},
     {name: "雨月空间", url: "https://www.mintimate.cn/", desc: "专注与你分享技术教程～"},
+    {name: "LiKai Blog", url: "https://tylk.cc/", desc: "云端电波起，星河寄心声"},
     {name: "运维小弟", url: "https://blog.srebro.cn/", desc: "专注技术积累，探索运维之道"},
     {name: "杨杨得亿", url: "https://yydy.link:2023/", desc: "关注网络安全，虚拟化，SSLVPN 等相关领域。"},
     {name: "SRE运维博客", url: "https://www.cnsre.cn/", desc: "专注SRE运维技术分享的博客"},
