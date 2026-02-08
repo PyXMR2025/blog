@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
     {name: "吃白饭的休伯利安号", url: "https://www.eatrice.cn/", desc: "用电脑搬砖的土木工程师"},
     {name: "老王的个人博客", url: "https://blog.oldwang.site/", desc: "这是一个 LinuxSre 相关的技术博客"},
     {name: "SimonSu", url: "https://simonsu.cn/", desc: "这是一个记录生活、工作点滴的个人博客。"},
-    {name: "小码同学", url: "https://blog.hikki.site/", desc: "喜欢的东西就努力去追求，万一成功了呢!"}
+    {name: "小码同学", url: "https://blog.hikki.site/", desc: "喜欢的东西就努力去追求，万一成功了呢!"},
+    {name: "FatPanda的小站", url: "https://12am.moe/", desc: "Coder&OIer"}
   ];
 
   // Fisher-Yates 洗牌算法
