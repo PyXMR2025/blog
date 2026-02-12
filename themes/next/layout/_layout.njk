@@ -1,121 +1,183 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang }}">
 <head>
+  <!-- 基础头部公共组件（缓存控制） -->
   {{ partial('_partials/head/head.njk', {}, {cache: theme.cache.enable}) }}
   {%- include '_partials/head/head-unique.njk' -%}
+  
+  <!-- 页面标题（模板块） -->
   <title>{% block title %}{% endblock %}</title>
+
+  <!-- 第三方统计/分析脚本（缓存控制） -->
   {{ partial('_third-party/analytics/index.njk', {}, {cache: theme.cache.enable}) }}
+  {{ partial('_third-party/statistics/index.njk', {}, {cache: theme.cache.enable}) }}
+  
+  <!-- 核心脚本与第三方集成（缓存控制） -->
   {{ partial('_scripts/index.njk', {}, {cache: theme.cache.enable}) }}
   {{ partial('_third-party/index.njk', {}, {cache: theme.cache.enable}) }}
-  {{ partial('_third-party/statistics/index.njk', {}, {cache: theme.cache.enable}) }}
+  
+  <!-- 数学公式与快速链接组件 -->
   {%- include '_third-party/math/index.njk' -%}
   {%- include '_third-party/quicklink.njk' -%}
+
+  <!-- 框架注入的头部内容 -->
   {{- next_inject('head') }}
+
+  <!-- 无JS fallback样式 -->
   <noscript>
     <link rel="stylesheet" href="{{ url_for(theme.css) }}/noscript.css">
   </noscript>
-  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "02045fccf216471184e81448797b3566"}'></script><!-- End Cloudflare Web Analytics -->
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "02045fccf216471184e81448797b3566"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+  <!-- Vercel Insights -->
   <script defer src="/_vercel/insights/script.js"></script>
+  
+  <!-- 灯笼 -->
   <script defer src="/third-part/js/lantern.js"></script>
+
+  <!-- 站点验证 Meta 标签 -->
   <meta name="baidu-site-verification" content="codeva-FuIvtGJoyJ" />
   <meta name="360-site-verification" content="0b6524e504a2c1865c05f4b983107d7c" />
   <meta name="yandex-verification" content="8c5995dc66b40cd5" />
   <meta name="msvalidate.01" content="94CC12F9EBDBD5361337329096B6444A" />
+
+  <!-- 资源预加载与站点图标 -->
   <link rel="prefetch" as="image" href="https://www.blogsclub.org/badge/jackie.openenet.cn">
   <link rel="icon" href="https://jackie.openenet.cn/favicon.ico" type="image/x-icon">
-  <!-- 新增：运行时长统计的样式 -->
+
+  <!-- 运行时长统计样式 -->
   <style>
-    /* 运行时长数字高亮 */
+    /* 运行时长数字高亮样式 */
     .uptime-num {
-        color: #e63946;
-        font-weight: bold;
+      color: #e63946;
+      font-weight: bold;
     }
-    /* 页脚统计行样式，保持居中 */
+    /* 页脚运行时长行样式 */
     .uptime-row {
-        margin: 8px 0;
-        text-align: center;
-        font-size: 14px;
-        color: #666;
+      margin: 8px 0;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
     }
   </style>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage"{% if theme.motion.enable %} class="use-motion"{% endif %}>
+<body 
+  itemscope 
+  itemtype="http://schema.org/WebPage"
+  {% if theme.motion.enable %} class="use-motion"{% endif %}
+>
+  <!-- 顶部装饰条 -->
   <div class="headband"></div>
 
+  <!-- 页面主体 -->
   <main class="main">
     <div class="column">
+      <!-- 页面头部 -->
       <header class="header" itemscope itemtype="http://schema.org/WPHeader">
         {%- include '_partials/header/index.njk' -%}
       </header>
+      
+      <!-- 侧边栏（可配置） -->
       {%- if theme.sidebar.display !== 'remove' %}
         {% block sidebar %}{% endblock %}
       {%- endif %}
     </div>
 
     <div class="main-inner {% block class %}{% endblock %}">
+      <!-- 子菜单 -->
       {%- include '_partials/header/sub-menu.njk' -%}
+      <!-- 页面核心内容（模板块） -->
       {% block content %}{% endblock %}
+      <!-- 评论区 -->
       {%- include '_partials/comments.njk' -%}
     </div>
   </main>
 
+  <!-- 页脚 -->
   <footer class="footer">
     <div class="footer-inner">
+      <!-- 多语言切换 -->
       {%- include '_partials/languages.njk' -%}
-      {{ partial('_partials/footer.njk', {}, {cache: theme.cache.enable}) }}
       
-      <!-- 新增：运行时长统计行 -->
+      <!-- 页脚公共内容（缓存控制） -->
+      {{ partial('_partials/footer.njk', {}, {cache: theme.cache.enable}) }}
+
+      <!-- 站点数据（居中显示） -->
+      <div style="text-align: center;">
+        <a href="https://www.blogsclub.org/rank.html" target="_blank">
+          <img 
+            src="https://www.blogsclub.org/badge/jackie.openenet.cn" 
+            style="height:60px!important" 
+            loading="lazy"
+            alt="统计数据">
+        </a>
+      </div>
+        
+      <!-- 运行时长统计展示行 -->
       <div class="uptime-row">
-        本站已经稳定运行了 <span class="uptime-num" id="days">0</span> 天 
+        本站已经稳定运行了 
+        <span class="uptime-num" id="days">0</span> 天 
         <span class="uptime-num" id="hours">0</span> 小时 
         <span class="uptime-num" id="seconds">0</span> 秒
       </div>
+
+      <!-- ICP备案 -->
+      <div style="text-align: center; margin: 8px 0;">
+        <a href="https://icp.gov.moe/?keyword=20260177" target="_blank">萌ICP备20260177号</a>
+      </div>
+
+      <!-- 第三方广告脚本容器 -->
+      <div id="container-0f2aeb03ec930e47193f4782e446c5b6"></div>
     </div>
-    <div style="text-align: center; /* 实现水平居中 */">
-      <img height="18px" src="https://boringbay.com/api/badge/jackie.openenet.cn"></img>
-      <a href="https://icp.gov.moe/?keyword=20260177" target="_blank">萌ICP备20260177号</a>
-    </div>
-<script async="async" data-cfasync="false" src="https://pl28675819.effectivegatecpm.com/0f2aeb03ec930e47193f4782e446c5b6/invoke.js"></script>
-<div id="container-0f2aeb03ec930e47193f4782e446c5b6"></div>
   </footer>
 
+  <!-- 页面组件（缓存控制） -->
   {{ partial('_partials/widgets.njk', {}, {cache: theme.cache.enable}) }}
 
+  <!-- 框架注入的页面底部内容 -->
   {{- next_inject('bodyEnd') }}
 
-  <!-- 新增：运行时长统计 -->
+  <!-- 第三方广告脚本 -->
+  <script async="async" data-cfasync="false" src="https://pl28675819.effectivegatecpm.com/0f2aeb03ec930e47193f4782e446c5b6/invoke.js"></script>
+
+  <!-- 运行时长统计逻辑 -->
   <script>
-    // 定义起始时间（GMT+8 2025-12-15 10:47:19）
+    // 站点启动时间（GMT+8 2025-12-15 10:47:19）
     const startTime = new Date('2025-12-15T10:47:19+08:00');
 
-    // 计算并更新运行时长
+    /**
+     * 计算并更新站点运行时长
+     */
     function updateUptime() {
-        const now = new Date();
-        const diffMs = now - startTime;
+      const now = new Date();
+      const diffMs = now - startTime;
 
-        // 处理当前时间早于起始时间的情况
-        if (diffMs < 0) {
-            document.getElementById('days').textContent = '0';
-            document.getElementById('hours').textContent = '0';
-            document.getElementById('seconds').textContent = '0';
-            return;
-        }
+      // 处理当前时间早于启动时间的边界情况
+      if (diffMs < 0) {
+        document.getElementById('days').textContent = '0';
+        document.getElementById('hours').textContent = '0';
+        document.getElementById('seconds').textContent = '0';
+        return;
+      }
 
-        // 时间单位转换
-        const totalSeconds = Math.floor(diffMs / 1000);
-        const days = Math.floor(totalSeconds / (24 * 60 * 60));
-        const remainingSeconds = totalSeconds % (24 * 60 * 60);
-        const hours = Math.floor(remainingSeconds / (60 * 60));
-        const seconds = Math.floor(remainingSeconds % (60 * 60));
+      // 时间单位转换（毫秒 -> 天/小时/秒）
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const days = Math.floor(totalSeconds / (24 * 60 * 60));
+      const remainingSeconds = totalSeconds % (24 * 60 * 60);
+      const hours = Math.floor(remainingSeconds / (60 * 60));
+      const seconds = Math.floor(remainingSeconds % (60 * 60));
 
-        // 更新页面显示
-        document.getElementById('days').textContent = days;
-        document.getElementById('hours').textContent = hours;
-        document.getElementById('seconds').textContent = seconds;
+      // 更新页面显示
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('seconds').textContent = seconds;
     }
 
-    // 初始化+每秒更新
+    // 初始化执行 + 每秒更新一次
     updateUptime();
     setInterval(updateUptime, 1000);
   </script>
