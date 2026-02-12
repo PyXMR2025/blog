@@ -185,6 +185,12 @@ links_settings:
   layout: block
 
 links:
+  BlogsClub: https://www.blogsclub.org/
+  博客之家: https://www.perass.com/
+  BlogFinder: https://bf.zzxworld.com/
+  BLOGS·CN: https://blogscn.fun/
+  博客中心: https://bokehub.com/home/
+  无聊湾: https://boringbay.com/
 
 # Table of Contents in the Sidebar
 # Front-matter variable (nonsupport wrap expand_all).
