@@ -117,12 +117,13 @@
         </a>
       </div>
         
-      <!-- 运行时长统计展示行 -->
+      <!-- 运行时长统计展示行（新增分钟显示） -->
       <div class="uptime-row">
         本站已经稳定运行了 
-        <span class="uptime-num" id="days">0</span> 天 
-        <span class="uptime-num" id="hours">0</span> 小时 
-        <span class="uptime-num" id="seconds">0</span> 秒
+        <span class="uptime-num" id="days">00</span> 天 
+        <span class="uptime-num" id="hours">00</span> 小时 
+        <span class="uptime-num" id="minutes">00</span> 分钟 
+        <span class="uptime-num" id="seconds">00</span> 秒
       </div>
 
       <!-- ICP备案 -->
@@ -130,8 +131,10 @@
         <a href="https://icp.gov.moe/?keyword=20260177" target="_blank">萌ICP备20260177号</a>
       </div>
 
+      <!-- 广告脚本（仅保留一次引入） -->
       <script async="async" data-cfasync="false" src="https://pl28675819.effectivegatecpm.com/0f2aeb03ec930e47193f4782e446c5b6/invoke.js"></script>
       <div id="container-0f2aeb03ec930e47193f4782e446c5b6"></div>
+
     </div>
   </footer>
 
@@ -141,13 +144,28 @@
   <!-- 框架注入的页面底部内容 -->
   {{- next_inject('bodyEnd') }}
 
-  <!-- 第三方广告脚本 -->
-  <script async="async" data-cfasync="false" src="https://pl28675819.effectivegatecpm.com/0f2aeb03ec930e47193f4782e446c5b6/invoke.js"></script>
-
-  <!-- 运行时长统计逻辑 -->
+  <!-- 运行时长统计逻辑（优化版） -->
   <script>
     // 站点启动时间（GMT+8 2025-12-15 10:47:19）
     const startTime = new Date('2025-12-15T10:47:19+08:00');
+    // 缓存DOM元素，避免重复查询
+    const uptimeElements = {
+      days: document.getElementById('days'),
+      hours: document.getElementById('hours'),
+      minutes: document.getElementById('minutes'),
+      seconds: document.getElementById('seconds')
+    };
+    // 定时器标识，用于页面卸载时清理
+    let uptimeTimer = null;
+
+    /**
+     * 数字补零：单位数补0，如 5 → 05
+     * @param {number} num 要补零的数字
+     * @returns {string} 补零后的字符串
+     */
+    function padZero(num) {
+      return num.toString().padStart(2, '0');
+    }
 
     /**
      * 计算并更新站点运行时长
@@ -158,28 +176,37 @@
 
       // 处理当前时间早于启动时间的边界情况
       if (diffMs < 0) {
-        document.getElementById('days').textContent = '0';
-        document.getElementById('hours').textContent = '0';
-        document.getElementById('seconds').textContent = '0';
+        uptimeElements.days.textContent = '00';
+        uptimeElements.hours.textContent = '00';
+        uptimeElements.minutes.textContent = '00';
+        uptimeElements.seconds.textContent = '00';
         return;
       }
 
-      // 时间单位转换（毫秒 -> 天/小时/秒）
+      // 时间单位转换（毫秒 -> 天/小时/分钟/秒）
       const totalSeconds = Math.floor(diffMs / 1000);
       const days = Math.floor(totalSeconds / (24 * 60 * 60));
-      const remainingSeconds = totalSeconds % (24 * 60 * 60);
-      const hours = Math.floor(remainingSeconds / (60 * 60));
-      const seconds = Math.floor(remainingSeconds % (60 * 60));
+      const remainingSecondsAfterDays = totalSeconds % (24 * 60 * 60);
+      const hours = Math.floor(remainingSecondsAfterDays / (60 * 60));
+      const remainingSecondsAfterHours = remainingSecondsAfterDays % (60 * 60);
+      const minutes = Math.floor(remainingSecondsAfterHours / 60);
+      const seconds = remainingSecondsAfterHours % 60;
 
-      // 更新页面显示
-      document.getElementById('days').textContent = days;
-      document.getElementById('hours').textContent = hours;
-      document.getElementById('seconds').textContent = seconds;
+      // 更新页面显示（补零后）
+      uptimeElements.days.textContent = padZero(days);
+      uptimeElements.hours.textContent = padZero(hours);
+      uptimeElements.minutes.textContent = padZero(minutes);
+      uptimeElements.seconds.textContent = padZero(seconds);
     }
 
     // 初始化执行 + 每秒更新一次
     updateUptime();
-    setInterval(updateUptime, 1000);
+    uptimeTimer = setInterval(updateUptime, 1000);
+
+    // 页面卸载时清理定时器，避免内存泄漏
+    window.addEventListener('beforeunload', () => {
+      clearInterval(uptimeTimer);
+    });
   </script>
 </body>
 </html>
