@@ -1,0 +1,77 @@
+name: Submit to Bing IndexNow
+
+# 触发条件：main分支推送 + 每天UTC 1:00定时 + 手动触发
+on:
+  push:
+    branches: ["main"]
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+
+jobs:
+  submit-to-bing:
+    runs-on: ubuntu-latest
+    steps:
+      # 步骤1：安装必要依赖（核心修复：安装jq）
+      - name: Install dependencies (jq)
+        run: sudo apt-get update && sudo apt-get install -y jq curl
+
+      # 步骤2：等待1分钟（仅main推送时需要，定时/手动触发也保留，可按需删除）
+      - name: Wait for 1 minute
+        run: sleep 60
+
+      # 步骤3：核心逻辑：下载sitemap并提交到Bing
+      - name: Fetch sitemap and submit to Bing IndexNow
+        run: |
+          # 配置参数（适配你的信息）
+          HOST="jackie.openenet.cn"
+          API_KEY="98a318ce9ac24028a209c3e93b1e1aa6"
+          KEY_LOCATION="https://jackie.openenet.cn/98a318ce9ac24028a209c3e93b1e1aa6.txt"
+          SITEMAP_URL="https://jackie.openenet.cn/sitemap.txt"
+
+          # 1. 下载sitemap.txt，容错网络失败
+          echo "=== 下载sitemap.txt ==="
+          if ! curl -s --fail "$SITEMAP_URL" -o sitemap.txt; then
+            echo "❌ 错误：无法下载sitemap.txt（URL: $SITEMAP_URL）"
+            exit 1
+          fi
+
+          # 2. 处理URL：过滤空行、去重、验证URL格式（适配你的每行一个URL格式）
+          echo -e "\n=== 处理URL列表 ==="
+          # 过滤空行+去重+仅保留该域名下的URL（避免提交无关URL）
+          grep -v '^$' sitemap.txt | sort -u | grep "^https://$HOST/" > valid_urls.txt
+
+          # 检查是否有有效URL
+          if [ ! -s valid_urls.txt ]; then
+            echo "❌ 错误：sitemap.txt中无有效URL（需以https://$HOST/开头）"
+            exit 1
+          fi
+          echo "✅ 找到有效URL数量：$(wc -l < valid_urls.txt)"
+          cat valid_urls.txt # 打印URL列表，便于调试
+
+          # 3. 转换为Bing API要求的JSON数组格式（适配你的URL格式）
+          echo -e "\n=== 构造JSON请求数据 ==="
+          URL_LIST=$(jq -R -s -c 'split("\n") | map(select(length > 0))' valid_urls.txt)
+          JSON_DATA=$(jq -n \
+            --arg host "$HOST" \
+            --arg key "$API_KEY" \
+            --arg keyLocation "$KEY_LOCATION" \
+            --argjson urlList "$URL_LIST" \
+            '{host: $host, key: $key, keyLocation: $keyLocation, urlList: $urlList}')
+          echo "JSON请求数据：$JSON_DATA"
+
+          # 4. 提交到Bing IndexNow API
+          echo -e "\n=== 提交到Bing IndexNow ==="
+          RESPONSE=$(curl -s --fail -X POST \
+            -H "Content-Type: application/json" \
+            -d "$JSON_DATA" \
+            "https://www.bing.com/indexnow?url=https://$HOST&key=$API_KEY")
+
+          # 5. 验证提交结果
+          echo "Bing API响应：$RESPONSE"
+          if echo "$RESPONSE" | grep -q '"success":true'; then
+            echo -e "\n✅ 成功：所有URL已提交到Bing IndexNow"
+          else
+            echo -e "\n❌ 失败：提交失败，请检查API密钥/密钥文件/URL格式"
+            exit 1
+          fi
