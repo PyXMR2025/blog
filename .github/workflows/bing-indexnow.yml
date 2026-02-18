@@ -1,79 +1,122 @@
-name: Submit to Bing IndexNow
+# 工作流名称：提交博客URL到Bing IndexNow
+name: Submit Blog URLs to Bing IndexNow
 
+# 触发条件：
+# 1. 推送到main分支（博客发布/更新时）；
+# 2. 每天凌晨1点定时推送（补漏）；
+# 3. 手动触发（应急使用）。
 on:
   push:
     branches: ["main"]
+    # 可选：仅当博客内容文件变更时触发（减少无效执行）
+    paths:
+      - "content/**"
+      - "posts/**"
+      - "source/**"
   schedule:
-    - cron: '0 1 * * *'
-  workflow_dispatch:
+    - cron: '0 1 * * *'  # UTC时间，对应北京时间9点
+  workflow_dispatch:  # 手动触发开关
 
+# 权限配置：仅读取仓库内容（最小权限原则）
 permissions:
   contents: read
 
+# 定义任务
 jobs:
-  submit-to-bing:
-    runs-on: ubuntu-latest
+  submit-to-indexnow:
+    runs-on: ubuntu-latest  # 使用Ubuntu最新版运行环境
     steps:
-      - name: Install dependencies (jq)
-        run: sudo apt-get update && sudo apt-get install -y jq curl
-
-      - name: Wait for 1 minute (only on push to main)
-        if: github.event_name == 'push' # 仅push触发时等待，节省时长
-        run: sleep 60
-
-      - name: Fetch sitemap and submit to Bing IndexNow
+      # 步骤1：安装依赖（jq用于处理JSON，curl用于请求，xmlstarlet用于解析xml sitemap）
+      - name: Install dependencies
         run: |
-          # 配置参数
-          HOST="jackie.openenet.cn"
-          API_KEY="98a318ce9ac24028a209c3e93b1e1aa6"
-          KEY_LOCATION="https://jackie.openenet.cn/98a318ce9ac24028a209c3e93b1e1aa6.txt"
-          SITEMAP_URL="https://jackie.openenet.cn/sitemap.txt"
+          sudo apt-get update && sudo apt-get install -y jq curl xmlstarlet
 
-          # 1. 下载sitemap.txt
-          echo "=== 下载sitemap.txt ==="
-          if ! curl -s "$SITEMAP_URL" -o sitemap.txt; then
-            echo "❌ 错误：无法下载sitemap.txt"
+      # 步骤2：延迟执行（仅push触发时）- 等待博客部署完成（避免推送未生效的URL）
+      - name: Wait for blog deployment (only on push)
+        if: github.event_name == 'push'
+        run: sleep 60  # 延迟1分钟，可根据博客部署耗时调整
+
+      # 步骤3：核心逻辑：获取Sitemap并推送到IndexNow
+      - name: Fetch sitemap and submit to Bing IndexNow
+        env:
+          # 从GitHub Secrets读取敏感信息（避免硬编码）
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          INDEXNOW_KEY_LOCATION: ${{ secrets.INDEXNOW_KEY_LOCATION }}
+          INDEXNOW_HOST: ${{ secrets.INDEXNOW_HOST || 'jackie.openenet.cn' }}
+          SITEMAP_URL: ${{ secrets.SITEMAP_URL || 'https://jackie.openenet.cn/sitemap.txt' }}
+        run: |
+          # ========== 1. 参数校验 ==========
+          echo "=== 校验配置参数 ==="
+          if [ -z "$INDEXNOW_KEY" ] || [ -z "$INDEXNOW_KEY_LOCATION" ] || [ -z "$INDEXNOW_HOST" ] || [ -z "$SITEMAP_URL" ]; then
+            echo "❌ 错误：缺少必要配置参数，请检查GitHub Secrets"
+            exit 1
+          fi
+          echo "✅ 配置参数校验通过"
+          echo "博客域名：$INDEXNOW_HOST"
+          echo "Sitemap地址：$SITEMAP_URL"
+
+          # ========== 2. 下载并解析Sitemap ==========
+          echo -e "\n=== 下载并解析Sitemap ==="
+          # 下载Sitemap文件
+          if ! curl -s -o sitemap.tmp "$SITEMAP_URL"; then
+            echo "❌ 错误：无法下载Sitemap文件（$SITEMAP_URL）"
             exit 1
           fi
 
-          # 2. 处理URL
-          echo -e "\n=== 处理URL列表 ==="
-          grep -v '^$' sitemap.txt | sort -u | grep "^https://$HOST/" > valid_urls.txt
+          # 区分Sitemap格式（txt/xml）并提取URL
+          if [[ "$SITEMAP_URL" =~ \.xml$ ]]; then
+            # 解析xml格式Sitemap
+            xmlstarlet sel -t -v "//url/loc" sitemap.tmp | grep "^https://$INDEXNOW_HOST/" | sort -u > valid_urls.txt
+          else
+            # 解析txt格式Sitemap（每行一个URL）
+            grep -v '^$' sitemap.tmp | sort -u | grep "^https://$INDEXNOW_HOST/" > valid_urls.txt
+          fi
+
+          # 检查有效URL数量
           if [ ! -s valid_urls.txt ]; then
-            echo "❌ 错误：无有效URL"
+            echo "❌ 错误：未提取到有效URL（请检查Sitemap格式和域名）"
             exit 1
           fi
-          echo "✅ 有效URL数量：$(wc -l < valid_urls.txt)"
+          VALID_URL_COUNT=$(wc -l < valid_urls.txt)
+          echo "✅ 提取到有效URL数量：$VALID_URL_COUNT"
+          # 打印前5个URL（便于调试）
+          echo "前5个有效URL："
+          head -5 valid_urls.txt
 
-          # 3. 构造JSON
-          echo -e "\n=== 构造JSON请求数据 ==="
+          # ========== 3. 构造IndexNow API请求数据 ==========
+          echo -e "\n=== 构造API请求数据 ==="
+          # 将URL列表转为JSON数组
           URL_LIST=$(jq -R -s -c 'split("\n") | map(select(length > 0))' valid_urls.txt)
+          # 构造完整JSON请求体
           JSON_DATA=$(jq -n \
-            --arg host "$HOST" \
-            --arg key "$API_KEY" \
-            --arg keyLocation "$KEY_LOCATION" \
+            --arg host "$INDEXNOW_HOST" \
+            --arg key "$INDEXNOW_KEY" \
+            --arg keyLocation "$INDEXNOW_KEY_LOCATION" \
             --argjson urlList "$URL_LIST" \
             '{host: $host, key: $key, keyLocation: $keyLocation, urlList: $urlList}')
+          echo "✅ 请求数据构造完成（JSON）："
+          echo "$JSON_DATA" | jq .  # 格式化输出JSON（便于调试）
 
-          # 4. 提交到Bing API（核心修改：移除--fail，保留状态码）
-          echo -e "\n=== 提交到Bing IndexNow ==="
-          # 捕获HTTP状态码和响应内容
+          # ========== 4. 提交到Bing IndexNow API ==========
+          echo -e "\n=== 提交到Bing IndexNow API ==="
+          # 发送POST请求，捕获状态码和响应内容
           RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST \
             -H "Content-Type: application/json" \
             -d "$JSON_DATA" \
-            "https://www.bing.com/indexnow?url=https://$HOST&key=$API_KEY")
+            "https://www.bing.com/indexnow?url=https://$INDEXNOW_HOST&key=$INDEXNOW_KEY")
           
-          # 分离响应内容和状态码
+          # 分离响应内容和HTTP状态码
           HTTP_STATUS=$(echo "$RESPONSE" | grep -oP 'HTTP_STATUS:\K\d+' | tail -1)
           API_RESPONSE=$(echo "$RESPONSE" | sed '/HTTP_STATUS:/d')
 
-          # 5. 修正成功判断逻辑（核心修复）
-          echo "Bing API 状态码：$HTTP_STATUS"
-          echo "Bing API 响应：$API_RESPONSE"
-          
-          # 成功条件：状态码200/202，或响应包含success/jobId（Bing的成功标识）
+          # ========== 5. 结果判断与日志 ==========
+          echo -e "\n=== 提交结果 ==="
+          echo "HTTP状态码：$HTTP_STATUS"
+          echo "API响应内容：$API_RESPONSE"
+
+          # 成功条件：状态码200（成功）/202（接受待处理），或响应包含success/jobId
           if [[ $HTTP_STATUS =~ ^20[02]$ ]] || echo "$API_RESPONSE" | grep -qE '"success":true|"jobId"'; then
-            echo -e "\n✅ 成功：URL提交到Bing IndexNow（状态码：$HTTP_STATUS）"
+            echo -e "\n✅ 成功：$VALID_URL_COUNT 个URL已提交到Bing IndexNow"
           else
             echo -e "\n❌ 失败：提交失败（状态码：$HTTP_STATUS）"
             exit 1
