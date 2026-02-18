@@ -27,6 +27,9 @@ category: CI/CD实践
 
 本文将从核心概念入手，一步步教你用GitHub Actions实现博客内容自动推送到Bing IndexNow，兼顾实用性和可扩展性。
 
+> 注意：如果博客无Github仓库，可以创建一个空仓库，再按照本文步骤配置GitHub Actions（无需博客代码）。
+> 本文以用Github+Vercel+Hexo搭建的博客为例，其他静态博客搭建方式类似。
+
 ## 核心概念速览
 ### GitHub Actions与CI/CD
 CI/CD（持续集成/持续部署）是DevOps的核心实践，而GitHub Actions是GitHub内置的CI/CD工具，无需额外服务器，只需在仓库中编写`yml`格式的工作流文件，就能实现代码推送、定时任务等触发的自动化操作（比如博客构建、部署、搜索引擎推送）。
