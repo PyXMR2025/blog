@@ -1,54 +1,129 @@
 <style>
-  /* 适配深色主题的广告模块样式 */
+  /* 基础样式（通用）- 优化整体排版 */
   .post-ad-section {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #444; /* 深灰色边框，适配深色背景 */
+    margin: 35px 0 20px;
+    padding: 20px;
+    border-radius: 8px;
     font-size: 0.95em;
-    color: #ddd; /* 浅色文字 */
+    line-height: 1.7;
+    box-sizing: border-box;
   }
+
   .post-ad-section h3 {
-    font-size: 1.1em;
-    margin-bottom: 15px;
-    color: #eee; /* 更亮的标题色 */
+    font-size: 1.15em;
+    margin: 0 0 15px 0;
     display: flex;
     align-items: center;
     gap: 8px;
+    font-weight: 600;
   }
+
+  /* 警告提示框 - 优化圆角和间距 */
   .post-ad-warning {
     font-size: 0.85em;
-    color: #ddd;
-    margin-bottom: 15px;
-    padding: 10px 12px;
-    background-color: #3a3a3a; /* 深色警告框背景 */
-    border-left: 3px solid #ff9800; /* 保留橙色警示条 */
-    border-radius: 4px;
+    margin: 0 0 18px 0;
+    padding: 12px 15px;
+    border-radius: 6px;
+    border-left: 3px solid #ff9800;
+    background-color: transparent; /* 取消固定背景，靠主题适配 */
   }
+
+  /* 列表样式 - 优化间距和对齐 */
   .post-ad-list {
     list-style: none;
     padding: 0;
+    margin: 0;
   }
+
   .post-ad-list li {
-    margin-bottom: 12px;
-    line-height: 1.6;
+    margin-bottom: 18px;
+    padding-left: 4px;
   }
+
+  .post-ad-list li:last-child {
+    margin-bottom: 0; /* 最后一项取消下间距 */
+  }
+
   .post-ad-list a {
-    color: #58a6ff; /* GitHub 风格的蓝色链接，适配深色 */
     text-decoration: none;
     font-weight: 500;
+    transition: color 0.2s ease;
+    border-bottom: 1px solid transparent; /*  hover下划线更柔和 */
   }
+
   .post-ad-list a:hover {
-    text-decoration: underline;
+    border-bottom: 1px solid currentColor;
+    color: #2563eb; /* 通用hover高亮色 */
   }
+
   .post-ad-list strong {
-    color: #eee; /* 强调文字更亮 */
+    font-weight: 600;
   }
+
   .post-ad-list code {
-    background-color: #2d2d2d;
-    color: #d2a8ff;
-    padding: 2px 4px;
-    border-radius: 3px;
+    padding: 2px 6px;
+    border-radius: 4px;
     font-size: 0.9em;
+    font-family: monospace;
+  }
+
+  /* 👇 深色主题适配（自动识别） */
+  @media (prefers-color-scheme: dark) {
+    .post-ad-section {
+      background-color: #2d2d2d;
+      border: 1px solid #444;
+      color: #ddd;
+    }
+    .post-ad-section h3 {
+      color: #eee;
+    }
+    .post-ad-warning {
+      color: #ddd;
+      background-color: #3a3a3a;
+    }
+    .post-ad-list a {
+      color: #58a6ff;
+    }
+    .post-ad-list a:hover {
+      color: #7ab0ff;
+    }
+    .post-ad-list strong {
+      color: #eee;
+    }
+    .post-ad-list code {
+      background-color: #1e1e1e;
+      color: #d2a8ff;
+    }
+  }
+
+  /* 👇 浅色主题适配（自动识别） */
+  @media (prefers-color-scheme: light) {
+    .post-ad-section {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      color: #333;
+    }
+    .post-ad-section h3 {
+      color: #222;
+    }
+    .post-ad-warning {
+      color: #555;
+      background-color: #fff3cd;
+      border-left-color: #ffc107;
+    }
+    .post-ad-list a {
+      color: #0d6efd;
+    }
+    .post-ad-list a:hover {
+      color: #0a58ca;
+    }
+    .post-ad-list strong {
+      color: #222;
+    }
+    .post-ad-list code {
+      background-color: #e9ecef;
+      color: #6610f2;
+    }
   }
 </style>
 
@@ -62,14 +137,14 @@
   <ul class="post-ad-list">
     <li>
       <strong>1. 币安 (Binance)</strong> - 全球头部加密货币交易平台<br>
-      新手入门首选，通过我的专属邀请链接注册，可享 <strong>现货/合约手续费永久返佣减免</strong>。<br>
-      👉 专属邀请链接：<a href="https://downbian.openenet.cn/" target="_blank" rel="noopener">点击下载币安APP</a>
+      新手入门首选，通过专属邀请链接注册享 <strong>现货/合约返佣20%+博主不定期补给福利</strong>。<br>
+      👉 币安APP下载：<a href="https://downbian.openenet.cn/" target="_blank" rel="noopener noreferrer">点击下载（国内可访问）</a>
     </li>
     <li>
       <strong>2. 配套开发/资产工具</strong><br>
-      ✅ <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener">雨云高性价比云服务器</a>（IoT上云/博客部署首选）<br>
-      ✅ <a href="https://onekey.so/r/ZH8DCL" target="_blank" rel="noopener">OneKey硬件冷钱包</a>（加密资产安全必备，折扣码：<code>ZH8DCL</code>）<br>
-      ✅ <a href="https://www.kryptex.com/?ref=0234fc58" target="_blank" rel="noopener">Kryptex闲置算力一键挖矿</a>
+      ✅ <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer">雨云高性价比云服务器</a>（IoT上云/博客部署首选）<br>
+      ✅ <a href="https://onekey.so/r/ZH8DCL" target="_blank" rel="noopener noreferrer">OneKey硬件冷钱包</a>（加密资产安全必备，折扣码：<code>ZH8DCL</code>）<br>
+      ✅ <a href="https://www.kryptex.com/?ref=0234fc58" target="_blank" rel="noopener noreferrer">Kryptex闲置算力一键挖矿</a>
     </li>
   </ul>
 </div>
