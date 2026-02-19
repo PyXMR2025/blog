@@ -1,39 +1,54 @@
-<!-- the post-ad.njk -->
 <style>
-  /* 简单加个样式，和正文区分开*/
+  /* 适配深色主题的广告模块样式 */
   .post-ad-section {
-    margin-top: 40px;
+    margin-top: 30px;
     padding-top: 20px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #444; /* 深灰色边框，适配深色背景 */
     font-size: 0.95em;
+    color: #ddd; /* 浅色文字 */
   }
   .post-ad-section h3 {
     font-size: 1.1em;
     margin-bottom: 15px;
-    color: #333;
+    color: #eee; /* 更亮的标题色 */
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   .post-ad-warning {
     font-size: 0.85em;
-    color: #888;
+    color: #ddd;
     margin-bottom: 15px;
-    padding: 8px;
-    background-color: #f9f9f9;
-    border-left: 3px solid #ff9800;
+    padding: 10px 12px;
+    background-color: #3a3a3a; /* 深色警告框背景 */
+    border-left: 3px solid #ff9800; /* 保留橙色警示条 */
+    border-radius: 4px;
   }
   .post-ad-list {
     list-style: none;
     padding: 0;
   }
   .post-ad-list li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    line-height: 1.6;
   }
   .post-ad-list a {
-    color: #0066cc;
+    color: #58a6ff; /* GitHub 风格的蓝色链接，适配深色 */
     text-decoration: none;
     font-weight: 500;
   }
   .post-ad-list a:hover {
     text-decoration: underline;
+  }
+  .post-ad-list strong {
+    color: #eee; /* 强调文字更亮 */
+  }
+  .post-ad-list code {
+    background-color: #2d2d2d;
+    color: #d2a8ff;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 0.9em;
   }
 </style>
 
