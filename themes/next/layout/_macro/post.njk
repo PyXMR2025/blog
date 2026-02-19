@@ -104,6 +104,8 @@
         <div class="post-eof"></div>
       {% else %}
         {{- next_inject('postBodyEnd') }}
+
+        {% include 'themes/next/layout/_partials/post-ad.njk' %}
         
         {%- if post.reward_settings.enable %}
           {{ partial('_partials/post/post-reward.njk') }}
