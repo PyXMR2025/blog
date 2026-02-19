@@ -285,8 +285,6 @@ reward_settings:
   animation: true
 
 reward:
-  wechatpay: /img/reward/wxp.png
-  alipay: /img/reward/alp.png
   #paypal: /images/paypal.png
   bitcoin: /img/reward/btc.png
   ethereum: /img/reward/eth.png
