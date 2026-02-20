@@ -9,8 +9,6 @@ description: 你好，我是Jackie，一名热爱技术的中国学生。这里�
 category: 散文杂事
 ---
 
-# Hello World
-
 ## 我的第一篇博文：Hello World
 
 你好，我是 Jackie。一名热爱技术的中国学生，专注分享**区块链、智能合约、以太坊、CI/CD、开源项目、开发板、嵌入式、业余无线电以及 IT 基础设施**的深度解析与实践笔记。
