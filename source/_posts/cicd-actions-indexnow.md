@@ -1,5 +1,5 @@
 ---
-title: CI/CD实践：用GitHub Actions实现博客内容自动推送IndexNow
+title: GitHub Actions 实现博客自动推送 IndexNow · 搜索引擎快速收录教程
 date: 2026-2-18 16:28:19
 updated: 2026-2-18 16:28:19
 tags: 

@@ -1,5 +1,5 @@
 ---
-title: 区块链实践：在Windows平台下使用安装使用Monero GUI钱包
+title: Monero GUI 钱包安装使用全教程 · Windows 门罗币钱包新手入门
 date: 2026-2-7 18:25:07
 updated: 2026-2-7 18:25:07
 tags: 
