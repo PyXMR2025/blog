@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- 基础头部公共组件（缓存控制） -->
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/16.png">
+  <link rel="mask-icon" href="/img/favicon/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jackie.openenet.cn","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":true,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":false,"lazyload":true,"nav":{"utterances":{"text":"Utterances","order":-1}},"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="本文教你用纯JS+CSS实现网站3D动态灯笼特效，无第三方库依赖，自带自然摆动、自转发光、流苏摇曳效果，支持自定义文字、移动端响应式适配，Hexo、Hugo、WordPress等所有博客均可一键集成，轻松给网站增添新年氛围感。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS&#x2F;CSS 实现 3D 动态灯笼特效 · 博客网站新年美化教程">
+<meta property="og:url" content="https://jackie.openenet.cn/denglong-js/index.html">
+<meta property="og:site_name" content="Jackie&#39;s Blog">
+<meta property="og:description" content="本文教你用纯JS+CSS实现网站3D动态灯笼特效，无第三方库依赖，自带自然摆动、自转发光、流苏摇曳效果，支持自定义文字、移动端响应式适配，Hexo、Hugo、WordPress等所有博客均可一键集成，轻松给网站增添新年氛围感。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jackie.openenet.cn/img/denglong-js/1.png">
+<meta property="article:published_time" content="2026-02-10T17:16:29.000Z">
+<meta property="article:modified_time" content="2026-02-10T17:16:29.000Z">
+<meta property="article:author" content="Jackie">
+<meta property="article:tag" content="3D灯笼效果">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="代码实现">
+<meta property="article:tag" content="前端开发">
+<meta property="article:tag" content="前端特效">
+<meta property="article:tag" content="博客优化">
+<meta property="article:tag" content="新年特效">
+<meta property="article:tag" content="网站美化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jackie.openenet.cn/img/denglong-js/1.png">
+
+
+<link rel="canonical" href="https://jackie.openenet.cn/denglong-js/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://jackie.openenet.cn/denglong-js/","path":"denglong-js/","title":"JS/CSS 实现 3D 动态灯笼特效 · 博客网站新年美化教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<!-- 页面标题（模板块） -->
+  <title>JS/CSS 实现 3D 动态灯笼特效 · 博客网站新年美化教程 | Jackie's Blog</title>
+
+  <!-- 第三方统计/分析脚本（缓存控制） -->
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <!-- 核心脚本与第三方集成（缓存控制） -->
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://s4.zstatic.net/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://s4.zstatic.net/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://s4.zstatic.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+  <script class="next-config" data-name="wavedrom" type="application/json">{"enable":true,"js":{"url":"https://s4.zstatic.net/ajax/libs/wavedrom/3.5.0/wavedrom.min.js","integrity":"sha256-INLAoJc6quTNfiMWkGZniYO2cxE8mHpddnLow1m6RFs="}}</script>
+  <script class="next-config" data-name="wavedrom_skin" type="application/json">{"enable":true,"js":{"url":"https://s4.zstatic.net/ajax/libs/wavedrom/3.5.0/skins/default.js","integrity":"sha256-fduc/Zszk5ezWws2uInY/ALWVmIrmV6VTgXbsYSReFI="}}</script>
+  <script src="/js/third-party/tags/wavedrom.js" defer></script>
+
+
+
+
+  
+  <!-- 数学公式与快速链接组件 -->
+
+  <script src="https://s4.zstatic.net/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://jackie.openenet.cn/denglong-js/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
+<!-- 框架注入的头部内容 -->
+
+  <!-- 无JS fallback样式 -->
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+
+  <meta name="robots" content="index,follow">
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "02045fccf216471184e81448797b3566"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+  <!-- Vercel Insights -->
+  <script defer src="/_vercel/insights/script.js"></script>
+  
+  <!-- 灯笼 -->
+  <script defer src="/third-part/js/lantern.js"></script>
+
+  <!-- 站点验证 Meta 标签 -->
+  <meta name="baidu-site-verification" content="codeva-FuIvtGJoyJ" />
+  <meta name="360-site-verification" content="0b6524e504a2c1865c05f4b983107d7c" />
+  <meta name="yandex-verification" content="8c5995dc66b40cd5" />
+  <meta name="msvalidate.01" content="94CC12F9EBDBD5361337329096B6444A" />
+
+  <!-- 资源预加载与站点图标 -->
+  <link rel="prefetch" as="image" href="https://boringbay.com/api/badge/jackie.openenet.cn">
+  <link rel="icon" href="https://jackie.openenet.cn/favicon.ico" type="image/x-icon">
+
+  <!-- 运行时长统计样式 -->
+  <style>
+    /* 运行时长数字高亮样式 */
+    .uptime-num {
+      color: #e63946;
+      font-weight: bold;
+    }
+    /* 页脚运行时长行样式 */
+    .uptime-row {
+      margin: 8px 0;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+<link rel="alternate" href="/atom.xml" title="Jackie's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+<body 
+  itemscope 
+  itemtype="http://schema.org/WebPage"
+   class="use-motion"
+>
+  <!-- 顶部装饰条 -->
+  <div class="headband"></div>
+
+  <!-- 页面主体 -->
+  <main class="main">
+    <div class="column">
+      <!-- 页面头部 -->
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jackie's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索区块链、自动化与开源技术</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-友链"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+      
+      <!-- 侧边栏（可配置） -->
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#3D%E5%8A%A8%E6%80%81%E7%81%AF%E7%AC%BC%E7%89%B9%E6%95%88-%C2%B7-%E5%8D%9A%E5%AE%A2%E7%BE%8E%E5%8C%96JS-CSS%E4%BB%A3%E7%A0%81-%C2%B7-%E7%BD%91%E7%AB%99%E6%96%B0%E5%B9%B4%E5%89%8D%E7%AB%AF%E6%8F%92%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">3D动态灯笼特效 · 博客美化JS&#x2F;CSS代码 · 网站新年前端插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%80%9D%E8%B7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">代码思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E6%8B%86%E5%88%86%EF%BC%88%E7%BB%84%E4%BB%B6%E5%8C%96%E6%80%9D%E6%83%B3%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">结构拆分（组件化思想）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F%E8%AE%BE%E8%AE%A1%EF%BC%883D-%E5%8A%A8%E7%94%BB%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">样式设计（3D+动画）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%81%B5%E6%B4%BB%E6%89%A9%E5%B1%95"><span class="nav-number">1.1.3.</span> <span class="nav-text">灵活扩展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%95%88%E6%9E%9C"><span class="nav-number">1.2.</span> <span class="nav-text">代码效果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E8%A7%89%E6%95%88%E6%9E%9C"><span class="nav-number">1.2.1.</span> <span class="nav-text">视觉效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92%E6%95%88%E6%9E%9C"><span class="nav-number">1.2.2.</span> <span class="nav-text">交互效果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.3.</span> <span class="nav-text">代码实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E5%8F%AF%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">完整可运行代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%EF%BC%88%E9%9B%B6%E9%85%8D%E7%BD%AE%EF%BC%89"><span class="nav-number">1.4.1.</span> <span class="nav-text">基础使用（零配置）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%81%AF%E7%AC%BC%E6%96%87%E5%AD%97"><span class="nav-number">1.4.2.</span> <span class="nav-text">自定义灯笼文字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E7%81%AF%E7%AC%BC%E6%A0%B7%E5%BC%8F-%E5%8A%A8%E7%94%BB"><span class="nav-number">1.4.3.</span> <span class="nav-text">调整灯笼样式&#x2F;动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.4.4.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E4%B8%BB%E8%A6%81%E8%A7%A3%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">代码主要解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F%E7%AE%A1%E7%90%86%EF%BC%88LANTERN-CONSTANTS%EF%BC%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">常量管理（LANTERN_CONSTANTS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83DOM%E5%88%9B%E5%BB%BA%E9%80%BB%E8%BE%91"><span class="nav-number">1.5.2.</span> <span class="nav-text">核心DOM创建逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS3-3D%E6%A0%B8%E5%BF%83"><span class="nav-number">1.5.3.</span> <span class="nav-text">CSS3 3D核心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E7%94%BB%E4%BC%98%E5%8C%96"><span class="nav-number">1.5.4.</span> <span class="nav-text">动画优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E5%BC%8F%E4%B8%8E%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-number">1.5.5.</span> <span class="nav-text">响应式与兼容性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jackie</p>
+  <div class="site-description" itemprop="description">这里是 Jackie 的个人博客，一名热爱技术的中国学生。专注分享区块链、智能合约、以太坊、CI/CD、开源项目、开发板、嵌入式、业余无线电以及 IT 基础设施的深度解析与实践笔记。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">97</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/PyXMR2025" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;PyXMR2025" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:pyxmr2025@openenet.cn" title="E-Mail → mailto:pyxmr2025@openenet.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://s4.zstatic.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.blogsclub.org/" title="https:&#x2F;&#x2F;www.blogsclub.org&#x2F;" rel="noopener" target="_blank">BlogsClub</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.perass.com/" title="https:&#x2F;&#x2F;www.perass.com&#x2F;" rel="noopener" target="_blank">博客之家</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://bf.zzxworld.com/" title="https:&#x2F;&#x2F;bf.zzxworld.com&#x2F;" rel="noopener" target="_blank">BlogFinder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blogscn.fun/" title="https:&#x2F;&#x2F;blogscn.fun&#x2F;" rel="noopener" target="_blank">BLOGS·CN</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://bokehub.com/home/" title="https:&#x2F;&#x2F;bokehub.com&#x2F;home&#x2F;" rel="noopener" target="_blank">博客中心</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://boringbay.com/" title="https:&#x2F;&#x2F;boringbay.com&#x2F;" rel="noopener" target="_blank">无聊湾</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+      <!-- 子菜单 -->
+<!-- 页面核心内容（模板块） -->
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jackie.openenet.cn/denglong-js/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jackie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jackie's Blog">
+      <meta itemprop="description" content="这里是 Jackie 的个人博客，一名热爱技术的中国学生。专注分享区块链、智能合约、以太坊、CI/CD、开源项目、开发板、嵌入式、业余无线电以及 IT 基础设施的深度解析与实践笔记。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JS&#x2F;CSS 实现 3D 动态灯笼特效 · 博客网站新年美化教程 | Jackie's Blog">
+      <meta itemprop="description" content="本文教你用纯JS+CSS实现网站3D动态灯笼特效，无第三方库依赖，自带自然摆动、自转发光、流苏摇曳效果，支持自定义文字、移动端响应式适配，Hexo、Hugo、WordPress等所有博客均可一键集成，轻松给网站增添新年氛围感。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS/CSS 实现 3D 动态灯笼特效 · 博客网站新年美化教程<a href="https://github.com/PyXMR2025/blog/tree/main/source/_posts/denglong-js.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-11 01:16:29" itemprop="dateCreated datePublished" datetime="2026-02-11T01:16:29+08:00">2026-02-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">前端开发</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>17k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>16 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">本文教你用纯JS+CSS实现网站3D动态灯笼特效，无第三方库依赖，自带自然摆动、自转发光、流苏摇曳效果，支持自定义文字、移动端响应式适配，Hexo、Hugo、WordPress等所有博客均可一键集成，轻松给网站增添新年氛围感。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="3D动态灯笼特效-·-博客美化JS-CSS代码-·-网站新年前端插件"><a href="#3D动态灯笼特效-·-博客美化JS-CSS代码-·-网站新年前端插件" class="headerlink" title="3D动态灯笼特效 · 博客美化JS&#x2F;CSS代码 · 网站新年前端插件"></a>3D动态灯笼特效 · 博客美化JS&#x2F;CSS代码 · 网站新年前端插件</h1><p>临近新年，给博客&#x2F;网站添一抹年味是很多站长的小小心愿。这篇文章将带你实现一款<strong>纯JS+CSS打造的3D动态灯笼特效</strong>，无需依赖任何第三方库，直接引入即可使用。这款灯笼具备自然摆动、3D自转、灯光闪烁、流苏摇曳等动态效果，支持自定义文字（比如“新年快乐”“恭喜发财”），还做了移动端响应式适配，无论是Hexo、WordPress还是自建博客，都能轻松集成，让你的网站在新年里氛围感拉满。</p>
+<p>除了新年氛围感美化，博客的搜索引擎收录与排名也是站长的核心需求，我写了<a href="/cicd-actions-indexnow/">《用 GitHub Actions 实现博客内容自动推送 IndexNow》</a>一文，能实现博客发布新内容即自动推送到各大搜索引擎，快速提升收录效率，新年新文章也能快速被搜索引擎抓取。</p>
+<blockquote>
+<p>注意：本文章是博主在阅读 <a target="_blank" rel="noopener" href="https://blog.ybyq.wang/archives/1681.html">春节到了，给typecho博客网站添加两对3D红灯笼</a> 后参考编写的，代码的部分思路来自于上文，读者可以点击上述链接查看。</p>
+</blockquote>
+<p>核心特点：</p>
+<ul>
+<li>🎨 纯原生实现：无jQuery&#x2F;第三方库依赖，轻量化</li>
+<li>🌟 3D视觉效果：CSS3 3D变换+渐变打造立体灯笼</li>
+<li>🎢 多维度动画：摆动+自转+灯光闪烁+流苏摇曳，效果更自然</li>
+<li>✨ 自定义能力：支持URL参数修改灯笼文字，常量统一管理样式</li>
+<li>📱 响应式适配：移动端自动缩放，适配不同屏幕尺寸</li>
+<li>⚡ 性能优化：使用<code>will-change</code>、<code>backface-visibility</code>等提升动画流畅度</li>
+</ul>
+<blockquote>
+<p>想要让你的博客访问速度更快、3D 特效加载更流畅，一款稳定、高性价比的国内云服务器是关键。我自己的部分服务就是部署在雨云云服务器，国内高防节点访问延迟低，静态资源加载速度快，性价比拉满，支持一键部署 Hexo、Hugo、WordPress 等主流博客程序（基于K8S），对新手站长非常友好。新人通过我的专属推广链接注册，可以免费领<strong>首月5折</strong>+<strong>博主不定期补给福利</strong>，哪怕是学生党也能轻松负担！<br><a target="_blank" rel="noopener" href="https://www.rainyun.com/jackie_">雨云服务器</a>。</p>
+</blockquote>
+<blockquote>
+<p>3D灯笼效果（Desktop）<br><img data-src="/img/denglong-js/1.png" alt="3D灯笼效果（Desktop）"></p>
+</blockquote>
+<h2 id="代码思路"><a href="#代码思路" class="headerlink" title="代码思路"></a>代码思路</h2><p>整个3D灯笼的实现分为<strong>结构层</strong>和<strong>样式层</strong>两大核心，遵循“组件化拆分、常量统一管理、动画分层控制”的思路：</p>
+<h3 id="结构拆分（组件化思想）"><a href="#结构拆分（组件化思想）" class="headerlink" title="结构拆分（组件化思想）"></a>结构拆分（组件化思想）</h3><p>将灯笼拆分为可复用的独立部件，通过JS动态创建DOM结构：</p>
+<ul>
+<li>容器层（deng-container）：统一管理所有灯笼，控制整体定位</li>
+<li>灯笼盒子（deng-box）：单个灯笼的外层，控制位置和动画延迟</li>
+<li>3D容器（lantern-3d）：承载3D变换，负责灯笼整体摆动</li>
+<li>灯笼部件：吊线、上下盖子、主体（瓣片+光源）、文字、流苏（珠子+中国结+穗子）</li>
+</ul>
+<h3 id="样式设计（3D-动画）"><a href="#样式设计（3D-动画）" class="headerlink" title="样式设计（3D+动画）"></a>样式设计（3D+动画）</h3><ul>
+<li>3D基础：通过<code>perspective</code>（透视）、<code>transform-style: preserve-3d</code>开启3D空间</li>
+<li>立体效果：使用<code>radial-gradient</code>（径向渐变）制作灯笼瓣片的通透感，<code>linear-gradient</code>制作金色盖子</li>
+<li>动画分层：不同动效拆分到不同元素，避免动画冲突：<ul>
+<li>3D容器：负责“自然摆动”动画（rotateX&#x2F;rotateZ）</li>
+<li>灯笼主体：负责“自转”动画（rotateY）</li>
+<li>光源：负责“闪烁”动画（opacity+scale）</li>
+<li>流苏：负责“摇曳”动画（独立的摆动曲线）</li>
+</ul>
+</li>
+</ul>
+<h3 id="灵活扩展"><a href="#灵活扩展" class="headerlink" title="灵活扩展"></a>灵活扩展</h3><ul>
+<li>常量抽离：所有样式参数（尺寸、颜色、动画时长）集中在<code>LANTERN_CONSTANTS</code>，方便修改</li>
+<li>URL参数解析：支持通过脚本URL传递<code>text</code>参数自定义灯笼文字（比如<code>lantern.js?text=恭喜发财</code>）</li>
+<li>容错处理：解析URL参数时增加try-catch，避免参数错误导致整个特效失效</li>
+<li>响应式：通过媒体查询适配移动端，自动缩放灯笼尺寸和位置</li>
+</ul>
+<h2 id="代码效果"><a href="#代码效果" class="headerlink" title="代码效果"></a>代码效果</h2><h3 id="视觉效果"><a href="#视觉效果" class="headerlink" title="视觉效果"></a>视觉效果</h3><ul>
+<li>4个灯笼分布在页面四角（可自定义位置），每个灯笼有不同的动画延迟，摆动更错落有致</li>
+<li>灯笼主体360°缓慢自转，瓣片的渐变效果呈现出3D立体质感</li>
+<li>内部光源持续闪烁，模拟灯笼内烛光的效果，有明暗和大小变化</li>
+<li>灯笼整体自然摆动（X&#x2F;Z轴旋转），流苏跟随摆动，还原真实灯笼的物理特性</li>
+<li>金色文字叠加在灯笼上，带发光阴影，视觉层级更突出</li>
+<li>移动端自动缩小灯笼尺寸，调整位置，避免遮挡内容</li>
+</ul>
+<h3 id="交互效果"><a href="#交互效果" class="headerlink" title="交互效果"></a>交互效果</h3><ul>
+<li>灯笼区域不遮挡页面点击（<code>pointer-events: none</code>），不影响网站正常使用</li>
+<li>无需手动操作，页面加载完成后自动渲染，零配置即可使用</li>
+</ul>
+<h2 id="代码实践"><a href="#代码实践" class="headerlink" title="代码实践"></a>代码实践</h2><h3 id="完整可运行代码"><a href="#完整可运行代码" class="headerlink" title="完整可运行代码"></a>完整可运行代码</h3><p>将以下代码保存为<code>lantern.js</code>文件（建议放在博客的<code>js</code>目录下），代码可直接使用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 提取常量：便于统一修改和维护</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">LANTERN_CONSTANTS</span> = &#123;</span><br><span class="line">  <span class="attr">CONTAINER_CLASS</span>: <span class="string">&#x27;deng-container&#x27;</span>,</span><br><span class="line">  <span class="attr">BOX_BASE_CLASS</span>: <span class="string">&#x27;deng-box&#x27;</span>,</span><br><span class="line">  <span class="attr">LANTERN_3D_CLASS</span>: <span class="string">&#x27;lantern-3d&#x27;</span>,</span><br><span class="line">  <span class="attr">DEFAULT_TEXTS</span>: [<span class="string">&#x27;新&#x27;</span>, <span class="string">&#x27;年&#x27;</span>, <span class="string">&#x27;快&#x27;</span>, <span class="string">&#x27;乐&#x27;</span>], <span class="comment">// 默认灯笼文字</span></span><br><span class="line">  <span class="attr">RIB_COUNT</span>: <span class="number">10</span>, <span class="comment">// 灯笼瓣片数量（建议偶数，360/数量为整数）</span></span><br><span class="line">  <span class="attr">ANIMATION_DURATIONS</span>: &#123;</span><br><span class="line">    <span class="attr">swing</span>: <span class="number">5</span>, <span class="comment">// 摆动动画时长(s)，值越大摆动越慢</span></span><br><span class="line">    <span class="attr">rotate</span>: <span class="number">18</span>, <span class="comment">// 自转动画时长(s)</span></span><br><span class="line">    <span class="attr">flicker</span>: <span class="number">3</span>, <span class="comment">// 灯光闪烁时长(s)</span></span><br><span class="line">    <span class="attr">tasselSwing</span>: <span class="number">5</span> <span class="comment">// 流苏摆动时长(s)</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">COLORS</span>: &#123;</span><br><span class="line">    <span class="attr">gold</span>: <span class="string">&#x27;#ffca28&#x27;</span>, <span class="comment">// 金色主色</span></span><br><span class="line">    <span class="attr">goldGradient</span>: [<span class="string">&#x27;#ffd700&#x27;</span>, <span class="string">&#x27;#ffca28&#x27;</span>, <span class="string">&#x27;#b8860b&#x27;</span>], <span class="comment">// 盖子渐变</span></span><br><span class="line">    <span class="attr">red</span>: <span class="string">&#x27;#d8000f&#x27;</span>, <span class="comment">// 灯笼红色</span></span><br><span class="line">    <span class="attr">light</span>: <span class="string">&#x27;#ffeb3b&#x27;</span> <span class="comment">// 灯光颜色</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">SIZES</span>: &#123;</span><br><span class="line">    <span class="attr">lanternWidth</span>: <span class="number">120</span>, <span class="comment">// 灯笼宽度</span></span><br><span class="line">    <span class="attr">lanternHeight</span>: <span class="number">100</span>, <span class="comment">// 灯笼高度</span></span><br><span class="line">    <span class="attr">capWidth</span>: <span class="number">50</span>, <span class="comment">// 盖子宽度</span></span><br><span class="line">    <span class="attr">capHeight</span>: <span class="number">12</span>, <span class="comment">// 盖子高度</span></span><br><span class="line">    <span class="attr">lightSize</span>: <span class="number">60</span>, <span class="comment">// 光源尺寸</span></span><br><span class="line">    <span class="attr">threadHeight</span>: <span class="number">70</span> <span class="comment">// 流苏穗子高度</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建灯笼容器（主入口）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createDengContainer</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> container = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">  container.<span class="property">className</span> = <span class="variable constant_">LANTERN_CONSTANTS</span>.<span class="property">CONTAINER_CLASS</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 容错处理URL参数解析：避免无参数时报错</span></span><br><span class="line">  <span class="keyword">const</span> customText = <span class="title function_">getCustomTextFromUrl</span>();</span><br><span class="line">  <span class="keyword">const</span> texts = customText ? customText.<span class="title function_">split</span>(<span class="string">&#x27;&#x27;</span>) : <span class="variable constant_">LANTERN_CONSTANTS</span>.<span class="property">DEFAULT_TEXTS</span>;</span><br><span class="line">  <span class="comment">// 限制文字数量（最多4个，对应4个灯笼）</span></span><br><span class="line">  <span class="keyword">const</span> validTexts = texts.<span class="property">length</span> &gt; <span class="number">4</span> ? texts.<span class="title function_">slice</span>(<span class="number">0</span>, <span class="number">4</span>) : texts;</span><br><span class="line">  <span class="comment">// 不足4个时补默认文字</span></span><br><span class="line">  <span class="keyword">while</span> (validTexts.<span class="property">length</span> &lt; <span class="number">4</span>) &#123;</span><br><span class="line">    validTexts.<span class="title function_">push</span>(<span class="variable constant_">LANTERN_CONSTANTS</span>.<span class="property">DEFAULT_TEXTS</span>[validTexts.<span class="property">length</span>]);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  validTexts.<span class="title function_">forEach</span>(<span class="function">(<span class="params">text, index</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> box = <span class="title function_">createLanternBox</span>(index);</span><br><span class="line">    <span class="keyword">const</span> lantern3D = <span class="title function_">createLantern3dWrapper</span>();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 组装灯笼部件</span></span><br><span class="line">    lantern3D.<span class="title function_">appendChild</span>(<span class="title function_">createHangingLine</span>());</span><br><span class="line">    lantern3D.<span class="title function_">appendChild</span>(<span class="title function_">createLanternCap</span>(<span class="string">&#x27;top&#x27;</span>));</span><br><span class="line">    lantern3D.<span class="title function_">appendChild</span>(<span class="title function_">createLanternCap</span>(<span class="string">&#x27;bottom&#x27;</span>));</span><br><span class="line">    lantern3D.<span class="title function_">appendChild</span>(<span class="title function_">createLanternBody</span>());</span><br><span class="line">    lantern3D.<span class="title function_">appendChild</span>(<span class="title function_">createLanternText</span>(text));</span><br><span class="line">    lantern3D.<span class="title function_">appendChild</span>(<span class="title function_">createLanternTassel</span>());</span><br><span class="line"></span><br><span class="line">    box.<span class="title function_">appendChild</span>(lantern3D);</span><br><span class="line">    container.<span class="title function_">appendChild</span>(box);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(container);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 从当前脚本URL获取自定义文字参数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">string|null</span>&#125; 自定义文字或null</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getCustomTextFromUrl</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> scriptSrc = <span class="variable language_">document</span>.<span class="property">currentScript</span>?.<span class="property">src</span> || <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">const</span> [, searchParams] = scriptSrc.<span class="title function_">split</span>(<span class="string">&#x27;?&#x27;</span>);</span><br><span class="line">    <span class="keyword">if</span> (!searchParams) <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">const</span> urlParams = <span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(searchParams);</span><br><span class="line">    <span class="keyword">return</span> urlParams.<span class="title function_">get</span>(<span class="string">&#x27;text&#x27;</span>)?.<span class="title function_">trim</span>() || <span class="literal">null</span>;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">&#x27;解析灯笼文字参数失败，使用默认文字:&#x27;</span>, e);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建单个灯笼的外层盒子（控制位置和延迟）</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; index 灯笼索引</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">HTMLElement</span>&#125; 灯笼盒子元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createLanternBox</span>(<span class="params">index</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> box = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">  box.<span class="property">className</span> = <span class="string">`<span class="subst">$&#123;LANTERN_CONSTANTS.BOX_BASE_CLASS&#125;</span> <span class="subst">$&#123;LANTERN_CONSTANTS.BOX_BASE_CLASS&#125;</span><span class="subst">$&#123;index + <span class="number">1</span>&#125;</span>`</span>;</span><br><span class="line">  <span class="comment">// 为每个灯笼设置不同的动画延迟，效果更自然</span></span><br><span class="line">  box.<span class="property">style</span>.<span class="property">animationDelay</span> = <span class="string">`<span class="subst">$&#123;index * <span class="number">0.5</span>&#125;</span>s`</span>;</span><br><span class="line">  <span class="keyword">return</span> box;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建灯笼3D容器（负责摆动）</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">HTMLElement</span>&#125; 3D容器元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createLantern3dWrapper</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> lantern3D = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">  lantern3D.<span class="property">className</span> = <span class="variable constant_">LANTERN_CONSTANTS</span>.<span class="property">LANTERN_3D_CLASS</span>;</span><br><span class="line">  <span class="keyword">return</span> lantern3D;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建灯笼吊线</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">HTMLElement</span>&#125; 吊线元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createHangingLine</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> xian = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">  xian.<span class="property">className</span> = <span class="string">&#x27;xian&#x27;</span>;</span><br><span class="line">  <span class="keyword">return</span> xian;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建灯笼盖子（顶部/底部）</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; position &#x27;top&#x27; | &#x27;bottom&#x27;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">HTMLElement</span>&#125; 盖子元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createLanternCap</span>(<span class="params">position</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> cap = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">  cap.<span class="property">className</span> = <span class="string">`lantern-cap-<span class="subst">$&#123;position&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 仅顶部盖子添加提环</span></span><br><span class="line">  <span class="keyword">if</span> (position === <span class="string">&#x27;top&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> capLoop = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">    capLoop.<span class="property">className</span> = <span class="string">&#x27;cap-loop&#x27;</span>;</span><br><span class="line">    cap.<span class="title function_">appendChild</span>(capLoop);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> cap;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建灯笼主体（带瓣片和光源，负责自转）</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">HTMLElement</span>&#125; 灯笼主体元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createLanternBody</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> lanternBody = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">  lanternBody.<span class="property">className</span> = <span class="string">&#x27;lantern-body&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 添加内部光源</span></span><br><span class="line">  <span class="keyword">const</span> lanternLight = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">  lanternLight.<span class="property">className</span> = <span class="string">&#x27;lantern-light&#x27;</span>;</span><br><span class="line">  lanternBody.<span class="title function_">appendChild</span>(lanternLight);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建瓣片（均匀分布）</span></span><br><span class="line">  <span class="keyword">const</span> ribAngle = <span class="number">360</span> / <span class="variable constant_">LANTERN_CONSTANTS</span>.<span class="property">RIB_COUNT</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="variable constant_">LANTERN_CONSTANTS</span>.<span class="property">RIB_COUNT</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> rib = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">    rib.<span class="property">className</span> = <span class="string">&#x27;rib&#x27;</span>;</span><br><span class="line">    rib.<span class="property">style</span>.<span class="property">transform</span> = <span class="string">`rotateY(<span class="subst">$&#123;i * ribAngle&#125;</span>deg)`</span>;</span><br><span class="line">    lanternBody.<span class="title function_">appendChild</span>(rib);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> lanternBody;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建灯笼文字</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; text 要显示的文字</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">HTMLElement</span>&#125; 文字元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createLanternText</span>(<span class="params">text</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> lanternText = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">  lanternText.<span class="property">className</span> = <span class="string">&#x27;deng-t&#x27;</span>;</span><br><span class="line">  lanternText.<span class="property">textContent</span> = text;</span><br><span class="line">  <span class="keyword">return</span> lanternText;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建灯笼流苏（替换innerHTML，提升性能和安全性）</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> &#123;<span class="type">HTMLElement</span>&#125; 流苏元素</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createLanternTassel</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> tassel = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">  tassel.<span class="property">className</span> = <span class="string">&#x27;tassel-total&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 珠子</span></span><br><span class="line">  <span class="keyword">const</span> bead = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">  bead.<span class="property">className</span> = <span class="string">&#x27;tassel-bead&#x27;</span>;</span><br><span class="line">  tassel.<span class="title function_">appendChild</span>(bead);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 扁平中国结</span></span><br><span class="line">  <span class="keyword">const</span> knot = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">  knot.<span class="property">className</span> = <span class="string">&#x27;tassel-knot-flat&#x27;</span>;</span><br><span class="line">  tassel.<span class="title function_">appendChild</span>(knot);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 流苏穗子</span></span><br><span class="line">  <span class="keyword">const</span> threads = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span><br><span class="line">  threads.<span class="property">className</span> = <span class="string">&#x27;tassel-threads&#x27;</span>;</span><br><span class="line">  tassel.<span class="title function_">appendChild</span>(threads);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> tassel;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 添加灯笼样式（优化性能和兼容性）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">addStyles</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> style = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;style&#x27;</span>);</span><br><span class="line">  style.<span class="property">type</span> = <span class="string">&#x27;text/css&#x27;</span>;</span><br><span class="line">  <span class="comment">// 使用模板字符串拼接样式，结合常量保证样式统一</span></span><br><span class="line">  style.<span class="property">textContent</span> = <span class="string">`</span></span><br><span class="line"><span class="string">    .deng-container &#123;</span></span><br><span class="line"><span class="string">      position: fixed; </span></span><br><span class="line"><span class="string">      top: 40px; </span></span><br><span class="line"><span class="string">      left: 0; </span></span><br><span class="line"><span class="string">      width: 100%; </span></span><br><span class="line"><span class="string">      height: 0;</span></span><br><span class="line"><span class="string">      z-index: 99999; </span></span><br><span class="line"><span class="string">      pointer-events: none; /* 不遮挡页面点击 */</span></span><br><span class="line"><span class="string">      perspective: 800px; /* 3D透视距离 */</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    .deng-box &#123; </span></span><br><span class="line"><span class="string">      position: fixed; </span></span><br><span class="line"><span class="string">      z-index: 999; </span></span><br><span class="line"><span class="string">      will-change: transform; /* 告诉浏览器提前优化动画 */</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    .deng-box1 &#123; left: 40px; top: -10px; &#125;</span></span><br><span class="line"><span class="string">    .deng-box2 &#123; left: 180px; top: 30px; &#125;</span></span><br><span class="line"><span class="string">    .deng-box3 &#123; right: 180px; top: 30px; &#125;</span></span><br><span class="line"><span class="string">    .deng-box4 &#123; right: 40px; top: -10px; &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    .xian &#123;</span></span><br><span class="line"><span class="string">      position: absolute; </span></span><br><span class="line"><span class="string">      left: <span class="subst">$&#123;LANTERN_CONSTANTS.SIZES.lanternWidth / <span class="number">2</span>&#125;</span>px; </span></span><br><span class="line"><span class="string">      width: 3px; </span></span><br><span class="line"><span class="string">      background: <span class="subst">$&#123;LANTERN_CONSTANTS.COLORS.gold&#125;</span>;</span></span><br><span class="line"><span class="string">      height: 1000px; </span></span><br><span class="line"><span class="string">      top: -1000px; </span></span><br><span class="line"><span class="string">      box-shadow: 0 0 5px rgba(255, 202, 40, 0.6); </span></span><br><span class="line"><span class="string">      z-index: 1;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    /* 容器负责整体摆动 */</span></span><br><span class="line"><span class="string">    .lantern-3d &#123;</span></span><br><span class="line"><span class="string">      position: relative; </span></span><br><span class="line"><span class="string">      width: <span class="subst">$&#123;LANTERN_CONSTANTS.SIZES.lanternWidth&#125;</span>px; </span></span><br><span class="line"><span class="string">      height: <span class="subst">$&#123;LANTERN_CONSTANTS.SIZES.lanternHeight&#125;</span>px;</span></span><br><span class="line"><span class="string">      transform-style: preserve-3d; /* 开启3D空间 */</span></span><br><span class="line"><span class="string">      transform-origin: 50% 0; /* 摆动中心点（顶部） */</span></span><br><span class="line"><span class="string">      will-change: transform; </span></span><br><span class="line"><span class="string">      animation: swingNatural <span class="subst">$&#123;LANTERN_CONSTANTS.ANIMATION_DURATIONS.swing&#125;</span>s infinite ease-in-out;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    /* 主体负责自转 */</span></span><br><span class="line"><span class="string">    .lantern-body &#123;</span></span><br><span class="line"><span class="string">      position: absolute; </span></span><br><span class="line"><span class="string">      width: 100%; </span></span><br><span class="line"><span class="string">      height: 100%;</span></span><br><span class="line"><span class="string">      transform-style: preserve-3d; </span></span><br><span class="line"><span class="string">      will-change: transform;</span></span><br><span class="line"><span class="string">      animation: rotateBody <span class="subst">$&#123;LANTERN_CONSTANTS.ANIMATION_DURATIONS.rotate&#125;</span>s infinite linear;</span></span><br><span class="line"><span class="string">      z-index: 5; /* 确保在盖子下面一点 */</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    .rib &#123;</span></span><br><span class="line"><span class="string">      position: absolute; </span></span><br><span class="line"><span class="string">      top: 0; </span></span><br><span class="line"><span class="string">      left: 0; </span></span><br><span class="line"><span class="string">      width: 100%; </span></span><br><span class="line"><span class="string">      height: 100%;</span></span><br><span class="line"><span class="string">      border-radius: 50%; </span></span><br><span class="line"><span class="string">      border: 1px solid rgba(255, 202, 40, 0.6); </span></span><br><span class="line"><span class="string">      box-sizing: border-box;</span></span><br><span class="line"><span class="string">      background: radial-gradient(circle at 50% 50%, rgba(216,0,15,0) 20%, rgba(216,0,15,0.7) 60%, rgba(216,0,15,0.95) 100%);</span></span><br><span class="line"><span class="string">      backface-visibility: visible; /* 显示背面，保证3D效果 */</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    /* 简化的、不旋转的盖子 */</span></span><br><span class="line"><span class="string">    .lantern-cap-top, .lantern-cap-bottom &#123;</span></span><br><span class="line"><span class="string">      position: absolute; </span></span><br><span class="line"><span class="string">      left: <span class="subst">$&#123;(LANTERN_CONSTANTS.SIZES.lanternWidth - LANTERN_CONSTANTS.SIZES.capWidth) / <span class="number">2</span>&#125;</span>px; </span></span><br><span class="line"><span class="string">      width: <span class="subst">$&#123;LANTERN_CONSTANTS.SIZES.capWidth&#125;</span>px; </span></span><br><span class="line"><span class="string">      height: <span class="subst">$&#123;LANTERN_CONSTANTS.SIZES.capHeight&#125;</span>px;</span></span><br><span class="line"><span class="string">      background: linear-gradient(to bottom, <span class="subst">$&#123;LANTERN_CONSTANTS.COLORS.goldGradient.join(<span class="string">&#x27;, &#x27;</span>)&#125;</span>);</span></span><br><span class="line"><span class="string">      border: 1px solid <span class="subst">$&#123;LANTERN_CONSTANTS.COLORS.gold&#125;</span>; </span></span><br><span class="line"><span class="string">      border-radius: 4px; </span></span><br><span class="line"><span class="string">      z-index: 20; /* 确保盖在旋转体上面 */</span></span><br><span class="line"><span class="string">      box-shadow: 0 2px 5px rgba(0,0,0,0.4);</span></span><br><span class="line"><span class="string">      will-change: transform;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    .lantern-cap-top &#123; </span></span><br><span class="line"><span class="string">      top: -<span class="subst">$&#123;LANTERN_CONSTANTS.SIZES.capHeight / <span class="number">2</span>&#125;</span>px; </span></span><br><span class="line"><span class="string">      border-bottom: none; </span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    .lantern-cap-bottom &#123; </span></span><br><span class="line"><span class="string">      bottom: -<span class="subst">$&#123;LANTERN_CONSTANTS.SIZES.capHeight / <span class="number">2</span>&#125;</span>px; </span></span><br><span class="line"><span class="string">      border-top: none; </span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    /* 提环 */</span></span><br><span class="line"><span class="string">    .cap-loop &#123;</span></span><br><span class="line"><span class="string">      position: absolute; </span></span><br><span class="line"><span class="string">      left: <span class="subst">$&#123;(LANTERN_CONSTANTS.SIZES.capWidth - <span class="number">14</span>) / <span class="number">2</span>&#125;</span>px; </span></span><br><span class="line"><span class="string">      top: -8px; </span></span><br><span class="line"><span class="string">      width: 14px; </span></span><br><span class="line"><span class="string">      height: 8px;</span></span><br><span class="line"><span class="string">      border: 2px solid <span class="subst">$&#123;LANTERN_CONSTANTS.COLORS.gold&#125;</span>; </span></span><br><span class="line"><span class="string">      border-bottom: none; </span></span><br><span class="line"><span class="string">      border-radius: 10px 10px 0 0;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    .lantern-light &#123;</span></span><br><span class="line"><span class="string">      position: absolute; </span></span><br><span class="line"><span class="string">      width: <span class="subst">$&#123;LANTERN_CONSTANTS.SIZES.lightSize&#125;</span>px; </span></span><br><span class="line"><span class="string">      height: <span class="subst">$&#123;LANTERN_CONSTANTS.SIZES.lightSize&#125;</span>px; </span></span><br><span class="line"><span class="string">      top: <span class="subst">$&#123;(LANTERN_CONSTANTS.SIZES.lanternHeight - LANTERN_CONSTANTS.SIZES.lightSize) / <span class="number">2</span>&#125;</span>px; </span></span><br><span class="line"><span class="string">      left: <span class="subst">$&#123;(LANTERN_CONSTANTS.SIZES.lanternWidth - LANTERN_CONSTANTS.SIZES.lightSize) / <span class="number">2</span>&#125;</span>px;</span></span><br><span class="line"><span class="string">      background: <span class="subst">$&#123;LANTERN_CONSTANTS.COLORS.light&#125;</span>; </span></span><br><span class="line"><span class="string">      border-radius: 50%; </span></span><br><span class="line"><span class="string">      filter: blur(18px); /* 模糊实现光晕效果 */</span></span><br><span class="line"><span class="string">      opacity: 0.9;</span></span><br><span class="line"><span class="string">      will-change: opacity, transform;</span></span><br><span class="line"><span class="string">      animation: flicker <span class="subst">$&#123;LANTERN_CONSTANTS.ANIMATION_DURATIONS.flicker&#125;</span>s infinite ease-in-out;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    .deng-t &#123;</span></span><br><span class="line"><span class="string">      position: absolute; </span></span><br><span class="line"><span class="string">      width: 100%; </span></span><br><span class="line"><span class="string">      height: 100%;</span></span><br><span class="line"><span class="string">      display: flex; </span></span><br><span class="line"><span class="string">      justify-content: center; </span></span><br><span class="line"><span class="string">      align-items: center;</span></span><br><span class="line"><span class="string">      font-size: 3rem; </span></span><br><span class="line"><span class="string">      color: <span class="subst">$&#123;LANTERN_CONSTANTS.COLORS.gold&#125;</span>; </span></span><br><span class="line"><span class="string">      font-weight: 700; </span></span><br><span class="line"><span class="string">      font-family: &quot;华文行楷&quot;, &quot;KaiTi&quot;, &quot;STKaiti&quot;, serif; /* 适配不同系统字体 */</span></span><br><span class="line"><span class="string">      text-shadow: 0 0 5px #ff6a00, 0 0 20px #ff0000; /* 文字发光效果 */</span></span><br><span class="line"><span class="string">      transform: translateZ(62px); /* 文字在3D空间的层级 */</span></span><br><span class="line"><span class="string">      backface-visibility: hidden; /* 隐藏背面，提升性能 */</span></span><br><span class="line"><span class="string">      -webkit-font-smoothing: antialiased; /* 文字抗锯齿 */</span></span><br><span class="line"><span class="string">      z-index: 30;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    .tassel-total &#123;</span></span><br><span class="line"><span class="string">      position: absolute; </span></span><br><span class="line"><span class="string">      top: <span class="subst">$&#123;LANTERN_CONSTANTS.SIZES.lanternHeight&#125;</span>px; </span></span><br><span class="line"><span class="string">      left: <span class="subst">$&#123;LANTERN_CONSTANTS.SIZES.lanternWidth / <span class="number">2</span>&#125;</span>px; </span></span><br><span class="line"><span class="string">      width: 0; </span></span><br><span class="line"><span class="string">      height: auto;</span></span><br><span class="line"><span class="string">      transform-style: preserve-3d; </span></span><br><span class="line"><span class="string">      will-change: transform;</span></span><br><span class="line"><span class="string">      animation: tasselSwing <span class="subst">$&#123;LANTERN_CONSTANTS.ANIMATION_DURATIONS.tasselSwing&#125;</span>s infinite ease-in-out; </span></span><br><span class="line"><span class="string">      animation-delay: 0.5s; /* 流苏摆动延迟，更自然 */</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    .tassel-bead &#123;</span></span><br><span class="line"><span class="string">      position: absolute; </span></span><br><span class="line"><span class="string">      left: -6px; </span></span><br><span class="line"><span class="string">      top: 5px; </span></span><br><span class="line"><span class="string">      width: 12px; </span></span><br><span class="line"><span class="string">      height: 12px;</span></span><br><span class="line"><span class="string">      background: radial-gradient(circle at 30% 30%, #fff, #ef5350); /* 珠子渐变 */</span></span><br><span class="line"><span class="string">      border-radius: 50%; </span></span><br><span class="line"><span class="string">      box-shadow: 0 2px 4px rgba(0,0,0,0.3); </span></span><br><span class="line"><span class="string">      z-index: 5;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    /* 扁平的中国结 */</span></span><br><span class="line"><span class="string">    .tassel-knot-flat &#123;</span></span><br><span class="line"><span class="string">      position: absolute; </span></span><br><span class="line"><span class="string">      left: -8px; </span></span><br><span class="line"><span class="string">      top: 18px; </span></span><br><span class="line"><span class="string">      width: 16px; </span></span><br><span class="line"><span class="string">      height: 16px;</span></span><br><span class="line"><span class="string">      background: <span class="subst">$&#123;LANTERN_CONSTANTS.COLORS.red&#125;</span>; </span></span><br><span class="line"><span class="string">      border: 1px solid <span class="subst">$&#123;LANTERN_CONSTANTS.COLORS.gold&#125;</span>;</span></span><br><span class="line"><span class="string">      transform: rotate(45deg); </span></span><br><span class="line"><span class="string">      box-shadow: 0 2px 5px rgba(0,0,0,0.3);</span></span><br><span class="line"><span class="string">      z-index: 4;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    .tassel-threads &#123;</span></span><br><span class="line"><span class="string">      position: absolute; </span></span><br><span class="line"><span class="string">      left: -7px; </span></span><br><span class="line"><span class="string">      top: 32px;</span></span><br><span class="line"><span class="string">      width: 14px; </span></span><br><span class="line"><span class="string">      height: <span class="subst">$&#123;LANTERN_CONSTANTS.SIZES.threadHeight&#125;</span>px;</span></span><br><span class="line"><span class="string">      background: repeating-linear-gradient(90deg, <span class="subst">$&#123;LANTERN_CONSTANTS.COLORS.red&#125;</span>, <span class="subst">$&#123;LANTERN_CONSTANTS.COLORS.red&#125;</span> 2px, #ff5252 2.5px, <span class="subst">$&#123;LANTERN_CONSTANTS.COLORS.red&#125;</span> 3px); /* 穗子纹理 */</span></span><br><span class="line"><span class="string">      border-radius: 2px 2px 5px 5px;</span></span><br><span class="line"><span class="string">      -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%); /* 渐变遮罩，穗子末端渐隐 */</span></span><br><span class="line"><span class="string">      mask-image: linear-gradient(to bottom, black 80%, transparent 100%);</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    /* 灯光闪烁动画 */</span></span><br><span class="line"><span class="string">    @keyframes flicker &#123;</span></span><br><span class="line"><span class="string">      0%, 100% &#123; opacity: 0.8; transform: scale(1); &#125;</span></span><br><span class="line"><span class="string">      50% &#123; opacity: 1; transform: scale(1.05); &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    /* 灯笼自然摆动动画 */</span></span><br><span class="line"><span class="string">    @keyframes swingNatural &#123;</span></span><br><span class="line"><span class="string">      0% &#123; transform: rotateX(-4deg) rotateZ(-2deg); &#125;</span></span><br><span class="line"><span class="string">      25% &#123; transform: rotateX(2deg) rotateZ(3deg); &#125;</span></span><br><span class="line"><span class="string">      50% &#123; transform: rotateX(4deg) rotateZ(2deg); &#125;</span></span><br><span class="line"><span class="string">      75% &#123; transform: rotateX(-2deg) rotateZ(-3deg); &#125;</span></span><br><span class="line"><span class="string">      100% &#123; transform: rotateX(-4deg) rotateZ(-2deg); &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    /* 流苏摆动动画 */</span></span><br><span class="line"><span class="string">    @keyframes tasselSwing &#123;</span></span><br><span class="line"><span class="string">      0% &#123; transform: rotateX(-5deg) rotateZ(-5deg); &#125;</span></span><br><span class="line"><span class="string">      50% &#123; transform: rotateX(5deg) rotateZ(5deg); &#125;</span></span><br><span class="line"><span class="string">      100% &#123; transform: rotateX(-5deg) rotateZ(-5deg); &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    /* 灯笼自转动画 */</span></span><br><span class="line"><span class="string">    @keyframes rotateBody &#123;</span></span><br><span class="line"><span class="string">      from &#123; transform: rotateY(0deg); &#125;</span></span><br><span class="line"><span class="string">      to &#123; transform: rotateY(360deg); &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    /* 响应式优化：移动端适配 */</span></span><br><span class="line"><span class="string">    @media (max-width: 768px) &#123;</span></span><br><span class="line"><span class="string">      .deng-box &#123; transform: scale(0.6); &#125;</span></span><br><span class="line"><span class="string">      .deng-box1 &#123; left: 10px; &#125; </span></span><br><span class="line"><span class="string">      .deng-box2 &#123; left: 80px; &#125;</span></span><br><span class="line"><span class="string">      .deng-box3 &#123; right: 80px; &#125; </span></span><br><span class="line"><span class="string">      .deng-box4 &#123; right: 10px; &#125;</span></span><br><span class="line"><span class="string">      .deng-t &#123; font-size: 2rem; &#125; /* 移动端文字缩小 */</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    /* 暗黑模式适配（可选） */</span></span><br><span class="line"><span class="string">    @media (prefers-color-scheme: dark) &#123;</span></span><br><span class="line"><span class="string">      .lantern-light &#123; opacity: 1; &#125; /* 暗黑模式下灯光更亮 */</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  `</span>;</span><br><span class="line">  <span class="variable language_">document</span>.<span class="property">head</span>.<span class="title function_">appendChild</span>(style);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 初始化灯笼</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">initLantern</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 确保DOM加载完成后执行，避免操作未渲染的DOM</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">document</span>.<span class="property">readyState</span> === <span class="string">&#x27;loading&#x27;</span>) &#123;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">addStyles</span>();</span><br><span class="line">      <span class="title function_">createDengContainer</span>();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_">addStyles</span>();</span><br><span class="line">    <span class="title function_">createDengContainer</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 启动灯笼（支持AMD/CMD/全局环境）</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable language_">module</span> !== <span class="string">&#x27;undefined&#x27;</span> &amp;&amp; <span class="variable language_">module</span>.<span class="property">exports</span>) &#123;</span><br><span class="line">  <span class="variable language_">module</span>.<span class="property">exports</span> = &#123; initLantern &#125;;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">&#x27;function&#x27;</span> &amp;&amp; define.<span class="property">amd</span>) &#123;</span><br><span class="line">  <span class="title function_">define</span>([], <span class="function">() =&gt;</span> (&#123; initLantern &#125;));</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 全局环境自动初始化</span></span><br><span class="line">  <span class="title function_">initLantern</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="基础使用（零配置）"><a href="#基础使用（零配置）" class="headerlink" title="基础使用（零配置）"></a>基础使用（零配置）</h3><p>将上述<code>lantern.js</code>文件上传到你的博客静态资源目录（比如<code>/js/lantern.js</code>），然后在博客的<code>&lt;/body&gt;</code>标签前引入脚本即可：</p>
+<blockquote>
+<p>注意：为了使博客页面加载更快，建议将脚本放到<code>&lt;/head&gt;</code>标签后，<code>&lt;/body&gt;</code>标签前。</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 引入3D灯笼脚本 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/js/lantern.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>打开博客页面，就能看到4个显示“新年快乐”的3D动态灯笼了。</p>
+<blockquote>
+<p>如果你在内网搭建了带新年特效的个人博客，想让外网的朋友也能访问，哪怕没有公网 IP，也可以参考我写的<a href="/oray-hsk-nat-traversal/">《使用贝锐花生壳内网穿透，实现在无外网 IP 访问内网服务》</a>一文，轻松实现内网博客的外网发布与访问。</p>
+</blockquote>
+<h3 id="自定义灯笼文字"><a href="#自定义灯笼文字" class="headerlink" title="自定义灯笼文字"></a>自定义灯笼文字</h3><p>通过URL参数<code>text</code>自定义灯笼文字（最多4个字符，不足自动补默认，超过截取前4个）：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 自定义文字为“恭喜发财” --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/js/lantern.js?text=恭喜发财&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="调整灯笼样式-动画"><a href="#调整灯笼样式-动画" class="headerlink" title="调整灯笼样式&#x2F;动画"></a>调整灯笼样式&#x2F;动画</h3><p>修改<code>LANTERN_CONSTANTS</code>常量即可自定义：</p>
+<ul>
+<li><code>COLORS</code>：修改灯笼的红色、金色、灯光颜色</li>
+<li><code>SIZES</code>：调整灯笼宽度、高度、盖子尺寸、光源大小等</li>
+<li><code>ANIMATION_DURATIONS</code>：修改摆动、自转、闪烁、流苏动画的时长</li>
+<li><code>RIB_COUNT</code>：调整灯笼瓣片数量（建议设为能被360整除的数，比如8、10、12）</li>
+</ul>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>脚本<code>z-index</code>设为99999，确保灯笼显示在最上层，若被遮挡可调整该值</li>
+<li>灯笼使用<code>pointer-events: none</code>，不会影响页面按钮、链接的点击</li>
+<li>兼容所有现代浏览器（Chrome&#x2F;Firefox&#x2F;Safari&#x2F;Edge），IE浏览器不支持CSS3 3D变换，效果会降级</li>
+<li>若博客使用了异步加载&#x2F;动态渲染（比如Vue&#x2F;React），可手动调用<code>initLantern()</code>初始化：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 手动初始化（适用于框架项目）</span></span><br><span class="line"><span class="title function_">initLantern</span>();</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="代码主要解析"><a href="#代码主要解析" class="headerlink" title="代码主要解析"></a>代码主要解析</h2><h3 id="常量管理（LANTERN-CONSTANTS）"><a href="#常量管理（LANTERN-CONSTANTS）" class="headerlink" title="常量管理（LANTERN_CONSTANTS）"></a>常量管理（LANTERN_CONSTANTS）</h3><p>所有可变参数都集中在这个常量对象中，好处是：</p>
+<ul>
+<li>无需在代码中到处找样式值，修改更高效</li>
+<li>便于维护，比如想把灯笼改成金色主题，只需修改<code>COLORS</code>里的红色值</li>
+<li>新手友好，无需理解复杂CSS，改常量就能定制效果</li>
+</ul>
+<h3 id="核心DOM创建逻辑"><a href="#核心DOM创建逻辑" class="headerlink" title="核心DOM创建逻辑"></a>核心DOM创建逻辑</h3><ul>
+<li><code>createDengContainer()</code>：主入口，创建容器并循环创建每个灯笼</li>
+<li><code>getCustomTextFromUrl()</code>：解析脚本URL的<code>text</code>参数，实现文字自定义，带异常捕获</li>
+<li><code>createLanternBody()</code>：创建灯笼主体，循环生成瓣片并设置旋转角度，实现3D立体效果</li>
+<li><code>createLanternTassel()</code>：拆分流苏为珠子、中国结、穗子，通过CSS渐变和遮罩实现质感</li>
+</ul>
+<h3 id="CSS3-3D核心"><a href="#CSS3-3D核心" class="headerlink" title="CSS3 3D核心"></a>CSS3 3D核心</h3><ul>
+<li><code>perspective: 800px</code>：设置3D透视距离，值越小透视效果越强</li>
+<li><code>transform-style: preserve-3d</code>：开启子元素的3D空间，是实现3D效果的关键</li>
+<li><code>transform-origin: 50% 0</code>：将灯笼摆动的中心点设为顶部，符合真实灯笼的摆动逻辑</li>
+<li><code>translateZ(62px)</code>：将文字放在3D空间的外层，避免被瓣片遮挡</li>
+</ul>
+<h3 id="动画优化"><a href="#动画优化" class="headerlink" title="动画优化"></a>动画优化</h3><ul>
+<li><code>will-change</code>：告诉浏览器该元素将要做动画，提前分配资源，提升流畅度</li>
+<li>动画分层：摆动、自转、闪烁、流苏动画分别绑定到不同元素，避免动画冲突</li>
+<li><code>backface-visibility: hidden</code>：隐藏元素背面，减少渲染计算，提升性能</li>
+</ul>
+<h3 id="响应式与兼容性"><a href="#响应式与兼容性" class="headerlink" title="响应式与兼容性"></a>响应式与兼容性</h3><ul>
+<li>媒体查询<code>@media (max-width: 768px)</code>：移动端缩小灯笼尺寸、调整位置</li>
+<li>字体适配：设置多个中文字体（华文行楷、楷体、STKaiti），适配不同操作系统</li>
+<li>暗黑模式适配：<code>prefers-color-scheme: dark</code>，自动调整灯光亮度</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这款3D动态灯笼特效轻量化、易集成、可定制，希望能给你的博客增添一份新年的温馨与喜庆。无论是个人博客、企业官网还是小程序网页，都能轻松接入，让访问者感受到满满的年味。</p>
+<p>最后，祝所有站长和开发者新年快乐，代码无bug，流量节节高！🎇🎆</p>
+<p>如果在使用过程中有任何问题，欢迎在评论区交流，也可以根据自己的创意扩展更多效果（比如添加飘落的雪花、自定义灯笼数量、调整摆动幅度等），让你的网站成为新年里最靓的仔～</p>
+<blockquote>
+<p>⚠️ 申明：本文内容由作者结合实际实操经验撰写，部分技术细节（如代码解析，代码细节）借助 AIGC 工具辅助整理，所有内容均经过作者亲自验证，确保准确可用。</p>
+</blockquote>
+<blockquote>
+<p>【站长专属福利】<br>不管是博客美化、前端特效部署，还是个人博客搭建、自动化运维，一款稳定、高性价比的云服务器都是站长的刚需。我自己用了 1 年多的雨云，国内节点访问稳定，支持一键部署各类博客程序、开发环境（基于K8S），性价比高，还提供免费的 SSL 证书，一站式搞定博客部署全流程。新人通过我的专属推广链接注册，除了官方新人福利，还可以免费领<strong>首月5折</strong>+<strong>博主不定期补给福利</strong>，有需要的朋友可以看看。<br><a target="_blank" rel="noopener" href="https://www.rainyun.com/jackie_">雨云服务器</a>。<br>注：本文所有代码均为开源免费分享，无任何商业合作，云服务器推荐仅为我本人真实使用体验，觉得确实能解决新手站长的痛点，推广链接可获得平台官方的少量奖励，不会给你带来任何额外成本，感谢你的支持！</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        <style>
+  /* 基础样式（通用）- 优化整体排版 */
+  .post-ad-section {
+    margin: 35px 0 20px;
+    padding: 20px;
+    border-radius: 8px;
+    font-size: 0.95em;
+    line-height: 1.7;
+    box-sizing: border-box;
+  }
+
+  .post-ad-section h3 {
+    font-size: 1.15em;
+    margin: 0 0 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+  }
+
+  /* 警告提示框 - 优化圆角和间距 */
+  .post-ad-warning {
+    font-size: 0.85em;
+    margin: 0 0 18px 0;
+    padding: 12px 15px;
+    border-radius: 6px;
+    border-left: 3px solid #ff9800;
+    background-color: transparent; /* 取消固定背景，靠主题适配 */
+  }
+
+  /* 列表样式 - 优化间距和对齐 */
+  .post-ad-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .post-ad-list li {
+    margin-bottom: 18px;
+    padding-left: 4px;
+  }
+
+  .post-ad-list li:last-child {
+    margin-bottom: 0; /* 最后一项取消下间距 */
+  }
+
+  .post-ad-list a {
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    border-bottom: 1px solid transparent; /*  hover下划线更柔和 */
+  }
+
+  .post-ad-list a:hover {
+    border-bottom: 1px solid currentColor;
+    color: #2563eb; /* 通用hover高亮色 */
+  }
+
+  .post-ad-list strong {
+    font-weight: 600;
+  }
+
+  .post-ad-list code {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: monospace;
+  }
+
+  /* 👇 深色主题适配（自动识别） */
+  @media (prefers-color-scheme: dark) {
+    .post-ad-section {
+      background-color: #2d2d2d;
+      border: 1px solid #444;
+      color: #ddd;
+    }
+    .post-ad-section h3 {
+      color: #eee;
+    }
+    .post-ad-warning {
+      color: #ddd;
+      background-color: #3a3a3a;
+    }
+    .post-ad-list a {
+      color: #58a6ff;
+    }
+    .post-ad-list a:hover {
+      color: #7ab0ff;
+    }
+    .post-ad-list strong {
+      color: #eee;
+    }
+    .post-ad-list code {
+      background-color: #1e1e1e;
+      color: #d2a8ff;
+    }
+  }
+
+  /* 👇 浅色主题适配（自动识别） */
+  @media (prefers-color-scheme: light) {
+    .post-ad-section {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      color: #333;
+    }
+    .post-ad-section h3 {
+      color: #222;
+    }
+    .post-ad-warning {
+      color: #555;
+      background-color: #fff3cd;
+      border-left-color: #ffc107;
+    }
+    .post-ad-list a {
+      color: #0d6efd;
+    }
+    .post-ad-list a:hover {
+      color: #0a58ca;
+    }
+    .post-ad-list strong {
+      color: #222;
+    }
+    .post-ad-list code {
+      background-color: #e9ecef;
+      color: #6610f2;
+    }
+  }
+</style>
+
+<div class="post-ad-section">
+  <h3>🛠️ 博主专属配套工具 & 福利</h3>
+  
+  <div class="post-ad-warning">
+    ⚠️ 风险提示：加密货币投资存在较高市场风险，需严格遵守所在地区法律法规，以下内容仅做工具知识分享，不构成任何投资建议。
+  </div>
+
+  <ul class="post-ad-list">
+    <li>
+      <strong>1. 币安 (Binance)</strong> - 全球头部加密货币交易平台<br>
+      新手入门首选，通过专属邀请链接注册享 <strong>现货/合约返佣20%+博主不定期补给福利</strong>。<br>
+      👉 币安APP下载：<a href="https://downbian.openenet.cn/" target="_blank" rel="noopener noreferrer">点击下载（国内可访问）</a>
+    </li>
+    <li>
+      <strong>2. 配套开发/资产工具</strong><br>
+      ✅ <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer">雨云高性价比云服务器</a>（IoT上云/博客部署首选）<br>
+      ✅ <a href="https://onekey.so/r/ZH8DCL" target="_blank" rel="noopener noreferrer">OneKey硬件冷钱包</a>（加密资产安全必备，折扣码：<code>ZH8DCL</code>）<br>
+      ✅ <a href="https://www.kryptex.com/?ref=0234fc58" target="_blank" rel="noopener noreferrer">Kryptex闲置算力一键挖矿</a>
+    </li>
+  </ul>
+</div>
+
+          <div class="reward-container">
+  <div>请我喝杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/img/reward/btc.png" alt="Jackie 比特币">
+        <span>比特币</span>
+      </div>
+      <div>
+        <img src="/img/reward/eth.png" alt="Jackie 以太坊">
+        <span>以太坊</span>
+      </div>
+      <div>
+        <img src="/img/reward/trx.png" alt="Jackie 波场">
+        <span>波场</span>
+      </div>
+      <div>
+        <img src="/img/reward/arb.png" alt="Jackie 阿尔比垂姆">
+        <span>阿尔比垂姆</span>
+      </div>
+      <div>
+        <img src="/img/reward/bsc.png" alt="Jackie 币安智能链">
+        <span>币安智能链</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Jackie
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://jackie.openenet.cn/denglong-js/" title="JS&#x2F;CSS 实现 3D 动态灯笼特效 · 博客网站新年美化教程">https://jackie.openenet.cn/denglong-js/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/CSS/" rel="tag"># CSS</a>
+              <a href="/tags/3D%E7%81%AF%E7%AC%BC%E6%95%88%E6%9E%9C/" rel="tag"># 3D灯笼效果</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E7%89%B9%E6%95%88/" rel="tag"># 前端特效</a>
+              <a href="/tags/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96/" rel="tag"># 博客优化</a>
+              <a href="/tags/%E7%BD%91%E7%AB%99%E7%BE%8E%E5%8C%96/" rel="tag"># 网站美化</a>
+              <a href="/tags/%E6%96%B0%E5%B9%B4%E7%89%B9%E6%95%88/" rel="tag"># 新年特效</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" rel="tag"># 前端开发</a>
+              <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" rel="tag"># 代码实现</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/ham-ps-3/" rel="prev" title="【BA8AHF】如何让自己可刑可铐（三）：整活向｜轴向模螺旋天线，卫星通信“加刑”神器">
+                  <i class="fa fa-angle-left"></i> 【BA8AHF】如何让自己可刑可铐（三）：整活向｜轴向模螺旋天线，卫星通信“加刑”神器
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/oray-hsk-nat-traversal/" rel="next" title="花生壳内网穿透全教程 · 无公网 IP 访问内网服务实战">
+                  花生壳内网穿透全教程 · 无公网 IP 访问内网服务实战 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      <!-- 评论区 -->
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <!-- 多语言切换 -->
+<!-- 页脚公共内容（缓存控制） -->
+      
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jackie</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">69k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:02</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+
+      <!-- 站点数据（居中显示） -->
+      <div style="text-align: center;">
+        <a href="https://www.blogsclub.org/rank.html" target="_blank">
+          <img 
+            src="https://www.blogsclub.org/badge/jackie.openenet.cn" 
+            style="height:60px!important" 
+            loading="lazy"
+            alt="统计数据">
+        </a>
+      </div>
+        
+      <!-- 运行时长统计展示行（新增分钟显示） -->
+      <div class="uptime-row">
+        本站已经稳定运行了 
+        <span class="uptime-num" id="days">00</span> 天 
+        <span class="uptime-num" id="hours">00</span> 小时 
+        <span class="uptime-num" id="minutes">00</span> 分钟 
+        <span class="uptime-num" id="seconds">00</span> 秒
+      </div>
+
+      <!-- ICP备案 -->
+      <div style="text-align: center; margin: 8px 0;">
+        <a href="https://icp.gov.moe/?keyword=20260177" target="_blank">萌ICP备20260177号</a>
+      </div>
+
+      <!-- 广告脚本（仅保留一次引入） -->
+      <!-- <script async="async" data-cfasync="false" src="https://pl28675819.effectivegatecpm.com/0f2aeb03ec930e47193f4782e446c5b6/invoke.js"></script> -->
+      <!-- <div id="container-0f2aeb03ec930e47193f4782e446c5b6"></div> -->
+
+    </div>
+  </footer>
+
+  <!-- 页面组件（缓存控制） -->
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/PyXMR2025" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  <!-- 框架注入的页面底部内容 --><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"PyXMR2025","repo":"blog-talk","client_id":"Ov23liwFgKqqzMwetvZo","client_secret":"0cc5bb2373d4ad3af282ac9f75578b50c6a3129c","admin_user":"PyXMR2025","distraction_free_mode":true,"proxy":"https://strong-caramel-969805.netlify.app/github_access_token","language":"zh-CN","js":{"url":"https://s4.zstatic.net/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"ea85d9fc370b67564bab67ba83c31054"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+
+  <!-- 运行时长统计逻辑（优化版） -->
+  <script>
+    // 站点启动时间（GMT+8 2025-12-15 10:47:19）
+    const startTime = new Date('2025-12-15T10:47:19+08:00');
+    // 缓存DOM元素，避免重复查询
+    const uptimeElements = {
+      days: document.getElementById('days'),
+      hours: document.getElementById('hours'),
+      minutes: document.getElementById('minutes'),
+      seconds: document.getElementById('seconds')
+    };
+    // 定时器标识，用于页面卸载时清理
+    let uptimeTimer = null;
+
+    /**
+     * 数字补零：单位数补0，如 5 → 05
+     * @param {number} num 要补零的数字
+     * @returns {string} 补零后的字符串
+     */
+    function padZero(num) {
+      return num.toString().padStart(2, '0');
+    }
+
+    /**
+     * 计算并更新站点运行时长
+     */
+    function updateUptime() {
+      const now = new Date();
+      const diffMs = now - startTime;
+
+      // 处理当前时间早于启动时间的边界情况
+      if (diffMs < 0) {
+        uptimeElements.days.textContent = '00';
+        uptimeElements.hours.textContent = '00';
+        uptimeElements.minutes.textContent = '00';
+        uptimeElements.seconds.textContent = '00';
+        return;
+      }
+
+      // 时间单位转换（毫秒 -> 天/小时/分钟/秒）
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const days = Math.floor(totalSeconds / (24 * 60 * 60));
+      const remainingSecondsAfterDays = totalSeconds % (24 * 60 * 60);
+      const hours = Math.floor(remainingSecondsAfterDays / (60 * 60));
+      const remainingSecondsAfterHours = remainingSecondsAfterDays % (60 * 60);
+      const minutes = Math.floor(remainingSecondsAfterHours / 60);
+      const seconds = remainingSecondsAfterHours % 60;
+
+      // 更新页面显示（补零后）
+      uptimeElements.days.textContent = padZero(days);
+      uptimeElements.hours.textContent = padZero(hours);
+      uptimeElements.minutes.textContent = padZero(minutes);
+      uptimeElements.seconds.textContent = padZero(seconds);
+    }
+
+    // 初始化执行 + 每秒更新一次
+    updateUptime();
+    uptimeTimer = setInterval(updateUptime, 1000);
+
+    // 页面卸载时清理定时器，避免内存泄漏
+    window.addEventListener('beforeunload', () => {
+      clearInterval(uptimeTimer);
+    });
+  </script>
+</body>
+</html>
