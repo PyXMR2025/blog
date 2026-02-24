@@ -20,32 +20,16 @@ category: 游戏专区
 
 谁懂啊家人们😭 三角洲行动这波我直接原地封神！
 
-<!-- 本地音频：无跨域、点击页面即播放、无报错 -->
-<audio 
-  src="/music/delta-force-weiloong/weiloong.mp3" 
-  loop 
-  id="bg-music"
-  style="display: none;"
-></audio>
-
-<!-- 友好提示 -->
-<div style="color: #666; font-size: 12px; text-align: center; margin: 10px 0;">
-  🔊 点击页面任意位置播放欧气BGM | 🎵 循环播放中（音频来源：互联网）
+<audio id="bgm" src="/music/delta-force-weiloong/weiloong.mp3" loop style="display:none">
+<div style="text-align:center; font-size:12px; color:#999;">
+ 🔊 点击页面任意位置播放欧气BGM（来源：互联网）
 </div>
 
 <script>
-// 仅监听点击播放，无跨域操作，绝对无报错
-document.addEventListener('click', function playLocalMusic() {
-  const audio = document.getElementById('bg-music');
-  if (audio && audio.paused) {
-    // 播放本地音频（浏览器允许，无跨域）
-    audio.play().catch(err => {
-      console.log('播放提示：', err.message); // 仅日志，无报错
-    });
-  }
-  // 只触发一次，避免重复播放
-  document.removeEventListener('click', playLocalMusic);
-});
+document.addEventListener('click', function(){
+  let audio = document.getElementById('bgm');
+  if(audio.paused) audio.play();
+},{ once: true })
 </script>
 
 免费现时三角券抽奖，我本来就佛系抽，只抽了1000刚好保底，没抱任何奢望——毕竟知道威龙首款至臻红皮「凌霄戍卫」是红皮天花板，特效拉满还难出，好多人肝好久都抽不到。
