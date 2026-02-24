@@ -1,5 +1,7 @@
 ---
 title: Monero GUI钱包安装使用新手全教程 · Windows门罗币钱包安装教程+XMR钱包新手避坑指南
+author_name: "Jackie"
+author_title: "探索区块链、自动化与开源技术"
 date: 2026-2-7 18:25:07
 updated: 2026-2-7 18:25:07
 tags: 

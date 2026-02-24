@@ -1,5 +1,7 @@
 ---
 title: 【BA8AHF】如何让自己可刑可铐（五）：整活向 · 抛物面天线的灵魂 —— 馈源，决定增益与刑期的关键
+author_name: "Jackie"
+author_title: "探索区块链、自动化与开源技术"
 date: 2026-2-16 09:18:33
 updated: 2026-2-16 09:18:33
 tags: 
