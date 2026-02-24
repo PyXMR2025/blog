@@ -150,3 +150,15 @@ search:
   field: post
   content: true
   format: html
+
+article_recommender:
+  # 是否自动将推荐模块注入到文章页面底部（默认 true）
+  inject: true
+  # 推荐策略（可选：balanced | title-focused | content-focused，默认 balanced）
+  strategy: balanced
+  # 默认推荐文章数量（默认 3）
+  default_count: 3
+  # 推荐区域标题（支持中英文）
+  recommended_title: "推荐文章"
+  # 时效性衰减系数（值越大，旧文章权重下降越快；默认 0.3）
+  recency_decay: 0.3

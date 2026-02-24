@@ -1,5 +1,7 @@
 ---
 title: Hello World
+author_name: "Jackie"
+author_title: "探索区块链、自动化与开源技术"
 date: 2026-1-1 00:00:00
 updated: 2026-1-1 00:00:00
 tags: 

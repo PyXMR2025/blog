@@ -1,5 +1,7 @@
 ---
 title: LCPI H616 ZERO性能测试 · 全志H616开发板横评 · 嵌入式Linux入门推荐
+author_name: "Jackie"
+author_title: "探索区块链、自动化与开源技术"
 date: 2026-1-7 23:16:02
 updated: 2026-1-7 23:16:02
 tags: 

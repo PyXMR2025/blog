@@ -1,5 +1,7 @@
 ---
 title: 【BA8AHF】如何让自己可刑可铐（四）：整活向 · 玩转倒置卡塞格伦天线，空战雷达级 “加刑” 拉满
+author_name: "Jackie"
+author_title: "探索区块链、自动化与开源技术"
 date: 2026-2-14 00:12:12
 updated: 2026-2-14 00:12:12
 tags: 
