@@ -1,0 +1,77 @@
+<style>
+  /* 雨云专属推广 - 极简融入式样式，适配Hexo博客底部/友链页 */
+  .rainyun-promotion {
+    margin: 25px 0;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 0.9em;
+    line-height: 1.8;
+  }
+
+  .rainyun-promotion .logo-area {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .rainyun-promotion .logo-area img {
+    height: 36px; /* 从24px调大到36px，logo更醒目 */
+    width: auto;
+    vertical-align: middle;
+  }
+
+  .rainyun-promotion .logo-area span {
+    font-weight: 500;
+    color: inherit;
+  }
+
+  .rainyun-promotion .desc {
+    margin-bottom: 6px;
+    color: #666;
+  }
+
+  .rainyun-promotion .link a {
+    text-decoration: none;
+    color: #0d6efd;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .rainyun-promotion .link a:hover {
+    color: #0a58ca;
+    text-decoration: underline;
+  }
+
+  /* 深色主题适配 */
+  @media (prefers-color-scheme: dark) {
+    .rainyun-promotion .desc {
+      color: #aaa;
+    }
+    .rainyun-promotion .link a {
+      color: #58a6ff;
+    }
+    .rainyun-promotion .link a:hover {
+      color: #7ab0ff;
+    }
+  }
+</style>
+
+<div class="rainyun-promotion">
+  <div class="logo-area">
+    <!-- 为图片添加loading="lazy"实现异步加载，提升页面性能 -->
+    <img 
+      src="https://jackie.openenet.cn/img/ad/rainyun.png" 
+      alt="雨云" 
+      loading="lazy"  <!-- 核心：异步加载属性 -->
+      width="auto"    <!-- 辅助：明确尺寸属性，避免布局偏移 -->
+      height="36">
+  </div>
+  <div class="desc">本站部分构建节点由雨云赞助提供</div>
+  <div class="link">
+    <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer">
+      通过博主专属链接注册，立享专属首月5折优惠券+博主不定期补给福利
+    </a>
+  </div>
+</div>
