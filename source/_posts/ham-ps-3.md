@@ -1,5 +1,7 @@
 ---
 title: 【BA8AHF】如何让自己可刑可铐（三）：整活向 · 轴向模螺旋天线，卫星通信“加刑”神器
+author_name: "Jackie"
+author_title: "探索区块链、自动化与开源技术"
 date: 2026-2-10 00:21:53
 updated: 2026-2-10 00:21:53
 tags: 
