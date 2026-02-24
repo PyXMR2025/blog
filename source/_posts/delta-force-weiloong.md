@@ -20,32 +20,31 @@ category: 游戏专区
 
 谁懂啊家人们😭 三角洲行动这波我直接原地封神！
 
-<!-- 网易云音乐嵌入式播放器（替代纯音频标签，兼容性更好） -->
-<!-- 网易云音乐播放器 + 自动播放触发JS -->
-<div id="music-player-container" style="margin: 10px 0;">
-  <iframe 
-    frameborder="no" 
-    border="0" 
-    marginwidth="0" 
-    marginheight="0" 
-    width="100%" 
-    height="86" 
-    id="music-iframe"
-    src="https://music.163.com/outchain/player?type=2&id=3347218900&auto=0&height=66"
-  ></iframe>
+<!-- 本地音频：无跨域、点击页面即播放、无报错 -->
+<audio 
+  src="/music/delta-force-weiloong/weiloong.mp3" 
+  loop 
+  id="bg-music"
+  style="display: none;"
+></audio>
+
+<!-- 友好提示 -->
+<div style="color: #666; font-size: 12px; text-align: center; margin: 10px 0;">
+  🔊 点击页面任意位置播放欧气BGM | 🎵 循环播放中（音频来源：互联网）
 </div>
 
 <script>
-// 监听页面首次点击，触发播放器播放
-document.addEventListener('click', function playMusic() {
-  // 获取播放器iframe
-  const musicIframe = document.getElementById('music-iframe');
-  if (musicIframe) {
-    // 向iframe发送播放指令（网易云播放器兼容的指令）
-    musicIframe.contentWindow.postMessage('play', '*');
-    // 只触发一次，避免重复播放
-    document.removeEventListener('click', playMusic);
+// 仅监听点击播放，无跨域操作，绝对无报错
+document.addEventListener('click', function playLocalMusic() {
+  const audio = document.getElementById('bg-music');
+  if (audio && audio.paused) {
+    // 播放本地音频（浏览器允许，无跨域）
+    audio.play().catch(err => {
+      console.log('播放提示：', err.message); // 仅日志，无报错
+    });
   }
+  // 只触发一次，避免重复播放
+  document.removeEventListener('click', playLocalMusic);
 });
 </script>
 
