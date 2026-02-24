@@ -1,5 +1,7 @@
 ---
 title: 2025年度回声 · Jackie的技术自留地：以热爱落笔，以协作深耕
+author_name: "Jackie"
+author_title: "探索区块链、自动化与开源技术"
 date: 2026-2-9 21:53:01
 updated: 2026-2-9 21:53:01
 tags: 
