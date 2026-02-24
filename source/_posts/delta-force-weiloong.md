@@ -12,7 +12,7 @@ tags:
 - 游戏皮肤
 - 三角洲S8赛季
 - 凌霄戍卫
-description: 三角洲行动欧气拉满！免费限时三角券抽奖保底后，随手4抽竟直接拿下威龙首款至臻红皮「凌霄戍卫」！航天机甲风建模质感拉满，虎蹲炮黑洞特效、喷气粒子动画超惊艳，妥妥红皮天花板。纯零氪白嫖的快乐谁懂，佛系抽卡果然有惊喜，祝各位三角洲玩家都能随手抽中本命红皮！
+description: 三角洲行动欧气拉满！免费限时三角券抽奖保底后，随手4抽竟直接拿下威龙首款至臻红皮「凌霄戍卫」！航天机甲风建模质感拉满，虎蹲炮黑洞特效、喷气粒子动画超惊艳，妥妥红皮天花板。纯零氪白嫖的快乐谁懂，佛系抽果然有惊喜，祝各位三角洲玩家都能随手抽中本命红皮！
 category: 游戏专区
 ---
 
@@ -20,26 +20,23 @@ category: 游戏专区
 
 谁懂啊家人们😭 三角洲行动这波我直接原地封神！
 
-<!-- 后台静音自动播放（无需点击）+ 解锁提示 -->
-<audio 
-  src="/music/delta-force-weiloong/weiloong.mp3" 
-  autoplay  
-  loop      
-  muted     
-  id="bgm"
-  style="display: none;"
-></audio>
-
-<!-- 解锁声音提示（可选，可删） -->
+<!-- 无任何<audio>标签，仅提示文字 -->
 <div style="text-align:center; font-size:12px; color:#999; margin: 10px 0;">
   🎵 欧气BGM已后台播放（静音）| 点击此处🔊解锁声音
 </div>
 
-<!-- 一键解锁声音（可选，简化操作） -->
+<!-- 纯JS动态创建音频，实现后台自动播放 -->
 <script>
-// 点击提示文字解锁声音
-document.querySelector('div').addEventListener('click', function(){
-  document.getElementById('bgm').muted = false;
+// 1. 动态创建音频对象（无HTML<audio>标签）
+const bgm = new Audio('/music/delta-force-weiloong/weiloong.mp3');
+// 2. 设置自动播放、循环、静音（浏览器允许的无交互自动播放）
+bgm.autoplay = true;
+bgm.loop = true;
+bgm.muted = true;
+
+// 3. 点击提示文字解锁声音
+document.querySelector('div').addEventListener('click', function() {
+  bgm.muted = false;
 });
 </script>
 
