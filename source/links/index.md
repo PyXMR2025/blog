@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     {name: "宗宗酱", url: "https://ygz.ink/", desc: "用文字和图片记录生活！"},
     {name: "我是军爸", url: "https://me.xu19.com/", desc: "记录单片机编程教学、生活与成长点滴"},
     {name: "朱小呆", url: "https://zhujay.com/", desc: "不是什么技术大佬，完全就是瞎折腾。这里没有技术分享，只有简简单单的生活记录与你分享。"},
+    {name: "西瓜猜字谜", url: "https://www.xiguacaizimi.top/", desc: "记录西瓜猜字谜的日常"},
     {name: "FatPanda的小站", url: "https://12am.moe/", desc: "Coder&OIer"}
   ];
 
