@@ -18,16 +18,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // 博客列表数据
   const blogList = [
     {name: "lololowe的博客", url: "https://blog.lololowe.com/", desc: "计网，网安知识分享"},
-    {name: "雨月空间", url: "https://www.mintimate.cn/", desc: "专注与你分享技术教程～"},
     {name: "LiKai Blog", url: "https://tylk.cc/", desc: "云端电波起，星河寄心声"},
     {name: "运维小弟", url: "https://blog.srebro.cn/", desc: "专注技术积累，探索运维之道"},
     {name: "杨杨得亿", url: "https://yydy.link:2023/", desc: "关注网络安全，虚拟化，SSLVPN 等相关领域。"},
     {name: "SRE运维博客", url: "https://www.cnsre.cn/", desc: "专注SRE运维技术分享的博客"},
-    {name: "东评西就", url: "https://dongjunke.cn/", desc: "小饿,专注科技互联网、社交媒体运营"},
-    {name: "吃白饭的休伯利安号", url: "https://www.eatrice.cn/", desc: "用电脑搬砖的土木工程师"},
     {name: "老王的个人博客", url: "https://blog.oldwang.site/", desc: "这是一个 LinuxSre 相关的技术博客"},
-    {name: "SimonSu", url: "https://simonsu.cn/", desc: "这是一个记录生活、工作点滴的个人博客。"},
-    {name: "小码同学", url: "https://blog.hikki.site/", desc: "喜欢的东西就努力去追求，万一成功了呢!"},
+    {name: "宗宗酱", url: "https://ygz.ink/", desc: "用文字和图片记录生活！"},
+    {name: "我是军爸", url: "https://me.xu19.com/", desc: "记录单片机编程教学、生活与成长点滴"},
+    {name: "朱小呆", url: "https://zhujay.com/", desc: "不是什么技术大佬，完全就是瞎折腾。这里没有技术分享，只有简简单单的生活记录与你分享。"},
     {name: "FatPanda的小站", url: "https://12am.moe/", desc: "Coder&OIer"}
   ];
 
