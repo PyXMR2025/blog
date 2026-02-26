@@ -155,48 +155,82 @@
   }
 </style>
 
-<!-- 广告加载逻辑（优化容错+性能） -->
+<!-- 广告加载逻辑（修复加载卡住问题，保留你的文字/图片路径） -->
 <script>
-// 广告加载函数 - 增加容错处理
+// 广告加载函数 - 增加重试+容错
 function loadAdContent() {
-  const adBody = document.getElementById('ad-body');
-  if (!adBody) return;
+  // 重试机制：最多尝试5次，每次间隔300ms
+  let retryCount = 0;
+  const maxRetry = 5;
 
-  try {
-    // 雨云广告内容（图片+居中文字）
-    const adHtml = `
-      <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
-        <img src="/img/rainyun/1.png" alt="雨云云服务器" class="ad-img" loading="lazy">
-        <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
-        <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
-      </a>
-    `;
-    adBody.innerHTML = adHtml;
+  function tryLoad() {
+    const adBody = document.getElementById('ad-body');
+    
+    // 调试日志（可按F12查看Console）
+    console.log('广告加载尝试:', retryCount + 1, '元素是否存在:', !!adBody);
 
-    // 图片加载失败降级处理
-    const adImg = adBody.querySelector('.ad-img');
-    if (adImg) {
-      adImg.onerror = function() {
-        // 图片加载失败时仅显示文字，保留广告信息
-        adBody.innerHTML = `
-          <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
-            <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
-            <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
-          </a>
-        `;
-      };
+    // 元素不存在则重试
+    if (!adBody) {
+      retryCount++;
+      if (retryCount < maxRetry) {
+        setTimeout(tryLoad, 300);
+      } else {
+        console.error('无法获取广告容器元素，请检查ID是否正确');
+        // 兜底：手动创建内容
+        const container = document.getElementById('next-ad-container');
+        if (container) {
+          container.innerHTML = `
+            <div class="ad-label">广告</div>
+            <div class="ad-content">
+              <div class="ad-loading">广告容器加载失败</div>
+            </div>
+          `;
+        }
+      }
+      return;
     }
-  } catch (error) {
-    console.warn('广告加载出错:', error);
-    adBody.innerHTML = '<div class="ad-loading">广告加载失败</div>';
+
+    try {
+      // 保留你修改后的广告内容
+      const adHtml = `
+        <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+          <img src="/img/rainyun/1.png" alt="雨云云服务器" class="ad-img" loading="lazy">
+          <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+          <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+        </a>
+      `;
+      adBody.innerHTML = adHtml;
+
+      // 图片加载失败降级
+      const adImg = adBody.querySelector('.ad-img');
+      if (adImg) {
+        adImg.onerror = function() {
+          adBody.innerHTML = `
+            <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+              <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+              <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+            </a>
+          `;
+        };
+      }
+    } catch (error) {
+      console.warn('广告加载出错:', error);
+      adBody.innerHTML = '<div class="ad-loading">广告加载失败</div>';
+    }
   }
+
+  tryLoad(); // 立即执行第一次尝试
 }
 
-// 页面加载完成后执行
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(loadAdContent, 1000);
-});
+// 修复执行时机：改用window.load（比DOMContentLoaded更晚，适配Next主题渲染）
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  // 页面已加载，立即执行
+  loadAdContent();
+} else {
+  // 页面未加载完，等所有资源加载后执行
+  window.addEventListener('load', loadAdContent);
+}
 
-// 适配Next主题手动切换明暗模式
+// 适配主题切换
 document.addEventListener('theme-change', function() {});
 </script>
