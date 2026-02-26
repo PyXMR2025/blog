@@ -288,15 +288,11 @@ reward_settings:
   animation: true
 
 reward:
-  wechatpay: /img/reward/wxp.png
-  alipay: /img/reward/alp.png
-  #paypal: /images/paypal.png
   bitcoin: /img/reward/btc.png
   ethereum: /img/reward/eth.png
   tron: /img/reward/trx.png
   arbitrum: /img/reward/arb.png
   bnbsmartchain: /img/reward/bsc.png
-
 
 # Subscribe through Telegram Channel, Twitter, etc.
 # Usage: `Key: permalink || icon` (Font Awesome)
