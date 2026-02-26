@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<!-- 配套CSS样式（建议放到Next主题的自定义样式文件中） -->
+<!-- 配套CSS样式（修复线条问题） -->
 <style>
   /* 广告容器基础样式 - 增强鲁棒性 */
   .next-ad-container {
@@ -23,6 +23,9 @@
     box-sizing: border-box;
     overflow: hidden;
     font-family: inherit;
+    /* 新增：确保容器无多余边框/线条 */
+    border: none !important;
+    box-shadow: none !important;
   }
 
   /* 明模式样式 */
@@ -65,17 +68,33 @@
     padding: 10px 0;
     min-height: 100px; /* 适配图片+文字的高度 */
     overflow: hidden;
+    /* 新增：清除多余线条 */
+    border: none !important;
+    outline: none !important;
   }
 
-  /* 广告链接容器 - 确保整体可点击 */
+  /* 广告链接容器 - 确保整体可点击 + 清除线条 */
   .ad-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    text-decoration: none; /* 移除链接下划线 */
+    /* 新增：彻底清除a标签的下划线/边框 */
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
     color: inherit; /* 继承容器文字颜色，适配明暗模式 */
+  }
+
+  /* 新增：确保hover时也无下划线 */
+  .ad-wrapper:hover,
+  .ad-wrapper:active,
+  .ad-wrapper:focus {
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
   }
 
   /* 广告图片样式 */
@@ -83,9 +102,10 @@
     max-width: 120px; /* 限制图片宽度，避免过大 */
     max-height: 60px;
     object-fit: contain;
-    border: none;
+    border: none !important; /* 新增：清除图片边框 */
     margin-bottom: 8px; /* 图片与文字间距 */
     transition: opacity 0.2s ease;
+    outline: none !important;
   }
 
   .ad-img:hover {
@@ -99,6 +119,8 @@
     margin: 2px 0;
     opacity: 0.9;
     transition: color 0.3s ease;
+    /* 新增：确保文字无装饰 */
+    text-decoration: none !important;
   }
 
   /* 第二行文字稍小，突出重点 */
@@ -155,68 +177,73 @@
   }
 </style>
 
-<!-- 广告加载逻辑（修复加载卡住问题，保留你的文字/图片路径） -->
+<!-- 广告加载逻辑（优化重排警告+修复线条） -->
 <script>
-// 广告加载函数 - 增加重试+容错
+// 广告加载函数 - 优化性能+重试机制
 function loadAdContent() {
-  // 重试机制：最多尝试5次，每次间隔300ms
+  // 优化：提前缓存元素选择器，减少DOM查询
+  const getAdBody = () => document.getElementById('ad-body');
   let retryCount = 0;
   const maxRetry = 5;
 
+  // 优化：使用requestAnimationFrame减少重排
   function tryLoad() {
-    const adBody = document.getElementById('ad-body');
-    
-    // 调试日志（可按F12查看Console）
-    console.log('广告加载尝试:', retryCount + 1, '元素是否存在:', !!adBody);
+    requestAnimationFrame(() => {
+      const adBody = getAdBody();
+      
+      // 调试日志（可按F12查看Console）
+      if (retryCount === 0) console.log('开始加载广告，元素是否存在:', !!adBody);
 
-    // 元素不存在则重试
-    if (!adBody) {
-      retryCount++;
-      if (retryCount < maxRetry) {
-        setTimeout(tryLoad, 300);
-      } else {
-        console.error('无法获取广告容器元素，请检查ID是否正确');
-        // 兜底：手动创建内容
-        const container = document.getElementById('next-ad-container');
-        if (container) {
-          container.innerHTML = `
-            <div class="ad-label">广告</div>
-            <div class="ad-content">
-              <div class="ad-loading">广告容器加载失败</div>
-            </div>
-          `;
+      // 元素不存在则重试
+      if (!adBody) {
+        retryCount++;
+        if (retryCount < maxRetry) {
+          setTimeout(tryLoad, 300);
+        } else {
+          console.error('无法获取广告容器元素，请检查ID是否正确');
+          // 兜底：手动创建内容
+          const container = document.getElementById('next-ad-container');
+          if (container) {
+            container.innerHTML = `
+              <div class="ad-label">广告</div>
+              <div class="ad-content">
+                <div class="ad-loading">广告容器加载失败</div>
+              </div>
+            `;
+          }
         }
+        return;
       }
-      return;
-    }
 
-    try {
-      // 保留你修改后的广告内容
-      const adHtml = `
-        <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
-          <img src="/img/rainyun/1.png" alt="雨云云服务器" class="ad-img" loading="lazy">
-          <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
-          <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
-        </a>
-      `;
-      adBody.innerHTML = adHtml;
+      try {
+        // 保留你修改后的广告内容
+        const adHtml = `
+          <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+            <img src="/img/rainyun/1.png" alt="雨云云服务器" class="ad-img" loading="lazy">
+            <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+            <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+          </a>
+        `;
+        // 优化：一次性赋值innerHTML，减少重排
+        adBody.innerHTML = adHtml;
 
-      // 图片加载失败降级
-      const adImg = adBody.querySelector('.ad-img');
-      if (adImg) {
-        adImg.onerror = function() {
-          adBody.innerHTML = `
-            <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
-              <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
-              <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
-            </a>
-          `;
-        };
+        // 图片加载失败降级
+        const adImg = adBody.querySelector('.ad-img');
+        if (adImg) {
+          adImg.onerror = function() {
+            adBody.innerHTML = `
+              <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+                <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+                <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+              </a>
+            `;
+          };
+        }
+      } catch (error) {
+        console.warn('广告加载出错:', error);
+        adBody.innerHTML = '<div class="ad-loading">广告加载失败</div>';
       }
-    } catch (error) {
-      console.warn('广告加载出错:', error);
-      adBody.innerHTML = '<div class="ad-loading">广告加载失败</div>';
-    }
+    });
   }
 
   tryLoad(); // 立即执行第一次尝试
