@@ -1,72 +1,101 @@
+<!-- 广告组件 - 适配Next主题+明暗模式 -->
+<div class="next-ad-container" id="next-ad-container">
+  <!-- 广告标签 -->
+  <div class="ad-label">广告</div>
+  <!-- 广告内容区域 -->
+  <div class="ad-content" id="ad-body">
+    <div class="ad-loading">
+      广告正在加载中...
+    </div>
+  </div>
+</div>
+
+<!-- 配套CSS样式（建议放到Next主题的自定义样式文件中） -->
 <style>
-  /* 雨云专属推广 - 无logo版，橙色主题，适配Hexo博客（黑白主题优化版） */
-  .rainyun-promotion {
-    margin: 25px 0;
-    padding: 20px 15px;
-    text-align: center;
-    font-size: 1em;
-    line-height: 1.8;
-    /* 基础亮色主题样式 */
-    background-color: #ffffff; /* 纯白背景 */
-    border: 1px solid #f3f4f6; /* 浅灰边框 */
+  /* 广告容器基础样式 */
+  .next-ad-container {
+    position: relative;
+    margin: 20px 0;
+    padding: 15px;
     border-radius: 8px;
-    border-left: 4px solid #f97316; /* 主橙色左侧边框，醒目焦点 */
-    box-shadow: 0 1px 3px rgba(249, 115, 22, 0.15); /* 橙色系轻微阴影，提升层次 */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* 适配Next主题默认间距和圆角 */
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
-  .rainyun-promotion .desc {
-    margin-bottom: 10px;
-    color: #1f2937; /* 深灰文字，清晰易读 */
-    font-weight: 600;
-    font-size: 1.05em;
+  /* 明模式（默认）样式 */
+  .next-ad-container {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #e6e6e6;
   }
 
-  .rainyun-promotion .link a {
-    text-decoration: none;
-    color: #f97316; /* 主橙色链接文字 */
-    font-weight: 700;
-    font-size: 1.1em;
-    transition: all 0.2s ease;
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 4px;
-    border: 1px solid #f97316; /* 橙色边框强化按钮感 */
+  /* 暗模式样式（适配Next主题的dark模式） */
+  [data-theme="dark"] .next-ad-container {
+    background-color: #2c2c2c;
+    color: #e5e5e5;
+    border: 1px solid #444;
   }
 
-  .rainyun-promotion .link a:hover {
-    color: #ffffff; /* hover时文字变白 */
-    background-color: #f97316; /* hover时背景变主橙色 */
-    text-decoration: none;
-    box-shadow: 0 2px 6px rgba(249, 115, 22, 0.2); /* hover增加阴影，更有立体感 */
+  /* 广告标签样式 */
+  .ad-label {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 10px;
+    opacity: 0.7;
+    transition: color 0.3s ease;
   }
 
-  /* 深色（黑色）主题适配 */
-  @media (prefers-color-scheme: dark) {
-    .rainyun-promotion {
-      background-color: #111827; /* 深灰黑色背景 */
-      border: 1px solid #374151; /* 深色边框 */
-      border-left-color: #fb923c; /* 浅橙色左侧边框，深色模式更柔和醒目 */
-      box-shadow: 0 1px 3px rgba(251, 146, 60, 0.2);
+  [data-theme="dark"] .ad-label {
+    color: #aaa;
+  }
+
+  /* 广告内容区域 */
+  .ad-content {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* 加载提示样式 */
+  .ad-loading {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+
+  /* 响应式适配（移动端优化） */
+  @media (max-width: 768px) {
+    .next-ad-container {
+      padding: 10px;
     }
-    .rainyun-promotion .desc {
-      color: #f9fafb; /* 纯白色文字 */
+    .ad-content {
+      height: 40px;
     }
-    .rainyun-promotion .link a {
-      color: #fb923c; /* 浅橙色链接文字 */
-      border-color: #fb923c; /* 浅橙色边框 */
-    }
-    .rainyun-promotion .link a:hover {
-      color: #111827; /* hover时文字变深黑 */
-      background-color: #fb923c; /* hover时背景变浅橙色 */
+    .ad-loading {
+      font-size: 12px;
     }
   }
 </style>
 
-<div class="rainyun-promotion">
-  <div class="desc">本站部分构建节点由雨云赞助提供</div>
-  <div class="link">
-    <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer">
-      博主专属链接注册 → 立享首月5折优惠券+不定期补给福利
-    </a>
-  </div>
-</div>
+<!-- 可选：广告加载逻辑（如需动态加载广告内容可添加） -->
+<script>
+// 示例：模拟广告加载（可替换为实际广告接口请求）
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(() => {
+    const adBody = document.getElementById('ad-body');
+    if (adBody) {
+      // 替换为实际广告内容（如广告图片/链接）
+      // adBody.innerHTML = '<a href="https://www.rainyun.com/jackie_" target="_blank"><img src="/img/rainyun/1.png" alt="雨云广告" style="max-width:100%;height:100%;object-fit:contain;"></a>';
+    }
+  }, 1000);
+});
+
+// 适配Next主题的手动切换明暗模式
+document.addEventListener('theme-change', function() {
+  // 模式切换时自动适配样式（CSS已通过[data-theme]实现，此处无需额外逻辑）
+});
+</script>
