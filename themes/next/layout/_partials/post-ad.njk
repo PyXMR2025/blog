@@ -1,4 +1,4 @@
-<!-- 广告组件 - 适配Next主题+明暗模式 -->
+<!-- 广告组件 - 适配Next主题+明暗模式（图片+文字版） -->
 <div class="next-ad-container" id="next-ad-container">
   <!-- 广告标签 -->
   <div class="ad-label">广告</div>
@@ -12,27 +12,28 @@
 
 <!-- 配套CSS样式（建议放到Next主题的自定义样式文件中） -->
 <style>
-  /* 广告容器基础样式 */
+  /* 广告容器基础样式 - 增强鲁棒性 */
   .next-ad-container {
     position: relative;
     margin: 20px 0;
     padding: 15px;
     border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    /* 适配Next主题默认间距和圆角 */
+    transition: all 0.3s ease;
     max-width: 100%;
     box-sizing: border-box;
+    overflow: hidden;
+    font-family: inherit;
   }
 
-  /* 明模式（默认）样式 */
+  /* 明模式样式 */
   .next-ad-container {
     background-color: #f5f5f5;
     color: #333;
     border: 1px solid #e6e6e6;
   }
 
-  /* 暗模式样式（适配Next主题的dark模式） */
-  [data-theme="dark"] .next-ad-container {
+  /* 暗模式样式 */
+  html[data-theme="dark"] .next-ad-container {
     background-color: #2c2c2c;
     color: #e5e5e5;
     border: 1px solid #444;
@@ -46,56 +47,190 @@
     font-size: 10px;
     opacity: 0.7;
     transition: color 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
   }
 
-  [data-theme="dark"] .ad-label {
+  html[data-theme="dark"] .ad-label {
     color: #aaa;
   }
 
-  /* 广告内容区域 */
+  /* 广告内容区域 - 整体居中布局 */
   .ad-content {
-    height: 50px;
     display: flex;
+    flex-direction: column; /* 图片+文字上下排列 */
+    align-items: center;     /* 水平居中 */
+    justify-content: center; /* 垂直居中 */
+    text-align: center;
+    padding: 10px 0;
+    min-height: 100px; /* 适配图片+文字的高度 */
+    overflow: hidden;
+  }
+
+  /* 广告链接容器 - 确保整体可点击 */
+  .ad-wrapper {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
+    width: 100%;
+    text-decoration: none; /* 移除链接下划线 */
+    color: inherit; /* 继承容器文字颜色，适配明暗模式 */
+  }
+
+  /* 广告图片样式 */
+  .ad-img {
+    max-width: 120px; /* 限制图片宽度，避免过大 */
+    max-height: 60px;
+    object-fit: contain;
+    border: none;
+    margin-bottom: 8px; /* 图片与文字间距 */
+    transition: opacity 0.2s ease;
+  }
+
+  .ad-img:hover {
+    opacity: 0.95;
+  }
+
+  /* 广告文字样式 - 适配明暗模式 */
+  .ad-text {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 2px 0;
+    opacity: 0.9;
+    transition: color 0.3s ease;
+  }
+
+  /* 第二行文字稍小，突出重点 */
+  .ad-text.sub {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  /* 暗模式文字颜色优化 */
+  html[data-theme="dark"] .ad-text {
+    color: #d0d0d0;
   }
 
   /* 加载提示样式 */
   .ad-loading {
     font-size: 14px;
     opacity: 0.8;
+    line-height: 1;
   }
 
-  /* 响应式适配（移动端优化） */
+  /* 响应式适配 - 移动端优化 */
   @media (max-width: 768px) {
     .next-ad-container {
       padding: 10px;
+      margin: 15px 0;
     }
     .ad-content {
-      height: 40px;
+      min-height: 80px;
+    }
+    .ad-img {
+      max-width: 100px;
+      max-height: 50px;
+    }
+    .ad-text {
+      font-size: 13px;
+    }
+    .ad-text.sub {
+      font-size: 11px;
     }
     .ad-loading {
       font-size: 12px;
     }
   }
+
+  /* 极小屏适配 */
+  @media (max-width: 480px) {
+    .ad-content {
+      min-height: 70px;
+    }
+    .ad-img {
+      max-width: 80px;
+      max-height: 40px;
+    }
+  }
 </style>
 
-<!-- 可选：广告加载逻辑（如需动态加载广告内容可添加） -->
+<!-- 广告加载逻辑（修复加载卡住问题，保留你的文字/图片路径） -->
 <script>
-// 示例：模拟广告加载（可替换为实际广告接口请求）
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(() => {
-    const adBody = document.getElementById('ad-body');
-    if (adBody) {
-      // 替换为实际广告内容（如广告图片/链接）
-      // adBody.innerHTML = '<a href="https://www.rainyun.com/jackie_" target="_blank"><img src="/img/rainyun/1.png" alt="雨云广告" style="max-width:100%;height:100%;object-fit:contain;"></a>';
-    }
-  }, 1000);
-});
+// 广告加载函数 - 增加重试+容错
+function loadAdContent() {
+  // 重试机制：最多尝试5次，每次间隔300ms
+  let retryCount = 0;
+  const maxRetry = 5;
 
-// 适配Next主题的手动切换明暗模式
-document.addEventListener('theme-change', function() {
-  // 模式切换时自动适配样式（CSS已通过[data-theme]实现，此处无需额外逻辑）
-});
+  function tryLoad() {
+    const adBody = document.getElementById('ad-body');
+    
+    // 调试日志（可按F12查看Console）
+    console.log('广告加载尝试:', retryCount + 1, '元素是否存在:', !!adBody);
+
+    // 元素不存在则重试
+    if (!adBody) {
+      retryCount++;
+      if (retryCount < maxRetry) {
+        setTimeout(tryLoad, 300);
+      } else {
+        console.error('无法获取广告容器元素，请检查ID是否正确');
+        // 兜底：手动创建内容
+        const container = document.getElementById('next-ad-container');
+        if (container) {
+          container.innerHTML = `
+            <div class="ad-label">广告</div>
+            <div class="ad-content">
+              <div class="ad-loading">广告容器加载失败</div>
+            </div>
+          `;
+        }
+      }
+      return;
+    }
+
+    try {
+      // 保留你修改后的广告内容
+      const adHtml = `
+        <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+          <img src="/img/rainyun/1.png" alt="雨云云服务器" class="ad-img" loading="lazy">
+          <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+          <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+        </a>
+      `;
+      adBody.innerHTML = adHtml;
+
+      // 图片加载失败降级
+      const adImg = adBody.querySelector('.ad-img');
+      if (adImg) {
+        adImg.onerror = function() {
+          adBody.innerHTML = `
+            <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+              <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+              <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+            </a>
+          `;
+        };
+      }
+    } catch (error) {
+      console.warn('广告加载出错:', error);
+      adBody.innerHTML = '<div class="ad-loading">广告加载失败</div>';
+    }
+  }
+
+  tryLoad(); // 立即执行第一次尝试
+}
+
+// 修复执行时机：改用window.load（比DOMContentLoaded更晚，适配Next主题渲染）
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  // 页面已加载，立即执行
+  loadAdContent();
+} else {
+  // 页面未加载完，等所有资源加载后执行
+  window.addEventListener('load', loadAdContent);
+}
+
+// 适配主题切换
+document.addEventListener('theme-change', function() {});
 </script>
