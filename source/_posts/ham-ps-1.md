@@ -1,7 +1,7 @@
 ---
-title: 【BA8AHF】如何让自己可刑可铐（一）：整活向 · 背个抛物面天线，解锁可刑可铐新姿势
-author_name: "Jackie"
-author_title: "探索区块链、自动化与开源技术"
+title: 如何让自己可刑可铐（一）：整活向 · 背个抛物面天线，解锁可刑可铐新姿势
+author_name: "BA8AHF"
+author_title: "博主的朋友，一个业余无线电爱好者"
 date: 2026-2-8 01:01:11
 updated: 2026-2-8 01:01:11
 tags: 

@@ -1,7 +1,7 @@
 ---
-title: 【BA8AHF】如何让自己可刑可铐（六）：整活向 · 全向宽带双锥天线，覆盖越广，“刑期”越长
-author_name: "Jackie"
-author_title: "探索区块链、自动化与开源技术"
+title: 如何让自己可刑可铐（六）：整活向 · 全向宽带双锥天线，覆盖越广，“刑期”越长
+author_name: "BA8AHF"
+author_title: "博主的朋友，一个业余无线电爱好者"
 date: 2026-2-16 11:57:12
 updated: 2026-2-16 11:57:12
 tags: 
