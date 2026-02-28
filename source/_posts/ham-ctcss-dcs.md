@@ -1,5 +1,5 @@
 ---
-title: 业余无线电入门 · 模拟亚音CTCSS+数字亚音DCS技术原理详解与应用场景
+title: 模拟亚音 CTCSS 与 数字亚音 DCS 技术原理详解与应用场景
 author_name: "Jackie"
 author_title: "探索区块链、自动化与开源技术"
 date: 2026-2-6 11:16:21

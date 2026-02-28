@@ -1,5 +1,5 @@
 ---
-title: GitHub Actions实现博客自动推送IndexNow · 搜索引擎快速收录教程
+title: 使用 GitHub Actions 自动提交 URL 到 IndexNow
 author_name: "Jackie"
 author_title: "探索区块链、自动化与开源技术"
 date: 2026-2-18 16:28:19

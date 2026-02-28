@@ -1,5 +1,5 @@
 ---
-title: 花生壳内网穿透（NAT穿透）全教程 · 无公网 IP 访问内网服务实战
+title: 花生壳内网穿透（ NAT 穿透）安装使用全教程 · 无公网 IP 访问内网服务实战
 author_name: "Jackie"
 author_title: "探索区块链、自动化与开源技术"
 date: 2026-2-13 02:15:45
