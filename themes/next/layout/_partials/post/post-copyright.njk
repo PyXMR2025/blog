@@ -30,5 +30,9 @@
       {{- __('post.copyright.license_content', next_url(ccURL, ccIcon + ccText)) }}
     {%- endif %}
   </li>
+  <li class="post-copyright-aigc">
+    <strong>AIGC 辅助创作声明：</strong>
+    {{ next_url('/aigc/', '本文采用 AIGC 工具辅助创作，全程人工校对、技术验证，作者对内容负责。', {title: 'AIGC辅助创作声明'}) }}
+  </li>
 </ul>
 </div>
