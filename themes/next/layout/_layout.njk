@@ -56,6 +56,7 @@
 
   <!-- 资源预加载与站点图标 -->
   <link rel="prefetch" as="image" href="https://boringbay.com/api/badge/jackie.openenet.cn">
+  <link rel="prefetch" as="image" href="https://www.blogsclub.org/badge/jackie.openenet.cn">
   <link rel="icon" href="https://jackie.openenet.cn/favicon.ico" type="image/x-icon">
 
   <!-- 运行时长统计样式 -->
@@ -115,17 +116,6 @@
       
       <!-- 页脚公共内容（缓存控制） -->
       {{ partial('_partials/footer.njk', {}, {cache: theme.cache.enable}) }}
-
-      <!-- 站点数据（居中显示） -->
-      <div style="text-align: center;">
-        <a href="https://www.blogsclub.org/rank.html" target="_blank">
-          <img 
-            src="https://www.blogsclub.org/badge/jackie.openenet.cn" 
-            style="height:60px!important" 
-            loading="lazy"
-            alt="统计数据">
-        </a>
-      </div>
         
       <!-- 运行时长统计展示行（新增分钟显示） -->
       <div class="uptime-row">
