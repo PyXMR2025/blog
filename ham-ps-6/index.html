@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- 基础头部公共组件（缓存控制） -->
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/16.png">
+  <link rel="mask-icon" href="/img/favicon/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jackie.openenet.cn","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":true,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":false,"lazyload":true,"nav":{"utterances":{"text":"Utterances","order":-1}},"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="本文整活向拆解双锥天线的核心结构、工作原理与辐射特性，详解特征阻抗与带宽的设计要点，对比笼形双锥天线的优化方案，分析全向宽带天线的应用场景，业余无线电进阶必看。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何让自己可刑可铐（六）：整活向 · 全向宽带双锥天线，覆盖越广，“刑期”越长">
+<meta property="og:url" content="https://jackie.openenet.cn/ham-ps-6/index.html">
+<meta property="og:site_name" content="Jackie&#39;s Blog">
+<meta property="og:description" content="本文整活向拆解双锥天线的核心结构、工作原理与辐射特性，详解特征阻抗与带宽的设计要点，对比笼形双锥天线的优化方案，分析全向宽带天线的应用场景，业余无线电进阶必看。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jackie.openenet.cn/img/ham-ps-6/1.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/ham-ps-6/2.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/ham-ps-6/3.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/ham-ps-6/4.png">
+<meta property="article:published_time" content="2026-02-16T03:57:12.000Z">
+<meta property="article:modified_time" content="2026-02-16T03:57:12.000Z">
+<meta property="article:author" content="Jackie">
+<meta property="article:tag" content="业余无线电">
+<meta property="article:tag" content="全向天线">
+<meta property="article:tag" content="卫星通信">
+<meta property="article:tag" content="双锥天线">
+<meta property="article:tag" content="可刑可铐天线小课堂">
+<meta property="article:tag" content="天线理论入门">
+<meta property="article:tag" content="宽带天线">
+<meta property="article:tag" content="射频技术小知识">
+<meta property="article:tag" content="特征阻抗">
+<meta property="article:tag" content="电磁兼容测试">
+<meta property="article:tag" content="硬核科普整活">
+<meta property="article:tag" content="笼形双锥">
+<meta property="article:tag" content="超宽带UWB">
+<meta property="article:tag" content="驻波比">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jackie.openenet.cn/img/ham-ps-6/1.png">
+
+
+<link rel="canonical" href="https://jackie.openenet.cn/ham-ps-6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://jackie.openenet.cn/ham-ps-6/","path":"ham-ps-6/","title":"如何让自己可刑可铐（六）：整活向 · 全向宽带双锥天线，覆盖越广，“刑期”越长"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<!-- 页面标题（模板块） -->
+  <title>如何让自己可刑可铐（六）：整活向 · 全向宽带双锥天线，覆盖越广，“刑期”越长 | Jackie's Blog</title>
+
+  <!-- 第三方统计/分析脚本（缓存控制） -->
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <!-- 核心脚本与第三方集成（缓存控制） -->
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://s4.zstatic.net/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://s4.zstatic.net/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://s4.zstatic.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+  <script class="next-config" data-name="wavedrom" type="application/json">{"enable":true,"js":{"url":"https://s4.zstatic.net/ajax/libs/wavedrom/3.5.0/wavedrom.min.js","integrity":"sha256-INLAoJc6quTNfiMWkGZniYO2cxE8mHpddnLow1m6RFs="}}</script>
+  <script class="next-config" data-name="wavedrom_skin" type="application/json">{"enable":true,"js":{"url":"https://s4.zstatic.net/ajax/libs/wavedrom/3.5.0/skins/default.js","integrity":"sha256-fduc/Zszk5ezWws2uInY/ALWVmIrmV6VTgXbsYSReFI="}}</script>
+  <script src="/js/third-party/tags/wavedrom.js" defer></script>
+
+
+
+
+  
+  <!-- 数学公式与快速链接组件 -->
+
+  <script src="https://s4.zstatic.net/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://jackie.openenet.cn/ham-ps-6/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
+<!-- 框架注入的头部内容 -->
+
+  <!-- 无JS fallback样式 -->
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "02045fccf216471184e81448797b3566"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+  <!-- Vercel Insights -->
+  <script defer src="/_vercel/insights/script.js"></script>
+  
+  <!-- 灯笼 -->
+  <!-- <script defer src="/third-part/js/lantern.js"></script> -->
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "vmvt7pyx28");
+  </script>
+
+  <!-- 站点验证 Meta 标签 -->
+  <meta name="baidu-site-verification" content="codeva-FuIvtGJoyJ" />
+  <meta name="360-site-verification" content="0b6524e504a2c1865c05f4b983107d7c" />
+  <meta name="yandex-verification" content="8c5995dc66b40cd5" />
+  <meta name="msvalidate.01" content="94CC12F9EBDBD5361337329096B6444A" />
+  <meta name="google-site-verification" content="XbIJi2VgCSSSChuFrq9PuP6yybHvXTUCGsV9oe2ZRf4" />
+
+  <!-- 资源预加载与站点图标 -->
+  <link rel="prefetch" as="image" href="https://boringbay.com/api/badge/jackie.openenet.cn">
+  <link rel="icon" href="https://jackie.openenet.cn/favicon.ico" type="image/x-icon">
+
+  <!-- 运行时长统计样式 -->
+  <style>
+    /* 运行时长数字高亮样式 */
+    .uptime-num {
+      color: #e63946;
+      font-weight: bold;
+    }
+    /* 页脚运行时长行样式 */
+    .uptime-row {
+      margin: 8px 0;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+<link rel="alternate" href="/atom.xml" title="Jackie's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+<body 
+  itemscope 
+  itemtype="http://schema.org/WebPage"
+   class="use-motion"
+>
+  <!-- 顶部装饰条 -->
+  <div class="headband"></div>
+
+  <!-- 页面主体 -->
+  <main class="main">
+    <div class="column">
+      <!-- 页面头部 -->
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jackie's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索区块链、自动化与开源技术</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-友链"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+      
+      <!-- 侧边栏（可配置） -->
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E9%94%A5%E5%A4%A9%E7%BA%BF%E7%9A%84%E6%A0%B8%E5%BF%83%E5%AE%9A%E4%BD%8D%EF%BC%9A%E7%A0%B4%E8%A7%A3%E7%AA%84%E5%B8%A6%E5%AE%9A%E5%90%91%E7%9A%84%E2%80%9C%E6%95%B4%E6%B4%BB%E2%80%9D%E7%93%B6%E9%A2%88"><span class="nav-number">1.</span> <span class="nav-text">双锥天线的核心定位：破解窄带定向的“整活”瓶颈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E8%83%BD%E5%AE%9E%E7%8E%B0%E8%B6%85%E5%AE%BD%E5%B8%A6%E5%85%A8%E5%90%91%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">结构与原理：为什么它能实现超宽带全向？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E4%BC%98%E5%8C%96%EF%BC%9A%E7%AC%BC%E5%BD%A2%E5%8F%8C%E9%94%A5%E5%A4%A9%E7%BA%BF"><span class="nav-number">2.1.</span> <span class="nav-text">实际应用优化：笼形双锥天线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%EF%BC%9A%E7%89%B9%E5%BE%81%E9%98%BB%E6%8A%97%E4%B8%8E%E5%B8%A6%E5%AE%BD%E7%9A%84%E2%80%9C%E5%8A%A0%E5%88%91%E2%80%9D%E5%AF%86%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">关键参数：特征阻抗与带宽的“加刑”密码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E6%83%B3%E4%B8%8E%E7%8E%B0%E5%AE%9E%EF%BC%9A%E6%97%A0%E9%99%90%E9%95%BFvs%E6%9C%89%E9%99%90%E9%95%BF%E5%8F%8C%E9%94%A5"><span class="nav-number">3.1.</span> <span class="nav-text">理想与现实：无限长vs有限长双锥</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%90%E5%B0%84%E7%89%B9%E6%80%A7%EF%BC%9A%E5%85%A8%E5%90%91%E8%A6%86%E7%9B%96%E7%9A%84%E4%BC%98%E5%8A%BF%E4%B8%8E%E5%8F%96%E8%88%8D"><span class="nav-number">4.</span> <span class="nav-text">辐射特性：全向覆盖的优势与取舍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9A%E5%93%AA%E9%87%8C%E7%94%A8%EF%BC%8C%E2%80%9C%E5%88%91%E6%9C%9F%E2%80%9D%E5%B0%B1%E5%BE%80%E5%93%AA%E6%B6%A8"><span class="nav-number">5.</span> <span class="nav-text">核心应用场景：哪里用，“刑期”就往哪涨</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%AB%E6%98%9F%E9%80%9A%E4%BF%A1%EF%BC%9A%E4%BD%8E%E8%BD%A8%E5%8D%AB%E6%98%9F%E6%B5%8B%E6%8E%A7%E7%9A%84%E2%80%9C%E5%85%B3%E9%94%AE%E7%BA%BD%E5%B8%A6%E2%80%9D"><span class="nav-number">5.1.</span> <span class="nav-text">卫星通信：低轨卫星测控的“关键纽带”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%B5%8B%E8%AF%95%EF%BC%9A%E6%9D%82%E6%95%A3%E5%B9%B2%E6%89%B0%E7%9A%84%E2%80%9C%E7%B2%BE%E5%87%86%E6%8E%A2%E6%B5%8B%E5%99%A8%E2%80%9D"><span class="nav-number">5.2.</span> <span class="nav-text">电磁兼容测试：杂散干扰的“精准探测器”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E5%8D%B1%E5%9C%BA%E6%99%AF%EF%BC%9A%E5%85%A8%E9%A2%91%E6%AE%B5%E4%BE%A6%E5%AF%9F%E4%B8%8E%E5%AE%BD%E5%B8%A6%E5%8E%8B%E5%88%B6"><span class="nav-number">5.3.</span> <span class="nav-text">高危场景：全频段侦察与宽带压制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%BD%E5%B8%A6vs%E7%AA%84%E5%B8%A6%EF%BC%9A%E4%B8%A4%E7%A7%8D%E2%80%9C%E6%95%B4%E6%B4%BB%E2%80%9D%E6%80%9D%E8%B7%AF%E7%9A%84%E7%BB%88%E6%9E%81%E5%AF%B9%E6%AF%94"><span class="nav-number">6.</span> <span class="nav-text">宽带vs窄带：两种“整活”思路的终极对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E6%9E%81%E8%AD%A6%E5%91%8A%EF%BC%9A%E5%85%A8%E5%90%91%E5%AE%BD%E5%B8%A6-%E9%AB%98%E9%A3%8E%E9%99%A9%EF%BC%8C%E5%90%88%E8%A7%84%E6%98%AF%E5%BA%95%E7%BA%BF"><span class="nav-number">7.</span> <span class="nav-text">终极警告：全向宽带&#x3D;高风险，合规是底线</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jackie</p>
+  <div class="site-description" itemprop="description">这里是 Jackie 的个人博客，一名热爱技术的中国学生。专注分享区块链、智能合约、以太坊、CI/CD、开源项目、开发板、嵌入式、业余无线电以及 IT 基础设施的深度解析与实践笔记。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">117</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/PyXMR2025" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;PyXMR2025" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:pyxmr2025@openenet.cn" title="E-Mail → mailto:pyxmr2025@openenet.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://s4.zstatic.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.blogsclub.org/" title="https:&#x2F;&#x2F;www.blogsclub.org&#x2F;" rel="noopener" target="_blank">BlogsClub</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.perass.com/" title="https:&#x2F;&#x2F;www.perass.com&#x2F;" rel="noopener" target="_blank">博客之家</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://bf.zzxworld.com/" title="https:&#x2F;&#x2F;bf.zzxworld.com&#x2F;" rel="noopener" target="_blank">BlogFinder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blogscn.fun/" title="https:&#x2F;&#x2F;blogscn.fun&#x2F;" rel="noopener" target="_blank">BLOGS·CN</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://bokehub.com/home/" title="https:&#x2F;&#x2F;bokehub.com&#x2F;home&#x2F;" rel="noopener" target="_blank">博客中心</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://boringbay.com/" title="https:&#x2F;&#x2F;boringbay.com&#x2F;" rel="noopener" target="_blank">无聊湾</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.blogplanet.cn/" title="https:&#x2F;&#x2F;www.blogplanet.cn&#x2F;" rel="noopener" target="_blank">博客星球</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.rmbk.cc/" title="https:&#x2F;&#x2F;www.rmbk.cc&#x2F;" rel="noopener" target="_blank">若梦博客</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://boke.lu/" title="https:&#x2F;&#x2F;boke.lu&#x2F;" rel="noopener" target="_blank">博客录</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+      <!-- 子菜单 -->
+<!-- 页面核心内容（模板块） -->
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jackie.openenet.cn/ham-ps-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jackie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jackie's Blog">
+      <meta itemprop="description" content="这里是 Jackie 的个人博客，一名热爱技术的中国学生。专注分享区块链、智能合约、以太坊、CI/CD、开源项目、开发板、嵌入式、业余无线电以及 IT 基础设施的深度解析与实践笔记。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="如何让自己可刑可铐（六）：整活向 · 全向宽带双锥天线，覆盖越广，“刑期”越长 | Jackie's Blog">
+      <meta itemprop="description" content="本文整活向拆解双锥天线的核心结构、工作原理与辐射特性，详解特征阻抗与带宽的设计要点，对比笼形双锥天线的优化方案，分析全向宽带天线的应用场景，业余无线电进阶必看。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何让自己可刑可铐（六）：整活向 · 全向宽带双锥天线，覆盖越广，“刑期”越长<a href="https://github.com/PyXMR2025/blog/tree/main/source/_posts/ham-ps-6.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-16 11:57:12" itemprop="dateCreated datePublished" datetime="2026-02-16T11:57:12+08:00">2026-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%B8%9A%E4%BD%99%E6%97%A0%E7%BA%BF%E7%94%B5/" itemprop="url" rel="index"><span itemprop="name">业余无线电</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">本文整活向拆解双锥天线的核心结构、工作原理与辐射特性，详解特征阻抗与带宽的设计要点，对比笼形双锥天线的优化方案，分析全向宽带天线的应用场景，业余无线电进阶必看。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>【作者BA8AHF已授权转载并允许删改】<br>BA8AHF（主笔编写）✨ | Jackie（整理 + 排版 + 发布）</p>
+</blockquote>
+<p>在之前的可刑可铐小课堂中，我们解锁了抛物面、螺旋天线等玩法，但这些天线有个共同的“致命短板”——窄带且高度定向！面对频率跳变极快、位置未知的信号，或是需要全方位、大面积开展电磁活动时，这种窄波束天线直接力不从心。今天就解锁宽带天线的核心款——<strong>双锥天线</strong>，全向覆盖+超宽带buff拉满，记住：覆盖范围越广，“刑期”潜力越足！</p>
+<blockquote>
+<p><img data-src="/img/ham-ps-6/1.png" alt="图1"></p>
+</blockquote>
+<h2 id="双锥天线的核心定位：破解窄带定向的“整活”瓶颈"><a href="#双锥天线的核心定位：破解窄带定向的“整活”瓶颈" class="headerlink" title="双锥天线的核心定位：破解窄带定向的“整活”瓶颈"></a>双锥天线的核心定位：破解窄带定向的“整活”瓶颈</h2><p>双锥天线的核心优势，就是打破窄带定向天线的局限，主打一个“广覆盖、全频段适配”，完美适配需要大范围捕获、覆盖信号的场景——而这些场景，恰恰是“可刑可铐”的重灾区。它的结构看似简单，实则藏着宽带全向的关键逻辑，堪称“低调但高危”的整活神器。</p>
+<h2 id="结构与原理：为什么它能实现超宽带全向？"><a href="#结构与原理：为什么它能实现超宽带全向？" class="headerlink" title="结构与原理：为什么它能实现超宽带全向？"></a>结构与原理：为什么它能实现超宽带全向？</h2><p>双锥天线的结构非常直观，由两个顶点相对的金属圆锥体组成，馈电点就位于两个顶点的交界处。简单来讲，我们可以把它看作是<strong>普通对称偶极子天线的升级款</strong>，两者的核心差异，就是宽带性能的关键：</p>
+<ul>
+<li>普通偶极子天线：粗细固定，谐振频率被长度死死限制，带宽极窄，只能适配特定频率，“整活”灵活性极差；</li>
+<li>双锥天线：通过增加圆锥的横截面积，在物理结构上模拟了“从馈电点向外无限延伸的传输线”。由于其截面尺寸随距离线性增加，电磁波传播时看到的几何结构具有高度自相似性，这就赋予了它超宽带（UWB）性能，让阻抗和方向图在极宽频率范围内保持稳定。</li>
+</ul>
+<h3 id="实际应用优化：笼形双锥天线"><a href="#实际应用优化：笼形双锥天线" class="headerlink" title="实际应用优化：笼形双锥天线"></a>实际应用优化：笼形双锥天线</h3><p>理论上的双锥天线是完整金属圆锥，但实际制造和使用中，为了减小重量、降低风阻，工程师们常会用多根金属杆拼凑成“笼形”结构——这就是我们最常见的<strong>笼形双锥天线</strong>，既保留了超宽带全向特性，又兼顾了实用性，也是业余爱好者最容易接触到（同时风险最高）的款式。</p>
+<h2 id="关键参数：特征阻抗与带宽的“加刑”密码"><a href="#关键参数：特征阻抗与带宽的“加刑”密码" class="headerlink" title="关键参数：特征阻抗与带宽的“加刑”密码"></a>关键参数：特征阻抗与带宽的“加刑”密码</h2><p>双锥天线的性能，核心取决于特征阻抗和带宽，而这两个参数，直接决定了它的“整活”能力和风险等级，记住核心公式和关键逻辑，不翻车、不“减刑”：</p>
+<p>核心计算公式（特征阻抗）：<strong>Z0&#x3D;120ln(cot(θ&#x2F;2))</strong></p>
+<p>公式解读：θ代表圆锥的半张角（即中心轴线到锥面的夹角），Z0代表特征阻抗。只要半张角θ设定合理，就能在数个倍频程内让阻抗维持在50欧姆附近——这是关键中的关键，能确保能量在宽频带内顺畅辐射，避免因阻抗不匹配产生严重驻波，进而烧毁发射机功放，既保住设备，也避免因设备故障暴露痕迹。</p>
+<h3 id="理想与现实：无限长vs有限长双锥"><a href="#理想与现实：无限长vs有限长双锥" class="headerlink" title="理想与现实：无限长vs有限长双锥"></a>理想与现实：无限长vs有限长双锥</h3><p>资料中常会提到“无限长双锥”这种理想模型，在这种理想状态下，天线从中心向外延伸至无穷远，其方向图、输入阻抗和方向性系数与频率完全无关，是真正意义上的全频段天线，“整活”潜力拉满。</p>
+<p>但实际我们只能制造“有限长双锥”，即便如此，只要合理设计半锥角θ和锥体长度（让锥高控制在1&#x2F;4到半个波长左右），仍然能获得极宽的阻抗带宽，可达2:1以上，完全能满足高阶“整活”需求。</p>
+<blockquote>
+<p>无限长双锥模型示意图<br><img data-src="/img/ham-ps-6/2.png" alt="无限长双锥模型示意图"></p>
+</blockquote>
+<blockquote>
+<p>有限长双锥模型示意图<br><img data-src="/img/ham-ps-6/3.png" alt="有限长双锥模型示意图"></p>
+</blockquote>
+<h2 id="辐射特性：全向覆盖的优势与取舍"><a href="#辐射特性：全向覆盖的优势与取舍" class="headerlink" title="辐射特性：全向覆盖的优势与取舍"></a>辐射特性：全向覆盖的优势与取舍</h2><p>双锥天线的辐射方向图呈“甜甜圈”状，完美契合全向覆盖需求，但其性能取舍也很明显，直接关系到“整活”策略：</p>
+<ul>
+<li>水平面（H面）：拥有360°全向辐射能力，能实现无死角信号覆盖，适合区域性电磁覆盖、信号搜索等场景；</li>
+<li>垂直面（E面）：能量集中在水平线附近，增益较低（通常只有0到3dBi），牺牲了单点信号强度，换来了全向覆盖能力。</li>
+</ul>
+<p>这种特性看似“温和”，实则风险极高——它能将有限能量集中在近地表平面，非常适合进行压制性操作，提醒一句：合法实验有奖励，非法操作有刑期，切勿轻易尝试！</p>
+<blockquote>
+<p><img data-src="/img/ham-ps-6/4.png" alt="图4"></p>
+</blockquote>
+<h2 id="核心应用场景：哪里用，“刑期”就往哪涨"><a href="#核心应用场景：哪里用，“刑期”就往哪涨" class="headerlink" title="核心应用场景：哪里用，“刑期”就往哪涨"></a>核心应用场景：哪里用，“刑期”就往哪涨</h2><p>双锥天线的应用场景，每一个都贴着“高危”标签，覆盖越广、用途越特殊，被请去“喝茶”的概率就越大，重点盘点3个核心场景：</p>
+<h3 id="卫星通信：低轨卫星测控的“关键纽带”"><a href="#卫星通信：低轨卫星测控的“关键纽带”" class="headerlink" title="卫星通信：低轨卫星测控的“关键纽带”"></a>卫星通信：低轨卫星测控的“关键纽带”</h3><p>虽然双锥天线无法支持远距离高速率数据传输，但在低轨道卫星（LEO）测控中不可或缺：当卫星刚发射入轨或姿态失控时，地面站与卫星的相对位置不确定，卫星搭载的双锥天线可凭借全向覆盖，无需精确对准就能与地面建立初步链路，发送关键遥测数据。</p>
+<p>地面端，双锥天线也常用于卫星信号搜索，在大范围内监测卫星过境时的信号特征。注意：双锥天线多为线极化，而卫星信号多为圆极化，接收时会存在约3dB的极化损失，这点需重点关注。</p>
+<h3 id="电磁兼容测试：杂散干扰的“精准探测器”"><a href="#电磁兼容测试：杂散干扰的“精准探测器”" class="headerlink" title="电磁兼容测试：杂散干扰的“精准探测器”"></a>电磁兼容测试：杂散干扰的“精准探测器”</h3><p>双锥天线最核心的合法应用场景是电磁兼容测试，凭借极宽的带宽和稳定的相位中心，它能准确测得环境中各个频段的杂散和干扰，为设备合规性测试提供支撑——但如果被用于非法场景，风险直接翻倍。</p>
+<h3 id="高危场景：全频段侦察与宽带压制"><a href="#高危场景：全频段侦察与宽带压制" class="headerlink" title="高危场景：全频段侦察与宽带压制"></a>高危场景：全频段侦察与宽带压制</h3><p>在特种通信领域，双锥天线常被用于全频段侦察和宽带压制，能全方位捕获信号、大范围干扰通信，堪称“整活天花板”。也正因为如此，偷偷使用这种天线，被条子请去喝茶的概率极大，切勿触碰红线！</p>
+<h2 id="宽带vs窄带：两种“整活”思路的终极对比"><a href="#宽带vs窄带：两种“整活”思路的终极对比" class="headerlink" title="宽带vs窄带：两种“整活”思路的终极对比"></a>宽带vs窄带：两种“整活”思路的终极对比</h2><p>很多人分不清宽带与窄带天线的“整活”逻辑，一张表讲清核心差异，选对思路才能“安全整活”（实则都高危，谨慎为先）：</p>
+<ul>
+<li>窄带天线（八木、抛物面等）：追求特定方向、特定频率的极致高增益，但视野狭窄，适合精准“瞄准”信号，风险集中在“定向高强度”；</li>
+<li>宽带天线（双锥等）：追求宽频率范围+全向覆盖，牺牲单点强度，换来了无死角监控和捕获能力，风险集中在“全向大范围”，堪称“可刑可铐”的终极选择。</li>
+</ul>
+<p>总结一句话：双锥天线不追极高增益，只追全向+宽带，一旦在非授权频带进行全向压制或监控操作，妥妥的“刑期拉满”！</p>
+<h2 id="终极警告：全向宽带-高风险，合规是底线"><a href="#终极警告：全向宽带-高风险，合规是底线" class="headerlink" title="终极警告：全向宽带&#x3D;高风险，合规是底线"></a>终极警告：全向宽带&#x3D;高风险，合规是底线</h2><p>最后再敲黑板：双锥天线看似结构简单、门槛不高，但它的全向+宽带特性，决定了其“高危属性”——覆盖范围越广，捕获、干扰的能力越强，被监管部门关注的概率就越大，细节决定刑期，切勿心存侥幸。</p>
+<p>本文所有内容参考自《天线理论》，图1与图4来自网络，无限长双锥与有限长双锥示意图选自《天线理论》，本文对部分内容进行了科普性优化，使其更贴合整活向科普风格，如果您有任何指正或建议，请及时向我反馈，谢谢！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        <!-- 广告组件 - 适配Next主题+明暗模式（图片+文字版） -->
+<div class="next-ad-container" id="next-ad-container">
+  <!-- 广告标签 -->
+  <div class="ad-label">广告</div>
+  <!-- 广告内容区域 -->
+  <div class="ad-content" id="ad-body">
+    <div class="ad-loading">
+      广告正在加载中...
+    </div>
+  </div>
+</div>
+
+<!-- 配套CSS样式（修复线条问题） -->
+<style>
+  /* 广告容器基础样式 - 增强鲁棒性 */
+  .next-ad-container {
+    position: relative;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: inherit;
+    /* 新增：确保容器无多余边框/线条 */
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 明模式样式 */
+  .next-ad-container {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #e6e6e6;
+  }
+
+  /* 暗模式样式 */
+  html[data-theme="dark"] .next-ad-container {
+    background-color: #2c2c2c;
+    color: #e5e5e5;
+    border: 1px solid #444;
+  }
+
+  /* 广告标签样式 */
+  .ad-label {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 10px;
+    opacity: 0.7;
+    transition: color 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  html[data-theme="dark"] .ad-label {
+    color: #aaa;
+  }
+
+  /* 广告内容区域 - 整体居中布局 */
+  .ad-content {
+    display: flex;
+    flex-direction: column; /* 图片+文字上下排列 */
+    align-items: center;     /* 水平居中 */
+    justify-content: center; /* 垂直居中 */
+    text-align: center;
+    padding: 10px 0;
+    min-height: 100px; /* 适配图片+文字的高度 */
+    overflow: hidden;
+    /* 新增：清除多余线条 */
+    border: none !important;
+    outline: none !important;
+  }
+
+  /* 广告链接容器 - 确保整体可点击 + 清除线条 */
+  .ad-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* 新增：彻底清除a标签的下划线/边框 */
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: inherit; /* 继承容器文字颜色，适配明暗模式 */
+  }
+
+  /* 新增：确保hover时也无下划线 */
+  .ad-wrapper:hover,
+  .ad-wrapper:active,
+  .ad-wrapper:focus {
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  /* 广告图片样式 */
+  .ad-img {
+    max-width: 120px; /* 限制图片宽度，避免过大 */
+    max-height: 60px;
+    object-fit: contain;
+    border: none !important; /* 新增：清除图片边框 */
+    margin-bottom: 8px; /* 图片与文字间距 */
+    transition: opacity 0.2s ease;
+    outline: none !important;
+  }
+
+  .ad-img:hover {
+    opacity: 0.95;
+  }
+
+  /* 广告文字样式 - 适配明暗模式 */
+  .ad-text {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 2px 0;
+    opacity: 0.9;
+    transition: color 0.3s ease;
+    /* 新增：确保文字无装饰 */
+    text-decoration: none !important;
+  }
+
+  /* 第二行文字稍小，突出重点 */
+  .ad-text.sub {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  /* 暗模式文字颜色优化 */
+  html[data-theme="dark"] .ad-text {
+    color: #d0d0d0;
+  }
+
+  /* 加载提示样式 */
+  .ad-loading {
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1;
+  }
+
+  /* 响应式适配 - 移动端优化 */
+  @media (max-width: 768px) {
+    .next-ad-container {
+      padding: 10px;
+      margin: 15px 0;
+    }
+    .ad-content {
+      min-height: 80px;
+    }
+    .ad-img {
+      max-width: 100px;
+      max-height: 50px;
+    }
+    .ad-text {
+      font-size: 13px;
+    }
+    .ad-text.sub {
+      font-size: 11px;
+    }
+    .ad-loading {
+      font-size: 12px;
+    }
+  }
+
+  /* 极小屏适配 */
+  @media (max-width: 480px) {
+    .ad-content {
+      min-height: 70px;
+    }
+    .ad-img {
+      max-width: 80px;
+      max-height: 40px;
+    }
+  }
+</style>
+
+<!-- 广告加载逻辑（优化重排警告+修复线条） -->
+<script>
+// 广告加载函数 - 优化性能+重试机制
+function loadAdContent() {
+  // 优化：提前缓存元素选择器，减少DOM查询
+  const getAdBody = () => document.getElementById('ad-body');
+  let retryCount = 0;
+  const maxRetry = 5;
+
+  // 优化：使用requestAnimationFrame减少重排
+  function tryLoad() {
+    requestAnimationFrame(() => {
+      const adBody = getAdBody();
+      
+      // 调试日志（可按F12查看Console）
+      if (retryCount === 0) console.log('开始加载广告，元素是否存在:', !!adBody);
+
+      // 元素不存在则重试
+      if (!adBody) {
+        retryCount++;
+        if (retryCount < maxRetry) {
+          setTimeout(tryLoad, 300);
+        } else {
+          console.error('无法获取广告容器元素，请检查ID是否正确');
+          // 兜底：手动创建内容
+          const container = document.getElementById('next-ad-container');
+          if (container) {
+            container.innerHTML = `
+              <div class="ad-label">广告</div>
+              <div class="ad-content">
+                <div class="ad-loading">广告容器加载失败</div>
+              </div>
+            `;
+          }
+        }
+        return;
+      }
+
+      try {
+        // 保留你修改后的广告内容
+        const adHtml = `
+          <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+            <img src="/img/rainyun/1.png" alt="雨云云服务器" class="ad-img" loading="lazy">
+            <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+            <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+          </a>
+        `;
+        // 优化：一次性赋值innerHTML，减少重排
+        adBody.innerHTML = adHtml;
+
+        // 图片加载失败降级
+        const adImg = adBody.querySelector('.ad-img');
+        if (adImg) {
+          adImg.onerror = function() {
+            adBody.innerHTML = `
+              <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+                <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+                <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+              </a>
+            `;
+          };
+        }
+      } catch (error) {
+        console.warn('广告加载出错:', error);
+        adBody.innerHTML = '<div class="ad-loading">广告加载失败</div>';
+      }
+    });
+  }
+
+  tryLoad(); // 立即执行第一次尝试
+}
+
+// 修复执行时机：改用window.load（比DOMContentLoaded更晚，适配Next主题渲染）
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  // 页面已加载，立即执行
+  loadAdContent();
+} else {
+  // 页面未加载完，等所有资源加载后执行
+  window.addEventListener('load', loadAdContent);
+}
+
+// 适配主题切换
+document.addEventListener('theme-change', function() {});
+</script>
+
+          <div class="reward-container">
+  <div>请我喝杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/img/reward/btc.png" alt="Jackie 比特币">
+        <span>比特币</span>
+      </div>
+      <div>
+        <img src="/img/reward/eth.png" alt="Jackie 以太坊">
+        <span>以太坊</span>
+      </div>
+      <div>
+        <img src="/img/reward/trx.png" alt="Jackie 波场">
+        <span>波场</span>
+      </div>
+      <div>
+        <img src="/img/reward/arb.png" alt="Jackie 阿尔比垂姆">
+        <span>阿尔比垂姆</span>
+      </div>
+      <div>
+        <img src="/img/reward/bsc.png" alt="Jackie 币安智能链">
+        <span>币安智能链</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Jackie
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://jackie.openenet.cn/ham-ps-6/" title="如何让自己可刑可铐（六）：整活向 · 全向宽带双锥天线，覆盖越广，“刑期”越长">https://jackie.openenet.cn/ham-ps-6/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-SA</a> 许可协议。转载请注明出处！
+  </li>
+  <li class="post-copyright-aigc">
+    <strong>AIGC 辅助创作声明：</strong>
+    <a href="/aigc/" title="AIGC辅助创作声明">本文采用 AIGC 工具辅助创作，全程人工校对、技术验证，作者对内容负责。</a>
+  </li>
+</ul>
+</div>
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E4%B8%9A%E4%BD%99%E6%97%A0%E7%BA%BF%E7%94%B5/" rel="tag"># 业余无线电</a>
+              <a href="/tags/%E5%8F%AF%E5%88%91%E5%8F%AF%E9%93%90%E5%A4%A9%E7%BA%BF%E5%B0%8F%E8%AF%BE%E5%A0%82/" rel="tag"># 可刑可铐天线小课堂</a>
+              <a href="/tags/%E5%A4%A9%E7%BA%BF%E7%90%86%E8%AE%BA%E5%85%A5%E9%97%A8/" rel="tag"># 天线理论入门</a>
+              <a href="/tags/%E5%B0%84%E9%A2%91%E6%8A%80%E6%9C%AF%E5%B0%8F%E7%9F%A5%E8%AF%86/" rel="tag"># 射频技术小知识</a>
+              <a href="/tags/%E7%A1%AC%E6%A0%B8%E7%A7%91%E6%99%AE%E6%95%B4%E6%B4%BB/" rel="tag"># 硬核科普整活</a>
+              <a href="/tags/%E5%8D%AB%E6%98%9F%E9%80%9A%E4%BF%A1/" rel="tag"># 卫星通信</a>
+              <a href="/tags/%E9%A9%BB%E6%B3%A2%E6%AF%94/" rel="tag"># 驻波比</a>
+              <a href="/tags/%E5%8F%8C%E9%94%A5%E5%A4%A9%E7%BA%BF/" rel="tag"># 双锥天线</a>
+              <a href="/tags/%E7%AC%BC%E5%BD%A2%E5%8F%8C%E9%94%A5/" rel="tag"># 笼形双锥</a>
+              <a href="/tags/%E5%AE%BD%E5%B8%A6%E5%A4%A9%E7%BA%BF/" rel="tag"># 宽带天线</a>
+              <a href="/tags/%E8%B6%85%E5%AE%BD%E5%B8%A6UWB/" rel="tag"># 超宽带UWB</a>
+              <a href="/tags/%E5%85%A8%E5%90%91%E5%A4%A9%E7%BA%BF/" rel="tag"># 全向天线</a>
+              <a href="/tags/%E7%94%B5%E7%A3%81%E5%85%BC%E5%AE%B9%E6%B5%8B%E8%AF%95/" rel="tag"># 电磁兼容测试</a>
+              <a href="/tags/%E7%89%B9%E5%BE%81%E9%98%BB%E6%8A%97/" rel="tag"># 特征阻抗</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/ham-ps-5/" rel="prev" title="如何让自己可刑可铐（五）：整活向 · 抛物面天线的灵魂 —— 馈源，决定增益与刑期的关键">
+                  <i class="fa fa-angle-left"></i> 如何让自己可刑可铐（五）：整活向 · 抛物面天线的灵魂 —— 馈源，决定增益与刑期的关键
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/cicd-actions-indexnow/" rel="next" title="使用 GitHub Actions 自动提交 URL 到 IndexNow">
+                  使用 GitHub Actions 自动提交 URL 到 IndexNow <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+<div class="hexo-article-recommender-section">
+  <div class="hexo-article-recommender-section-divider">
+    <div class="hexo-article-recommender-divider-line"></div>
+    <div class="hexo-article-recommender-divider-text">
+      <span>推荐文章</span>
+    </div>
+  </div>
+
+  <div class="hexo-article-recommender-posts">
+    
+      
+      
+      <div class="hexo-article-recommender-post-card" data-bg="#6a89cc, #4a69bd">
+        <!-- 左上角：站内标签 -->
+        <div class="hexo-article-recommender-site-tag">站内</div>
+
+        <!-- 左下角：关系类型标签 + 相关度 -->
+        <div class="hexo-article-recommender-relation-tag related">
+          相关
+          <span class="hexo-article-recommender-score">(33.3%)
+        </span>
+        </div>
+
+        <div class="hexo-article-recommender-card-header">
+          <div class="hexo-article-recommender-reading-time">
+            <i class="fas fa-clock"></i>
+            8分钟
+          </div>
+        </div>
+        <div class="hexo-article-recommender-card-content">
+          <h4 class="hexo-article-recommender-post-title">
+            <a href="/ham-ps-5/">如何让自己可刑可铐（五）：整活向 · 抛物面天线的灵魂 —— 馈源，决定增益与刑期的关键</a>
+          </h4>
+          <p class="hexo-article-recommender-post-excerpt">
+            本文整活向拆解抛物面天线馈源的核心地位、合格馈源的3个硬标准，详解不同馈源形态的适用场景与性能差异，教你拿捏天线增益的核心密码，业余无线电进阶必看。
+          </p>
+          <div class="hexo-article-recommender-author">
+            <div class="hexo-article-recommender-author-avatar" style="background: #4a69bd;">
+              1
+            </div>
+            <div class="hexo-article-recommender-author-info">
+              <div class="hexo-article-recommender-author-name">BA8AHF</div>
+              <div class="hexo-article-recommender-author-title">博主的朋友，一个业余无线电爱好者</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      
+      
+      <div class="hexo-article-recommender-post-card" data-bg="#e55039, #eb2f06">
+        <!-- 左上角：站内标签 -->
+        <div class="hexo-article-recommender-site-tag">站内</div>
+
+        <!-- 左下角：关系类型标签 + 相关度 -->
+        <div class="hexo-article-recommender-relation-tag related">
+          相关
+          <span class="hexo-article-recommender-score">(30.7%)
+        </span>
+        </div>
+
+        <div class="hexo-article-recommender-card-header">
+          <div class="hexo-article-recommender-reading-time">
+            <i class="fas fa-clock"></i>
+            8分钟
+          </div>
+        </div>
+        <div class="hexo-article-recommender-card-content">
+          <h4 class="hexo-article-recommender-post-title">
+            <a href="/ham-ps-2/">如何让自己可刑可铐（二）：整活向 · 玩转卡塞格伦天线，铁窗体验再升级</a>
+          </h4>
+          <p class="hexo-article-recommender-post-excerpt">
+            本文整活向拆解卡塞格伦天线的核心结构、工作原理与技术优势，对比传统抛物面天线的性能提升，详解偏置卡塞格伦的优化方案，业余无线电卫星通信入门必看。
+          </p>
+          <div class="hexo-article-recommender-author">
+            <div class="hexo-article-recommender-author-avatar" style="background: #e55039;">
+              2
+            </div>
+            <div class="hexo-article-recommender-author-info">
+              <div class="hexo-article-recommender-author-name">BA8AHF</div>
+              <div class="hexo-article-recommender-author-title">博主的朋友，一个业余无线电爱好者</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      
+      
+      <div class="hexo-article-recommender-post-card" data-bg="#3dc1d3, #0fb9b1">
+        <!-- 左上角：站内标签 -->
+        <div class="hexo-article-recommender-site-tag">站内</div>
+
+        <!-- 左下角：关系类型标签 + 相关度 -->
+        <div class="hexo-article-recommender-relation-tag related">
+          相关
+          <span class="hexo-article-recommender-score">(30.7%)
+        </span>
+        </div>
+
+        <div class="hexo-article-recommender-card-header">
+          <div class="hexo-article-recommender-reading-time">
+            <i class="fas fa-clock"></i>
+            5分钟
+          </div>
+        </div>
+        <div class="hexo-article-recommender-card-content">
+          <h4 class="hexo-article-recommender-post-title">
+            <a href="/ham-ps-1/">如何让自己可刑可铐（一）：整活向 · 背个抛物面天线，解锁可刑可铐新姿势</a>
+          </h4>
+          <p class="hexo-article-recommender-post-excerpt">
+            本文整活向拆解抛物面天线的核心结构、工作原理与增益计算公式，分析传统中心馈电的先天缺陷，详解偏置抛物面天线的优化方案，业余无线电新手入门必看。
+          </p>
+          <div class="hexo-article-recommender-author">
+            <div class="hexo-article-recommender-author-avatar" style="background: #3dc1d3;">
+              3
+            </div>
+            <div class="hexo-article-recommender-author-info">
+              <div class="hexo-article-recommender-author-name">BA8AHF</div>
+              <div class="hexo-article-recommender-author-title">博主的朋友，一个业余无线电爱好者</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+  <h2 class="hexo-article-recommender-section-over">--- over ---</h2>
+</div>
+
+<style>
+.hexo-article-recommender-section {
+  margin-top: 60px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hexo-article-recommender-section-divider {
+  position: relative;
+  margin: 60px 0;
+}
+
+.hexo-article-recommender-divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #6a89cc, transparent);
+}
+
+.hexo-article-recommender-divider-text {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 0 15px;
+}
+
+.hexo-article-recommender-divider-text span {
+  color: #6a89cc;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.hexo-article-recommender-section-over {
+  text-align: center;
+  margin: 30px;
+  color: #9e9e9e;
+}
+
+.hexo-article-recommender-posts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}
+
+.hexo-article-recommender-post-card {
+  width: 280px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 270px;
+  position: relative;
+}
+
+.hexo-article-recommender-post-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.hexo-article-recommender-card-header {
+  height: 60px;
+  position: relative;
+  background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite alternate;
+}
+
+.hexo-article-recommender-post-card[data-bg^="#6a89cc"] .hexo-article-recommender-card-header {
+  --bg-start: #6a89cc; --bg-end: #4a69bd;
+}
+.hexo-article-recommender-post-card[data-bg^="#e55039"] .hexo-article-recommender-card-header {
+  --bg-start: #e55039; --bg-end: #eb2f06;
+}
+.hexo-article-recommender-post-card[data-bg^="#3dc1d3"] .hexo-article-recommender-card-header {
+  --bg-start: #3dc1d3; --bg-end: #0fb9b1;
+}
+.hexo-article-recommender-post-card[data-bg^="#f6b93b"] .hexo-article-recommender-card-header {
+  --bg-start: #f6b93b; --bg-end: #e55039;
+}
+
+.hexo-article-recommender-reading-time {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(4px);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.hexo-article-recommender-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 60px);
+  justify-content: space-between;
+}
+
+.hexo-article-recommender-post-title {
+  margin-top: 0;
+  font-size: 1.2em;
+  line-height: 1.4;
+  color: #2c3e50;
+}
+
+.hexo-article-recommender-post-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.hexo-article-recommender-post-title a:hover {
+  color: #6a89cc;
+}
+
+.hexo-article-recommender-post-excerpt {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.hexo-article-recommender-author {
+  display: flex;
+  align-items: center;
+}
+
+.hexo-article-recommender-author-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.hexo-article-recommender-author-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.hexo-article-recommender-author-title {
+  font-size: 12px;
+  color: #888;
+}
+
+/* ========== 左上角：站内标签 ========== */
+.hexo-article-recommender-site-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(42, 170, 138, 0.9);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 0 0 8px 0;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ========== 左下角：关系类型标签 ========== */
+.hexo-article-recommender-relation-tag {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 0 8px 0 0;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hexo-article-recommender-relation-tag.related {
+  background-color: rgba(42, 170, 138, 0.9); /* 绿色：相关 */
+}
+
+.hexo-article-recommender-relation-tag.fallback {
+  background-color: rgba(229, 80, 57, 0.9); /* 橙红：推荐 */
+}
+
+.hexo-article-recommender-post-card:hover .hexo-article-recommender-relation-tag {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 相关度分数样式 */
+.hexo-article-recommender-relation-tag .hexo-article-recommender-score {
+  font-size: 10px;
+  opacity: 0.8;
+  margin-left: 4px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .hexo-article-recommender-posts {
+    flex-direction: column;
+    align-items: center;
+  }
+  .hexo-article-recommender-post-card {
+    width: calc(100% - 30px);
+    max-width: 400px;
+  }
+}
+</style>
+
+</div>
+
+
+
+
+
+
+      <!-- 评论区 -->
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <!-- 多语言切换 -->
+<!-- 页脚公共内容（缓存控制） -->
+      
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jackie</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">68k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:02</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+
+      <!-- 站点数据（居中显示） -->
+      <div style="text-align: center;">
+        <a href="https://www.blogsclub.org/rank.html" target="_blank">
+          <img 
+            src="https://www.blogsclub.org/badge/jackie.openenet.cn" 
+            style="height:60px!important" 
+            loading="lazy"
+            alt="统计数据">
+        </a>
+      </div>
+        
+      <!-- 运行时长统计展示行（新增分钟显示） -->
+      <div class="uptime-row">
+        本站已经稳定运行了 
+        <span class="uptime-num" id="days">00</span> 天 
+        <span class="uptime-num" id="hours">00</span> 小时 
+        <span class="uptime-num" id="minutes">00</span> 分钟 
+        <span class="uptime-num" id="seconds">00</span> 秒
+      </div>
+
+      <!-- ICP备案 -->
+      <div style="text-align: center; margin: 8px 0;">
+        <a href="https://icp.gov.moe/?keyword=20260177" target="_blank">萌ICP备20260177号</a>
+      </div>
+
+      <!-- 广告脚本（仅保留一次引入） -->
+      <!-- <script async="async" data-cfasync="false" src="https://pl28675819.effectivegatecpm.com/0f2aeb03ec930e47193f4782e446c5b6/invoke.js"></script> -->
+      <!-- <div id="container-0f2aeb03ec930e47193f4782e446c5b6"></div> -->
+
+    </div>
+  </footer>
+
+  <!-- 页面组件（缓存控制） -->
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/PyXMR2025" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  <!-- 框架注入的页面底部内容 --><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"PyXMR2025","repo":"blog-talk","client_id":"Ov23liwFgKqqzMwetvZo","admin_user":"PyXMR2025","distraction_free_mode":true,"proxy":"https://gitalk.openenet.cn/get_accesstoken","language":"zh-CN","js":{"url":"https://s4.zstatic.net/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"4093ccb203465b825576a8ffef362afa"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+
+  <!-- 运行时长统计逻辑（优化版） -->
+  <script>
+    // 站点启动时间（GMT+8 2025-12-15 10:47:19）
+    const startTime = new Date('2025-12-15T10:47:19+08:00');
+    // 缓存DOM元素，避免重复查询
+    const uptimeElements = {
+      days: document.getElementById('days'),
+      hours: document.getElementById('hours'),
+      minutes: document.getElementById('minutes'),
+      seconds: document.getElementById('seconds')
+    };
+    // 定时器标识，用于页面卸载时清理
+    let uptimeTimer = null;
+
+    /**
+     * 数字补零：单位数补0，如 5 → 05
+     * @param {number} num 要补零的数字
+     * @returns {string} 补零后的字符串
+     */
+    function padZero(num) {
+      return num.toString().padStart(2, '0');
+    }
+
+    /**
+     * 计算并更新站点运行时长
+     */
+    function updateUptime() {
+      const now = new Date();
+      const diffMs = now - startTime;
+
+      // 处理当前时间早于启动时间的边界情况
+      if (diffMs < 0) {
+        uptimeElements.days.textContent = '00';
+        uptimeElements.hours.textContent = '00';
+        uptimeElements.minutes.textContent = '00';
+        uptimeElements.seconds.textContent = '00';
+        return;
+      }
+
+      // 时间单位转换（毫秒 -> 天/小时/分钟/秒）
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const days = Math.floor(totalSeconds / (24 * 60 * 60));
+      const remainingSecondsAfterDays = totalSeconds % (24 * 60 * 60);
+      const hours = Math.floor(remainingSecondsAfterDays / (60 * 60));
+      const remainingSecondsAfterHours = remainingSecondsAfterDays % (60 * 60);
+      const minutes = Math.floor(remainingSecondsAfterHours / 60);
+      const seconds = remainingSecondsAfterHours % 60;
+
+      // 更新页面显示（补零后）
+      uptimeElements.days.textContent = padZero(days);
+      uptimeElements.hours.textContent = padZero(hours);
+      uptimeElements.minutes.textContent = padZero(minutes);
+      uptimeElements.seconds.textContent = padZero(seconds);
+    }
+
+    // 初始化执行 + 每秒更新一次
+    updateUptime();
+    uptimeTimer = setInterval(updateUptime, 1000);
+
+    // 页面卸载时清理定时器，避免内存泄漏
+    window.addEventListener('beforeunload', () => {
+      clearInterval(uptimeTimer);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- 基础头部公共组件（缓存控制） -->
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/16.png">
+  <link rel="mask-icon" href="/img/favicon/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jackie.openenet.cn","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":true,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":false,"lazyload":true,"nav":{"utterances":{"text":"Utterances","order":-1}},"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="本文详解Windows平台下Monero GUI钱包的完整安装、配置与使用全流程，覆盖门罗币核心概念、安装包验证、钱包创建、收发款操作与安全避坑指南，兼顾新手友好性与资产安全性，门罗币XMR钱包入门必看。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Monero GUI 钱包 Windows 平台安装使用全教程">
+<meta property="og:url" content="https://jackie.openenet.cn/monero-gui-install/index.html">
+<meta property="og:site_name" content="Jackie&#39;s Blog">
+<meta property="og:description" content="本文详解Windows平台下Monero GUI钱包的完整安装、配置与使用全流程，覆盖门罗币核心概念、安装包验证、钱包创建、收发款操作与安全避坑指南，兼顾新手友好性与资产安全性，门罗币XMR钱包入门必看。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jackie.openenet.cn/img/monero-gui-install/1.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/monero-gui-install/2.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/monero-gui-install/3.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/monero-gui-install/4.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/monero-gui-install/5.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/monero-gui-install/6.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/monero-gui-install/7.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/monero-gui-install/8.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/monero-gui-install/9.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/monero-gui-install/10.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/monero-gui-install/11.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/monero-gui-install/12.png">
+<meta property="article:published_time" content="2026-02-07T10:25:07.000Z">
+<meta property="article:modified_time" content="2026-02-07T10:25:07.000Z">
+<meta property="article:author" content="Jackie">
+<meta property="article:tag" content="Monero">
+<meta property="article:tag" content="MoneroGUI">
+<meta property="article:tag" content="OneKey">
+<meta property="article:tag" content="加密货币">
+<meta property="article:tag" content="区块链">
+<meta property="article:tag" content="比特币">
+<meta property="article:tag" content="硬件钱包">
+<meta property="article:tag" content="钱包">
+<meta property="article:tag" content="门罗币">
+<meta property="article:tag" content="隐私安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jackie.openenet.cn/img/monero-gui-install/1.png">
+
+
+<link rel="canonical" href="https://jackie.openenet.cn/monero-gui-install/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://jackie.openenet.cn/monero-gui-install/","path":"monero-gui-install/","title":"Monero GUI 钱包 Windows 平台安装使用全教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<!-- 页面标题（模板块） -->
+  <title>Monero GUI 钱包 Windows 平台安装使用全教程 | Jackie's Blog</title>
+
+  <!-- 第三方统计/分析脚本（缓存控制） -->
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <!-- 核心脚本与第三方集成（缓存控制） -->
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://s4.zstatic.net/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://s4.zstatic.net/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://s4.zstatic.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+  <script class="next-config" data-name="wavedrom" type="application/json">{"enable":true,"js":{"url":"https://s4.zstatic.net/ajax/libs/wavedrom/3.5.0/wavedrom.min.js","integrity":"sha256-INLAoJc6quTNfiMWkGZniYO2cxE8mHpddnLow1m6RFs="}}</script>
+  <script class="next-config" data-name="wavedrom_skin" type="application/json">{"enable":true,"js":{"url":"https://s4.zstatic.net/ajax/libs/wavedrom/3.5.0/skins/default.js","integrity":"sha256-fduc/Zszk5ezWws2uInY/ALWVmIrmV6VTgXbsYSReFI="}}</script>
+  <script src="/js/third-party/tags/wavedrom.js" defer></script>
+
+
+
+
+  
+  <!-- 数学公式与快速链接组件 -->
+
+  <script src="https://s4.zstatic.net/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://jackie.openenet.cn/monero-gui-install/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
+<!-- 框架注入的头部内容 -->
+
+  <!-- 无JS fallback样式 -->
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "02045fccf216471184e81448797b3566"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+  <!-- Vercel Insights -->
+  <script defer src="/_vercel/insights/script.js"></script>
+  
+  <!-- 灯笼 -->
+  <!-- <script defer src="/third-part/js/lantern.js"></script> -->
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "vmvt7pyx28");
+  </script>
+
+  <!-- 站点验证 Meta 标签 -->
+  <meta name="baidu-site-verification" content="codeva-FuIvtGJoyJ" />
+  <meta name="360-site-verification" content="0b6524e504a2c1865c05f4b983107d7c" />
+  <meta name="yandex-verification" content="8c5995dc66b40cd5" />
+  <meta name="msvalidate.01" content="94CC12F9EBDBD5361337329096B6444A" />
+  <meta name="google-site-verification" content="XbIJi2VgCSSSChuFrq9PuP6yybHvXTUCGsV9oe2ZRf4" />
+
+  <!-- 资源预加载与站点图标 -->
+  <link rel="prefetch" as="image" href="https://boringbay.com/api/badge/jackie.openenet.cn">
+  <link rel="icon" href="https://jackie.openenet.cn/favicon.ico" type="image/x-icon">
+
+  <!-- 运行时长统计样式 -->
+  <style>
+    /* 运行时长数字高亮样式 */
+    .uptime-num {
+      color: #e63946;
+      font-weight: bold;
+    }
+    /* 页脚运行时长行样式 */
+    .uptime-row {
+      margin: 8px 0;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+<link rel="alternate" href="/atom.xml" title="Jackie's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+<body 
+  itemscope 
+  itemtype="http://schema.org/WebPage"
+   class="use-motion"
+>
+  <!-- 顶部装饰条 -->
+  <div class="headband"></div>
+
+  <!-- 页面主体 -->
+  <main class="main">
+    <div class="column">
+      <!-- 页面头部 -->
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jackie's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索区块链、自动化与开源技术</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-友链"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+      
+      <!-- 侧边栏（可配置） -->
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">核心概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%A8%E7%BD%97%E5%B8%81%EF%BC%88XMR%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">门罗币（XMR）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%A8%E7%BD%97%E5%B8%81GUI%E9%92%B1%E5%8C%85"><span class="nav-number">1.2.</span> <span class="nav-text">门罗币GUI钱包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows%E5%B9%B3%E5%8F%B0Monero-GUI%E9%92%B1%E5%8C%85%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">Windows平台Monero GUI钱包安装与配置步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E9%92%B1%E5%8C%85%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">2.1.</span> <span class="nav-text">获取钱包安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%8C%85%E5%B9%B6%E9%AA%8C%E8%AF%81%E5%93%88%E5%B8%8C%E5%80%BC"><span class="nav-number">2.2.</span> <span class="nav-text">下载安装包并验证哈希值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B%E4%B8%8E%E5%AE%89%E8%A3%85%EF%BC%88%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%89%88%E6%9C%AC%E6%97%A0%E9%9C%80%E5%AE%89%E8%A3%85%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">解压与安装（压缩包版本无需安装）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E9%92%B1%E5%8C%85%E7%A8%8B%E5%BA%8F%E5%B9%B6%E8%A7%A3%E5%86%B3%E6%9D%80%E6%AF%92%E8%BD%AF%E4%BB%B6%E8%AF%AF%E6%8A%A5"><span class="nav-number">2.4.</span> <span class="nav-text">运行钱包程序并解决杀毒软件误报</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%B1%E5%8C%85%E7%9B%AE%E5%BD%95%E4%B8%BB%E8%A6%81%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90"><span class="nav-number">2.5.</span> <span class="nav-text">钱包目录主要文件解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E8%AF%AD%E8%A8%80%E5%B9%B6%E8%BF%9B%E5%85%A5%E9%85%8D%E7%BD%AE%E7%95%8C%E9%9D%A2"><span class="nav-number">2.6.</span> <span class="nav-text">选择语言并进入配置界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E9%92%B1%E5%8C%85%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.7.</span> <span class="nav-text">选择钱包运行模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E9%92%B1%E5%8C%85%E7%B1%BB%E5%9E%8B%EF%BC%88%E9%87%8D%E7%82%B9%E6%8E%A8%E8%8D%90%E7%A1%AC%E4%BB%B6%E9%92%B1%E5%8C%85%EF%BC%89"><span class="nav-number">2.8.</span> <span class="nav-text">选择钱包类型（重点推荐硬件钱包）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OneKey-Pro%E7%A1%AC%E4%BB%B6%E9%92%B1%E5%8C%85%E6%8E%A8%E8%8D%90%E8%AF%B4%E6%98%8E%EF%BC%88%E5%AE%89%E5%85%A8%E4%BF%9D%E9%9A%9C%E8%AF%A6%E8%A7%A3%EF%BC%89"><span class="nav-number">2.8.1.</span> <span class="nav-text">OneKey Pro硬件钱包推荐说明（安全保障详解）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E9%92%B1%E5%8C%85%E5%90%8D%E7%A7%B0%E4%B8%8E%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE"><span class="nav-number">2.9.</span> <span class="nav-text">编辑钱包名称与存储位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A9%E8%AE%B0%E8%AF%8D%E5%A4%87%E4%BB%BD%EF%BC%88%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D%EF%BC%8C%E5%85%B3%E4%B9%8E%E8%B5%84%E4%BA%A7%E5%AE%89%E5%85%A8%EF%BC%89"><span class="nav-number">2.10.</span> <span class="nav-text">助记词备份（重中之重，关乎资产安全）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E9%92%B1%E5%8C%85%E5%AF%86%E7%A0%81"><span class="nav-number">2.11.</span> <span class="nav-text">设置钱包密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%EF%BC%88%E8%8A%82%E7%82%B9%EF%BC%89%E7%B1%BB%E5%9E%8B%EF%BC%88%E5%BD%B1%E5%93%8D%E9%9A%90%E7%A7%81%E4%B8%8E%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%89"><span class="nav-number">2.12.</span> <span class="nav-text">设置守护进程（节点）类型（影响隐私与安全性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E8%AE%A4%E4%BF%A1%E6%81%AF%E5%B9%B6%E5%88%9B%E5%BB%BA%E9%92%B1%E5%8C%85"><span class="nav-number">2.13.</span> <span class="nav-text">确认信息并创建钱包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Monero-GUI%E9%92%B1%E5%8C%85%E6%A0%B8%E5%BF%83%E6%93%8D%E4%BD%9C%EF%BC%88%E6%94%B6%E6%AC%BE%E4%B8%8E%E4%BB%98%E6%AC%BE%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Monero GUI钱包核心操作（收款与付款）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B6%E6%AC%BE%E6%93%8D%E4%BD%9C%EF%BC%88%E6%8E%A5%E6%94%B6%E9%97%A8%E7%BD%97%E5%B8%81%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">收款操作（接收门罗币）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%98%E6%AC%BE%E6%93%8D%E4%BD%9C%EF%BC%88%E8%BD%AC%E5%87%BA%E9%97%A8%E7%BD%97%E5%B8%81%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">付款操作（转出门罗币）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">4.</span> <span class="nav-text">常见问题与注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="nav-number">4.1.</span> <span class="nav-text">常见问题解决</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%EF%BC%88%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">安全注意事项（重中之重）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jackie</p>
+  <div class="site-description" itemprop="description">这里是 Jackie 的个人博客，一名热爱技术的中国学生。专注分享区块链、智能合约、以太坊、CI/CD、开源项目、开发板、嵌入式、业余无线电以及 IT 基础设施的深度解析与实践笔记。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">117</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/PyXMR2025" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;PyXMR2025" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:pyxmr2025@openenet.cn" title="E-Mail → mailto:pyxmr2025@openenet.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://s4.zstatic.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.blogsclub.org/" title="https:&#x2F;&#x2F;www.blogsclub.org&#x2F;" rel="noopener" target="_blank">BlogsClub</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.perass.com/" title="https:&#x2F;&#x2F;www.perass.com&#x2F;" rel="noopener" target="_blank">博客之家</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://bf.zzxworld.com/" title="https:&#x2F;&#x2F;bf.zzxworld.com&#x2F;" rel="noopener" target="_blank">BlogFinder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blogscn.fun/" title="https:&#x2F;&#x2F;blogscn.fun&#x2F;" rel="noopener" target="_blank">BLOGS·CN</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://bokehub.com/home/" title="https:&#x2F;&#x2F;bokehub.com&#x2F;home&#x2F;" rel="noopener" target="_blank">博客中心</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://boringbay.com/" title="https:&#x2F;&#x2F;boringbay.com&#x2F;" rel="noopener" target="_blank">无聊湾</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.blogplanet.cn/" title="https:&#x2F;&#x2F;www.blogplanet.cn&#x2F;" rel="noopener" target="_blank">博客星球</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.rmbk.cc/" title="https:&#x2F;&#x2F;www.rmbk.cc&#x2F;" rel="noopener" target="_blank">若梦博客</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://boke.lu/" title="https:&#x2F;&#x2F;boke.lu&#x2F;" rel="noopener" target="_blank">博客录</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+      <!-- 子菜单 -->
+<!-- 页面核心内容（模板块） -->
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jackie.openenet.cn/monero-gui-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jackie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jackie's Blog">
+      <meta itemprop="description" content="这里是 Jackie 的个人博客，一名热爱技术的中国学生。专注分享区块链、智能合约、以太坊、CI/CD、开源项目、开发板、嵌入式、业余无线电以及 IT 基础设施的深度解析与实践笔记。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Monero GUI 钱包 Windows 平台安装使用全教程 | Jackie's Blog">
+      <meta itemprop="description" content="本文详解Windows平台下Monero GUI钱包的完整安装、配置与使用全流程，覆盖门罗币核心概念、安装包验证、钱包创建、收发款操作与安全避坑指南，兼顾新手友好性与资产安全性，门罗币XMR钱包入门必看。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Monero GUI 钱包 Windows 平台安装使用全教程<a href="https://github.com/PyXMR2025/blog/tree/main/source/_posts/monero-gui-install.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-07 18:25:07" itemprop="dateCreated datePublished" datetime="2026-02-07T18:25:07+08:00">2026-02-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">区块链实践</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">本文详解Windows平台下Monero GUI钱包的完整安装、配置与使用全流程，覆盖门罗币核心概念、安装包验证、钱包创建、收发款操作与安全避坑指南，兼顾新手友好性与资产安全性，门罗币XMR钱包入门必看。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本文将详细讲解Windows平台下Monero GUI钱包的完整安装、配置及使用流程，涵盖门罗币核心概念、钱包下载验证、安装配置、收发款操作等关键环节，兼顾新手友好性与安全性，同时补充技术细节和风险提示，帮助用户快速掌握门罗币钱包的使用方法，规避常见操作风险。</p>
+<h2 id="核心概念解析"><a href="#核心概念解析" class="headerlink" title="核心概念解析"></a>核心概念解析</h2><h3 id="门罗币（XMR）"><a href="#门罗币（XMR）" class="headerlink" title="门罗币（XMR）"></a>门罗币（XMR）</h3><p>门罗币（Monero，简称XMR）是一款专注于<strong>隐私保护</strong>的开源加密货币，基于工作量证明（PoW）机制，采用RandomX算法，区别于比特币的SHA-256算法，其最大特点是对CPU挖矿友好，普通家用电脑即可参与挖矿，无需高端显卡，算力门槛极低、操作便捷。作为匿名性极强的加密货币，门罗币通过环形签名（Ring Signatures）、隐形地址（Stealth Addresses）和环CT（Ring Confidential Transactions）三大核心技术，隐藏交易双方的地址、交易金额及交易流水，实现完全匿名的点对点交易，避免交易信息被追踪和泄露。门罗币价格受加密货币市场整体行情影响，波动幅度较大，但其去中心化程度高、隐私保护特性突出，广泛应用于隐私交易、跨境转账等场景，同时需注意，其价格波动及相关交易可能存在投资风险，且需遵守所在地区的监管规定。</p>
+<h3 id="门罗币GUI钱包"><a href="#门罗币GUI钱包" class="headerlink" title="门罗币GUI钱包"></a>门罗币GUI钱包</h3><p>门罗币GUI（Monero GUI）钱包是门罗币官方及社区开发并维护的桌面端钱包应用，支持Windows、Linux、MacOS三大主流桌面平台，兼容性强、安全性高（官方开源，可审计，无第三方恶意插件）。该钱包功能全面，既支持在线钱包（实时连接节点，便捷收发款），也支持离线钱包（离线创建、离线签名，避免私钥触网，提升资产安全性）；支持多语言切换（含简体中文、繁体中文），适配不同语言用户的使用习惯；提供多种钱包类型，可根据需求选择创建新钱包、导入已有钱包（通过助记词、私钥、硬件钱包导入），同时支持硬件钱包联动（如Trezor等），进一步保障私钥安全；具备完善的钱包管理功能，包括钱包备份、密码修改、交易记录查询、节点自定义配置等，满足用户对门罗币资产存储、管理、交易的全场景需求，是新手入门门罗币的首选钱包工具。</p>
+<h2 id="Windows平台Monero-GUI钱包安装与配置步骤"><a href="#Windows平台Monero-GUI钱包安装与配置步骤" class="headerlink" title="Windows平台Monero GUI钱包安装与配置步骤"></a>Windows平台Monero GUI钱包安装与配置步骤</h2><h3 id="获取钱包安装包"><a href="#获取钱包安装包" class="headerlink" title="获取钱包安装包"></a>获取钱包安装包</h3><p>访问门罗币GUI钱包官方GitHub发布页面，这是获取官方正版钱包的唯一安全渠道，避免从第三方网站下载，防止被植入恶意程序、窃取私钥或篡改安装文件。</p>
+<p>官方GitHub发布地址：<code>https://github.com/monero-project/monero-gui/releases/</code></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/monero-project/monero-gui/releases/">官方GitHub发布地址</a></p>
+</blockquote>
+<p>进入页面后，下滑找到<strong>最新稳定版</strong>（标注类似“Fluorine Fermi, GUI, Point Release 4.5”），根据自身系统版本选择对应安装包，目前主流Windows系统均为64位，推荐选择“Windows, 64-bit (Installer)”安装包（exe格式，便捷安装）或“Windows, 64-bit”压缩包，本文以64位Installer版本（0.18.4.0）为例进行操作。(点击后会跳转到官方网站monero-site：<code>https://downloads.getmonero.org</code>)</p>
+<blockquote>
+<p>平台选择截图<br><img data-src="/img/monero-gui-install/1.png" alt="平台选择截图"></p>
+</blockquote>
+<h3 id="下载安装包并验证哈希值"><a href="#下载安装包并验证哈希值" class="headerlink" title="下载安装包并验证哈希值"></a>下载安装包并验证哈希值</h3><p>点击对应版本的下载链接（需科学上网，GitHub及getmonero.org部分地区访问受限），开始下载安装包。下载完成后，<strong>务必对比哈希值</strong>，这是保障安装包安全的关键步骤，可有效防范黑客篡改安装文件、植入恶意程序的风险——官方会在GitHub发布页面的“Download Hashes”下方，标注对应安装包的哈希值（SHA256哈希），复制该哈希值备用。</p>
+<p>哈希值验证方法：使用7-Zip压缩软件（需提前安装），右键点击下载的安装包&#x2F;压缩包，选择“属性”，切换到“哈希值”选项卡，查看软件计算出的SHA256哈希值，与GitHub上官方提供的哈希值进行对比，两者完全一致则说明文件未被篡改，可正常使用；若不一致，需立即删除文件，重新从官方渠道下载。</p>
+<h3 id="解压与安装（压缩包版本无需安装）"><a href="#解压与安装（压缩包版本无需安装）" class="headerlink" title="解压与安装（压缩包版本无需安装）"></a>解压与安装（压缩包版本无需安装）</h3><p>若下载的是Zip压缩包，右键点击压缩包，选择“解压到当前文件夹”或指定解压路径，建议解压到非系统盘（如D盘），避免系统盘重装导致钱包文件丢失；若下载的是Installer安装包（exe格式），双击运行安装程序，按照提示选择安装路径（同样建议非系统盘），点击“下一步”完成安装，安装过程中无需勾选额外插件（默认选项即可）。</p>
+<h3 id="运行钱包程序并解决杀毒软件误报"><a href="#运行钱包程序并解决杀毒软件误报" class="headerlink" title="运行钱包程序并解决杀毒软件误报"></a>运行钱包程序并解决杀毒软件误报</h3><p>解压&#x2F;安装完成后，进入对应的文件夹，找到<strong>monero-wallet-gui.exe</strong>文件，双击运行。此时，部分杀毒软件（如Windows Defender、360安全卫士等）可能会出现误报，提示该文件为“可疑程序”，这是因为门罗币钱包涉及加密算法，部分杀毒软件会误判其为恶意程序，无需担心。</p>
+<p>解决方法：在杀毒软件的提示窗口中，选择“信任该文件”“添加到白名单”或“允许运行”，若未出现提示，可暂时关闭杀毒软件（运行钱包后再重新开启），避免杀毒软件拦截钱包程序，导致无法正常运行。</p>
+<blockquote>
+<p>文件目录截图<br><img data-src="/img/monero-gui-install/2.png" alt="文件目录截图"></p>
+</blockquote>
+<h3 id="钱包目录主要文件解析"><a href="#钱包目录主要文件解析" class="headerlink" title="钱包目录主要文件解析"></a>钱包目录主要文件解析</h3><p>钱包文件夹中的核心文件关系到资产安全，需重点了解，避免误删或随意移动：</p>
+<ul>
+<li><strong>monero-wallet-gui.exe</strong>：门罗币GUI钱包主程序，双击运行即可打开钱包，是用户操作的主要入口。</li>
+<li><strong>monero-wallet-cli.exe</strong>：门罗币命令行钱包程序，适合有技术基础的用户，通过命令行操作钱包，功能与GUI钱包一致，更简洁高效。</li>
+<li><strong>monero-wallet-rpc.exe</strong>：门罗币RPC钱包程序，用于实现钱包与第三方应用的联动，支持通过RPC接口调用钱包功能，适合开发者使用。</li>
+<li><strong>monerod.exe</strong>：门罗币节点（守护进程）程序，运行后可同步门罗币区块链数据，实现本地节点连接，提升交易隐私性和安全性。</li>
+<li><strong>ReadMe.htm</strong>：官方帮助文档，包含钱包基本操作、常见问题解答等内容，新手可随时查阅。</li>
+<li><strong>unins000.exe</strong>：钱包卸载程序（仅Installer版本有），双击可卸载钱包，卸载前建议备份好钱包文件。</li>
+<li><strong>start-low-graphics-mode.bat</strong>：低图形模式启动脚本，当钱包无法正常显示（如显卡兼容问题）时，双击该脚本，可以低图形模式启动钱包。</li>
+<li><strong>&#x2F;monero-storage</strong>：钱包核心配置与数据存储目录，至关重要，不可误删。</li>
+<li><strong>&#x2F;monero-storage&#x2F;wallets</strong>：钱包文件存储目录，每个钱包对应一个子文件夹，包含钱包的所有数据。</li>
+<li><strong>&#x2F;monero-storage&#x2F;wallets&#x2F;your-wallet-name&#x2F;wallet.key</strong>：钱包密钥文件，存储钱包的私钥相关信息，是资产安全的核心，绝对不能泄露给他人，建议定期备份。</li>
+<li><strong>&#x2F;p2pool</strong>：去中心化矿池存储文件夹，若需参与门罗币CPU挖矿，可通过该文件夹配置矿池相关参数（也可通过XMRig进行挖矿）。</li>
+<li><strong>LICENSE</strong>：门罗币开源协议文件，详细说明钱包的开源许可范围。</li>
+</ul>
+<h3 id="选择语言并进入配置界面"><a href="#选择语言并进入配置界面" class="headerlink" title="选择语言并进入配置界面"></a>选择语言并进入配置界面</h3><p>首次运行monero-wallet-gui.exe后，会弹出语言选择窗口，推荐选择“简体中文（中国）”，若需使用繁体中文，可选择“繁体中文（台湾）”，选择完成后，点击“继续”，进入钱包模式选择界面。</p>
+<blockquote>
+<p>选择语言截图<br><img data-src="/img/monero-gui-install/3.png" alt="选择语言截图"></p>
+</blockquote>
+<h3 id="选择钱包运行模式"><a href="#选择钱包运行模式" class="headerlink" title="选择钱包运行模式"></a>选择钱包运行模式</h3><p>进入模式选择界面后，有两个关键选项，新手可按照以下建议配置：</p>
+<ul>
+<li><strong>Portable mode（携带模式）</strong>：可选功能，勾选后，钱包的配置文件、钱包数据会存储在钱包程序所在目录，适合在U盘等移动存储设备上使用，插入不同Windows电脑均可正常打开钱包。</li>
+<li><strong>高级模式</strong>：务必点击“高级模式”，无需担心操作复杂，高级模式可提供更全面的钱包配置选项（如节点自定义、钱包类型选择等），是后续创建安全钱包、配置节点的基础，本文全程基于高级模式操作。</li>
+</ul>
+<p>配置完成后，点击“继续”，进入钱包类型选择界面。</p>
+<blockquote>
+<p>选择模式截图<br><img data-src="/img/monero-gui-install/4.png" alt="选择模式截图"></p>
+</blockquote>
+<h3 id="选择钱包类型（重点推荐硬件钱包）"><a href="#选择钱包类型（重点推荐硬件钱包）" class="headerlink" title="选择钱包类型（重点推荐硬件钱包）"></a>选择钱包类型（重点推荐硬件钱包）</h3><p>钱包类型分为两种，优先推荐使用硬件钱包创建，安全性更高，具体选择如下：</p>
+<ul>
+<li><strong>创建一个新的钱包</strong>：纯软件钱包，私钥和助记词存储在电脑本地，操作便捷，但需注意电脑安全（避免电脑中病毒、被入侵），适合暂时没有硬件钱包的用户，后续可导入硬件钱包管理。</li>
+<li><strong>从硬件引入创建一个新钱包（强烈推荐）</strong>：通过硬件钱包创建钱包，私钥存储在硬件设备中，永不触网，可彻底隔绝网络攻击、电脑病毒、恶意程序的窃取风险，是目前最安全的钱包创建方式，推荐使用OneKey Pro硬件钱包。</li>
+</ul>
+<blockquote>
+<p>选择钱包类型截图<br><img data-src="/img/monero-gui-install/5.png" alt="选择钱包类型截图"></p>
+</blockquote>
+<h4 id="OneKey-Pro硬件钱包推荐说明（安全保障详解）"><a href="#OneKey-Pro硬件钱包推荐说明（安全保障详解）" class="headerlink" title="OneKey Pro硬件钱包推荐说明（安全保障详解）"></a>OneKey Pro硬件钱包推荐说明（安全保障详解）</h4><p>OneKey Pro作为旗舰级硬件冷钱包，是门罗币存储的最优选择，其核心安全优势如下，全方位守护数字资产安全：</p>
+<ul>
+<li>【硬核安全防护】搭载四颗EAL6+级安全芯片，采用银行金库级的物理防护标准打造私钥存储核心，私钥全程在硬件内部生成和存储，永不触网、永不泄露，从根源上杜绝网络攻击、恶意程序、电脑病毒的窃取风险。</li>
+<li>【量子级安全布局】依托量子就绪的硬件架构与全开源可审计的固件系统，不仅能抵御当下主流的侧信道攻击、物理篡改、暴力破解等安全威胁，更能提前适配后量子时代的安全需求，避免量子计算技术对私钥的破解风险。</li>
+<li>【全链路安全验证】采用防拆封包装设计，搭配固件原生认证机制，设备上电即可自动完成验真，彻底杜绝翻新机、改装机、恶意篡改设备的风险，让安全保障从用户接触产品的那一刻就全面生效；同时经过SlowMist等专业安全机构独立审计，技术透明、风险可验。</li>
+<li>【多场景适配】不仅支持门罗币（XMR），还兼容比特币、以太坊等主流加密货币，支持Web3、质押、多链网络等多种功能，OneKey配套应用程序无需连接硬件钱包也可使用，功能丰富便捷。</li>
+</ul>
+<p>OneKey Pro购买链接：<code>https://onekey.so/r/ZH8DCL</code>，购买时输入博主专属折扣码：<strong>ZH8DCL</strong>，可领取专属优惠；若暂时没有OneKey Pro，可选择Trezor任意型号（OneKey Pro支持开启Trezor Compat功能，实现兼容），后续博主也会持续参与monero-gui对OneKey硬件钱包的适配优化，提升使用体验。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://onekey.so/r/ZH8DCL">OneKey Pro购买链接</a></p>
+</blockquote>
+<h3 id="编辑钱包名称与存储位置"><a href="#编辑钱包名称与存储位置" class="headerlink" title="编辑钱包名称与存储位置"></a>编辑钱包名称与存储位置</h3><p>选择钱包类型后，点击“下一步”，进入钱包名称与存储位置编辑界面：</p>
+<ul>
+<li>钱包名称：自定义填写，建议填写简单易记的名称（如“我的门罗币钱包”），无需包含特殊字符，便于后续识别。</li>
+<li>存储位置：默认存储在&#x2F;monero-storage&#x2F;wallets目录下，可点击“浏览”修改存储路径，建议选择非系统盘、不易误删的文件夹（如D盘“门罗币钱包”文件夹），避免系统重装或文件夹误删导致钱包丢失。</li>
+</ul>
+<p>编辑完成后，点击“下一步”，进入助记词生成界面。</p>
+<blockquote>
+<p>编辑钱包名称截图<br><img data-src="/img/monero-gui-install/6.png" alt="编辑钱包名称截图"></p>
+</blockquote>
+<h3 id="助记词备份（重中之重，关乎资产安全）"><a href="#助记词备份（重中之重，关乎资产安全）" class="headerlink" title="助记词备份（重中之重，关乎资产安全）"></a>助记词备份（重中之重，关乎资产安全）</h3><p>进入助记词生成界面后，系统会自动生成一组12位或25位的助记词（门罗币默认12位），<strong>助记词是恢复钱包的唯一凭证</strong>，等同于钱包的“备用钥匙”，一旦丢失或泄露，钱包内的门罗币将无法找回，且可能被他人窃取，务必高度重视。</p>
+<p>助记词备份注意事项（必须严格遵守）：</p>
+<ul>
+<li>务必<strong>离线手写备份</strong>，使用纸质笔记本记录，不要存储在电脑、手机、U盘等电子设备中，避免电子设备被入侵、丢失导致助记词泄露。</li>
+<li>记录时务必<strong>准确无误</strong>，按照系统显示的顺序逐字记录，不要遗漏、颠倒、写错字符，建议记录2份，分别存放在不同的安全位置（如家中保险柜、隐秘抽屉），避免一份丢失后无法恢复。</li>
+<li>绝对不要将助记词泄露给他人，包括亲友、陌生人、客服等，任何索要助记词的行为都是诈骗，务必警惕。</li>
+<li>若使用OneKey Pro硬件钱包，助记词会生成在硬件设备内部，无需在电脑上记录，进一步提升安全性，只需妥善保管硬件钱包及硬件钱包的助记词即可。</li>
+</ul>
+<p>备份完成后，点击“下一步”，系统会要求重新输入助记词（验证备份是否正确），按照记录的助记词，逐字选择对应字符，输入完成后点击“下一步”。再次强调：OneKey Pro硬件钱包无需在电脑端输入助记词，全程在硬件设备上操作，安全性远超软件钱包，是资产存储的最优选择。</p>
+<blockquote>
+<p>助记词截图<br><img data-src="/img/monero-gui-install/7.png" alt="助记词截图"></p>
+</blockquote>
+<h3 id="设置钱包密码"><a href="#设置钱包密码" class="headerlink" title="设置钱包密码"></a>设置钱包密码</h3><p>助记词验证通过后，进入钱包密码设置界面，密码用于保护钱包程序的打开权限，防止他人在你的电脑上打开钱包、操作资产，设置时需注意以下几点：</p>
+<ul>
+<li>密码需足够复杂，建议包含大写字母、小写字母、数字、特殊字符（如!@#$%^&amp;*与空格），长度不低于8位，避免使用生日、手机号、简单密码（如123456），防止被暴力破解。</li>
+<li>密码需妥善记忆，不要泄露给他人，若忘记密码，可通过之前备份的助记词恢复钱包，重新设置密码。</li>
+</ul>
+<p>输入密码（两次输入需一致）后，点击“下一步”，进入节点（守护进程）设置界面。</p>
+<blockquote>
+<p>输入密码截图<br><img data-src="/img/monero-gui-install/8.png" alt="输入密码截图"></p>
+</blockquote>
+<h3 id="设置守护进程（节点）类型（影响隐私与安全性）"><a href="#设置守护进程（节点）类型（影响隐私与安全性）" class="headerlink" title="设置守护进程（节点）类型（影响隐私与安全性）"></a>设置守护进程（节点）类型（影响隐私与安全性）</h3><p>门罗币钱包需要连接节点（守护进程）才能同步区块链数据、完成收发款操作，节点分为本地节点和远程节点，优先推荐配置本地节点，具体说明如下：</p>
+<ul>
+<li><strong>本地节点（推荐）</strong>：运行钱包文件夹中的monerod.exe程序，同步门罗币全量区块链数据（几百GB），同步完成后，钱包通过本地节点进行交易，优势是隐私性极高（交易信息不经过第三方节点，避免被追踪）、安全性强（不依赖第三方节点，避免节点被攻击导致交易失败）、手续费低。</li>
+<li><strong>开启Prune模式</strong>：勾选“Prune”选项，可开启 pruning 模式，该模式下仅同步区块链核心数据，无需同步全量数据，可节省大量存储空间（仅需几十GB（2025-12-1，大约90GB）），适合硬盘空间较小的用户，不影响钱包正常使用和安全性。</li>
+<li><strong>远程节点（不推荐）</strong>：连接第三方节点同步数据，无需本地同步区块链，操作便捷、节省时间，但存在三大风险：① 手续费可能偏高（部分第三方节点会收取额外手续费）；② 隐私性降低（交易信息会经过第三方节点，可能被节点运营方追踪）；③ 存在间谍节点风险（恶意节点可能记录交易信息、窃取用户隐私，甚至篡改交易数据）。</li>
+</ul>
+<p>若暂时无法同步本地节点（如网络不佳、硬盘空间不足），仅推荐连接门罗币官方社区节点，确保节点安全，博主推荐节点如下：</p>
+<ol>
+<li><code>node1.xmr-tw.org:18081</code></li>
+<li><code>node2.xmr-tw.org:18081</code></li>
+</ol>
+<p>节点配置完成后，点击“下一步”，进入信息确认界面。</p>
+<blockquote>
+<p>设置守护进程截图<br><img data-src="/img/monero-gui-install/9.png" alt="设置守护进程截图"></p>
+</blockquote>
+<h3 id="确认信息并创建钱包"><a href="#确认信息并创建钱包" class="headerlink" title="确认信息并创建钱包"></a>确认信息并创建钱包</h3><p>进入信息确认界面后，仔细核对以下信息，确保无误：钱包名称、钱包存储路径、节点类型（本地&#x2F;远程）、节点地址（若为远程节点），确认所有信息正确后，点击“create wallet”（创建钱包），等待钱包创建完成（约1-2分钟），创建完成后，自动进入钱包主界面，至此，Monero GUI钱包安装配置完成。</p>
+<blockquote>
+<p>确认信息截图<br><img data-src="/img/monero-gui-install/10.png" alt="确认信息截图"></p>
+</blockquote>
+<h2 id="Monero-GUI钱包核心操作（收款与付款）"><a href="#Monero-GUI钱包核心操作（收款与付款）" class="headerlink" title="Monero GUI钱包核心操作（收款与付款）"></a>Monero GUI钱包核心操作（收款与付款）</h2><h3 id="收款操作（接收门罗币）"><a href="#收款操作（接收门罗币）" class="headerlink" title="收款操作（接收门罗币）"></a>收款操作（接收门罗币）</h3><p>收款操作用于接收他人转账的门罗币，步骤简单，重点注意地址选择，具体流程如下：</p>
+<ol>
+<li>打开Monero GUI钱包，进入主界面后，点击左侧导航栏中的“收款”选项，进入收款界面。</li>
+<li>点击“创建新隐私地址”，系统会自动生成一个门罗币收款地址，地址以<strong>8开头</strong>（如85aVccp1ZhbSQCrt2jYTPPgLvVonsX7Re3FSJKwv4PvaAL7tu8TpSesQgRydWW2CF7adMnxLjnSsfcZaoiSUyCAg7NqjLDd），该地址为隐私地址，推荐使用。</li>
+<li>不建议使用以4开头的地址，隐私性较差。</li>
+<li>复制生成的8开头收款（隐私地址）地址，将其发送给转账方，转账方通过该地址向你转账即可。</li>
+</ol>
+<p>注意：收款后，需等待<strong>10次区块确认</strong>，交易才算正式生效，钱包内的余额才会更新，可在“交易记录”中查看确认进度。</p>
+<blockquote>
+<p>创建新隐私地址截图<br><img data-src="/img/monero-gui-install/11.png" alt="创建新隐私地址截图"></p>
+</blockquote>
+<h3 id="付款操作（转出门罗币）"><a href="#付款操作（转出门罗币）" class="headerlink" title="付款操作（转出门罗币）"></a>付款操作（转出门罗币）</h3><p>付款操作用于向他人转出门罗币，步骤需谨慎，避免地址输入错误、金额错误，具体流程如下：</p>
+<ol>
+<li>打开Monero GUI钱包，进入主界面后，点击左侧导航栏中的“付款”选项，进入付款界面。</li>
+<li>在“收款地址”输入框中，粘贴对方提供的门罗币收款地址（务必仔细核对地址，确保无误，地址错误会导致门罗币丢失，且无法找回）。</li>
+<li>在“金额”输入框中，输入要转出的门罗币数量，注意单位为XMR，可根据需求调整小数位数。</li>
+<li>核对地址和金额无误后，点击“付款”，输入钱包密码（验证身份），确认付款，等待交易提交。</li>
+</ol>
+<blockquote>
+<p>付款截图<br><img data-src="/img/monero-gui-install/12.png" alt="付款截图"></p>
+</blockquote>
+<p>注意事项：</p>
+<ul>
+<li>手续费说明：门罗币交易手续费极低，一般不会高于0.0001 XMR，若手续费明显偏高，需先检查节点连接状态，大概率是连接了恶意远程节点，建议切换为本地节点或官方社区节点。</li>
+<li>区块确认：无论收款还是付款，均需等待10次区块确认，交易才算生效，确认完成前，不要重复操作（如重复付款），避免造成资产损失。</li>
+<li>交易记录：所有收发款交易记录，均可在钱包主界面的“交易记录”中查看，包含交易地址、金额、手续费、确认次数等信息，便于对账。</li>
+</ul>
+<h2 id="常见问题与注意事项"><a href="#常见问题与注意事项" class="headerlink" title="常见问题与注意事项"></a>常见问题与注意事项</h2><h3 id="常见问题解决"><a href="#常见问题解决" class="headerlink" title="常见问题解决"></a>常见问题解决</h3><ul>
+<li>钱包无法打开：大概率是杀毒软件误报拦截，将monero-wallet-gui.exe添加到杀毒软件白名单，或暂时关闭杀毒软件后重新运行；若仍无法打开，可重新下载安装包，对比哈希值后重新安装。</li>
+<li>节点无法连接：本地节点无法连接，可重启monerod.exe程序，检查网络连接（确保科学上网正常）；远程节点无法连接，可切换为官方社区节点，或改为本地节点。</li>
+<li>助记词丢失：若助记词丢失，且未使用硬件钱包，钱包内的门罗币将无法找回，务必提前做好离线备份；若使用OneKey Pro硬件钱包，可通过硬件钱包自身的助记词恢复。</li>
+<li>交易失败：检查收款地址是否正确、节点是否正常连接、钱包余额是否充足（包含手续费），若仍失败，可重启钱包或切换节点后重新尝试。</li>
+</ul>
+<h3 id="安全注意事项（重中之重）"><a href="#安全注意事项（重中之重）" class="headerlink" title="安全注意事项（重中之重）"></a>安全注意事项（重中之重）</h3><ul>
+<li>私钥与助记词：绝对不要泄露私钥、助记词，不要存储在电子设备中，仅离线手写备份，且备份多份，存放在安全位置。</li>
+<li>安装包来源：仅从官方GitHub渠道下载钱包安装包，不要从第三方网站下载，下载后务必对比哈希值，防止文件被篡改。</li>
+<li>电脑安全：使用钱包的电脑需安装杀毒软件，定期杀毒、更新系统，避免中病毒、被入侵，不要浏览不安全网站、下载不明文件。</li>
+<li>硬件钱包：优先使用OneKey Pro等硬件钱包管理门罗币，私钥永不触网，安全性远超软件钱包。</li>
+<li>监管风险：加密货币交易在部分地区存在监管风险，需遵守所在地区的法律法规，谨慎参与交易和挖矿。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文详细讲解了Windows平台下Monero GUI钱包的安装、配置及收发款全流程，从核心概念解析到具体步骤操作，再到安全注意事项，全方位覆盖新手使用需求。重点强调了助记词备份、节点配置、硬件钱包使用的安全性，建议新手优先选择OneKey Pro硬件钱包创建钱包，最大程度保障门罗币资产安全。后续使用过程中，若遇到问题，可查阅官方ReadMe文档或门罗币社区资料，也可关注博主后续更新的相关优化内容。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        <!-- 广告组件 - 适配Next主题+明暗模式（图片+文字版） -->
+<div class="next-ad-container" id="next-ad-container">
+  <!-- 广告标签 -->
+  <div class="ad-label">广告</div>
+  <!-- 广告内容区域 -->
+  <div class="ad-content" id="ad-body">
+    <div class="ad-loading">
+      广告正在加载中...
+    </div>
+  </div>
+</div>
+
+<!-- 配套CSS样式（修复线条问题） -->
+<style>
+  /* 广告容器基础样式 - 增强鲁棒性 */
+  .next-ad-container {
+    position: relative;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: inherit;
+    /* 新增：确保容器无多余边框/线条 */
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 明模式样式 */
+  .next-ad-container {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #e6e6e6;
+  }
+
+  /* 暗模式样式 */
+  html[data-theme="dark"] .next-ad-container {
+    background-color: #2c2c2c;
+    color: #e5e5e5;
+    border: 1px solid #444;
+  }
+
+  /* 广告标签样式 */
+  .ad-label {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 10px;
+    opacity: 0.7;
+    transition: color 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  html[data-theme="dark"] .ad-label {
+    color: #aaa;
+  }
+
+  /* 广告内容区域 - 整体居中布局 */
+  .ad-content {
+    display: flex;
+    flex-direction: column; /* 图片+文字上下排列 */
+    align-items: center;     /* 水平居中 */
+    justify-content: center; /* 垂直居中 */
+    text-align: center;
+    padding: 10px 0;
+    min-height: 100px; /* 适配图片+文字的高度 */
+    overflow: hidden;
+    /* 新增：清除多余线条 */
+    border: none !important;
+    outline: none !important;
+  }
+
+  /* 广告链接容器 - 确保整体可点击 + 清除线条 */
+  .ad-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* 新增：彻底清除a标签的下划线/边框 */
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: inherit; /* 继承容器文字颜色，适配明暗模式 */
+  }
+
+  /* 新增：确保hover时也无下划线 */
+  .ad-wrapper:hover,
+  .ad-wrapper:active,
+  .ad-wrapper:focus {
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  /* 广告图片样式 */
+  .ad-img {
+    max-width: 120px; /* 限制图片宽度，避免过大 */
+    max-height: 60px;
+    object-fit: contain;
+    border: none !important; /* 新增：清除图片边框 */
+    margin-bottom: 8px; /* 图片与文字间距 */
+    transition: opacity 0.2s ease;
+    outline: none !important;
+  }
+
+  .ad-img:hover {
+    opacity: 0.95;
+  }
+
+  /* 广告文字样式 - 适配明暗模式 */
+  .ad-text {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 2px 0;
+    opacity: 0.9;
+    transition: color 0.3s ease;
+    /* 新增：确保文字无装饰 */
+    text-decoration: none !important;
+  }
+
+  /* 第二行文字稍小，突出重点 */
+  .ad-text.sub {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  /* 暗模式文字颜色优化 */
+  html[data-theme="dark"] .ad-text {
+    color: #d0d0d0;
+  }
+
+  /* 加载提示样式 */
+  .ad-loading {
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1;
+  }
+
+  /* 响应式适配 - 移动端优化 */
+  @media (max-width: 768px) {
+    .next-ad-container {
+      padding: 10px;
+      margin: 15px 0;
+    }
+    .ad-content {
+      min-height: 80px;
+    }
+    .ad-img {
+      max-width: 100px;
+      max-height: 50px;
+    }
+    .ad-text {
+      font-size: 13px;
+    }
+    .ad-text.sub {
+      font-size: 11px;
+    }
+    .ad-loading {
+      font-size: 12px;
+    }
+  }
+
+  /* 极小屏适配 */
+  @media (max-width: 480px) {
+    .ad-content {
+      min-height: 70px;
+    }
+    .ad-img {
+      max-width: 80px;
+      max-height: 40px;
+    }
+  }
+</style>
+
+<!-- 广告加载逻辑（优化重排警告+修复线条） -->
+<script>
+// 广告加载函数 - 优化性能+重试机制
+function loadAdContent() {
+  // 优化：提前缓存元素选择器，减少DOM查询
+  const getAdBody = () => document.getElementById('ad-body');
+  let retryCount = 0;
+  const maxRetry = 5;
+
+  // 优化：使用requestAnimationFrame减少重排
+  function tryLoad() {
+    requestAnimationFrame(() => {
+      const adBody = getAdBody();
+      
+      // 调试日志（可按F12查看Console）
+      if (retryCount === 0) console.log('开始加载广告，元素是否存在:', !!adBody);
+
+      // 元素不存在则重试
+      if (!adBody) {
+        retryCount++;
+        if (retryCount < maxRetry) {
+          setTimeout(tryLoad, 300);
+        } else {
+          console.error('无法获取广告容器元素，请检查ID是否正确');
+          // 兜底：手动创建内容
+          const container = document.getElementById('next-ad-container');
+          if (container) {
+            container.innerHTML = `
+              <div class="ad-label">广告</div>
+              <div class="ad-content">
+                <div class="ad-loading">广告容器加载失败</div>
+              </div>
+            `;
+          }
+        }
+        return;
+      }
+
+      try {
+        // 保留你修改后的广告内容
+        const adHtml = `
+          <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+            <img src="/img/rainyun/1.png" alt="雨云云服务器" class="ad-img" loading="lazy">
+            <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+            <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+          </a>
+        `;
+        // 优化：一次性赋值innerHTML，减少重排
+        adBody.innerHTML = adHtml;
+
+        // 图片加载失败降级
+        const adImg = adBody.querySelector('.ad-img');
+        if (adImg) {
+          adImg.onerror = function() {
+            adBody.innerHTML = `
+              <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+                <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+                <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+              </a>
+            `;
+          };
+        }
+      } catch (error) {
+        console.warn('广告加载出错:', error);
+        adBody.innerHTML = '<div class="ad-loading">广告加载失败</div>';
+      }
+    });
+  }
+
+  tryLoad(); // 立即执行第一次尝试
+}
+
+// 修复执行时机：改用window.load（比DOMContentLoaded更晚，适配Next主题渲染）
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  // 页面已加载，立即执行
+  loadAdContent();
+} else {
+  // 页面未加载完，等所有资源加载后执行
+  window.addEventListener('load', loadAdContent);
+}
+
+// 适配主题切换
+document.addEventListener('theme-change', function() {});
+</script>
+
+          <div class="reward-container">
+  <div>请我喝杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/img/reward/btc.png" alt="Jackie 比特币">
+        <span>比特币</span>
+      </div>
+      <div>
+        <img src="/img/reward/eth.png" alt="Jackie 以太坊">
+        <span>以太坊</span>
+      </div>
+      <div>
+        <img src="/img/reward/trx.png" alt="Jackie 波场">
+        <span>波场</span>
+      </div>
+      <div>
+        <img src="/img/reward/arb.png" alt="Jackie 阿尔比垂姆">
+        <span>阿尔比垂姆</span>
+      </div>
+      <div>
+        <img src="/img/reward/bsc.png" alt="Jackie 币安智能链">
+        <span>币安智能链</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Jackie
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://jackie.openenet.cn/monero-gui-install/" title="Monero GUI 钱包 Windows 平台安装使用全教程">https://jackie.openenet.cn/monero-gui-install/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-SA</a> 许可协议。转载请注明出处！
+  </li>
+  <li class="post-copyright-aigc">
+    <strong>AIGC 辅助创作声明：</strong>
+    <a href="/aigc/" title="AIGC辅助创作声明">本文采用 AIGC 工具辅助创作，全程人工校对、技术验证，作者对内容负责。</a>
+  </li>
+</ul>
+</div>
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"># 区块链</a>
+              <a href="/tags/%E9%97%A8%E7%BD%97%E5%B8%81/" rel="tag"># 门罗币</a>
+              <a href="/tags/%E6%AF%94%E7%89%B9%E5%B8%81/" rel="tag"># 比特币</a>
+              <a href="/tags/MoneroGUI/" rel="tag"># MoneroGUI</a>
+              <a href="/tags/%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/" rel="tag"># 加密货币</a>
+              <a href="/tags/%E9%92%B1%E5%8C%85/" rel="tag"># 钱包</a>
+              <a href="/tags/OneKey/" rel="tag"># OneKey</a>
+              <a href="/tags/%E7%A1%AC%E4%BB%B6%E9%92%B1%E5%8C%85/" rel="tag"># 硬件钱包</a>
+              <a href="/tags/Monero/" rel="tag"># Monero</a>
+              <a href="/tags/%E9%9A%90%E7%A7%81%E5%AE%89%E5%85%A8/" rel="tag"># 隐私安全</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/ham-ctcss-dcs/" rel="prev" title="模拟亚音 CTCSS 与 数字亚音 DCS 技术原理详解与应用场景">
+                  <i class="fa fa-angle-left"></i> 模拟亚音 CTCSS 与 数字亚音 DCS 技术原理详解与应用场景
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/ham-ps-1/" rel="next" title="如何让自己可刑可铐（一）：整活向 · 背个抛物面天线，解锁可刑可铐新姿势">
+                  如何让自己可刑可铐（一）：整活向 · 背个抛物面天线，解锁可刑可铐新姿势 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+<div class="hexo-article-recommender-section">
+  <div class="hexo-article-recommender-section-divider">
+    <div class="hexo-article-recommender-divider-line"></div>
+    <div class="hexo-article-recommender-divider-text">
+      <span>推荐文章</span>
+    </div>
+  </div>
+
+  <div class="hexo-article-recommender-posts">
+    
+      
+      
+      <div class="hexo-article-recommender-post-card" data-bg="#6a89cc, #4a69bd">
+        <!-- 左上角：站内标签 -->
+        <div class="hexo-article-recommender-site-tag">站内</div>
+
+        <!-- 左下角：关系类型标签 + 相关度 -->
+        <div class="hexo-article-recommender-relation-tag related">
+          相关
+          <span class="hexo-article-recommender-score">(18.9%)
+        </span>
+        </div>
+
+        <div class="hexo-article-recommender-card-header">
+          <div class="hexo-article-recommender-reading-time">
+            <i class="fas fa-clock"></i>
+            12分钟
+          </div>
+        </div>
+        <div class="hexo-article-recommender-card-content">
+          <h4 class="hexo-article-recommender-post-title">
+            <a href="/why-save-btc/">比特币长期持有优势解析・为什么我只选择长期持有比特币，而非股票、黄金等其他资产</a>
+          </h4>
+          <p class="hexo-article-recommender-post-excerpt">
+            比特币（BTC/Bitcoin）作为一种长期投资资产，在过去十多年中表现出色，成为全球关注的价值存储选项。本文深度解析比特币的核心技术、市场表现以及与股票、黄金
+          </p>
+          <div class="hexo-article-recommender-author">
+            <div class="hexo-article-recommender-author-avatar" style="background: #4a69bd;">
+              1
+            </div>
+            <div class="hexo-article-recommender-author-info">
+              <div class="hexo-article-recommender-author-name">Jackie</div>
+              <div class="hexo-article-recommender-author-title">探索区块链、自动化与开源技术</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      
+      
+      <div class="hexo-article-recommender-post-card" data-bg="#e55039, #eb2f06">
+        <!-- 左上角：站内标签 -->
+        <div class="hexo-article-recommender-site-tag">站内</div>
+
+        <!-- 左下角：关系类型标签 + 相关度 -->
+        <div class="hexo-article-recommender-relation-tag fallback">
+          推荐
+          <span class="hexo-article-recommender-score">(4.7%)
+        </span>
+        </div>
+
+        <div class="hexo-article-recommender-card-header">
+          <div class="hexo-article-recommender-reading-time">
+            <i class="fas fa-clock"></i>
+            2分钟
+          </div>
+        </div>
+        <div class="hexo-article-recommender-card-content">
+          <h4 class="hexo-article-recommender-post-title">
+            <a href="/delta-force-weiloong/">欧气炸了🔥三角洲行动4抽绝杀威龙红皮！免费券保底后捡漏天花板</a>
+          </h4>
+          <p class="hexo-article-recommender-post-excerpt">
+            三角洲行动欧气拉满！免费限时三角券抽奖保底后，随手4抽竟直接拿下威龙首款至臻红皮「凌霄戍卫」！航天机甲风建模质感拉满，虎蹲炮黑洞特效、喷气粒子动画超惊艳，妥妥红
+          </p>
+          <div class="hexo-article-recommender-author">
+            <div class="hexo-article-recommender-author-avatar" style="background: #e55039;">
+              2
+            </div>
+            <div class="hexo-article-recommender-author-info">
+              <div class="hexo-article-recommender-author-name">Jackie</div>
+              <div class="hexo-article-recommender-author-title">探索区块链、自动化与开源技术</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      
+      
+      <div class="hexo-article-recommender-post-card" data-bg="#3dc1d3, #0fb9b1">
+        <!-- 左上角：站内标签 -->
+        <div class="hexo-article-recommender-site-tag">站内</div>
+
+        <!-- 左下角：关系类型标签 + 相关度 -->
+        <div class="hexo-article-recommender-relation-tag fallback">
+          推荐
+          <span class="hexo-article-recommender-score">(4.7%)
+        </span>
+        </div>
+
+        <div class="hexo-article-recommender-card-header">
+          <div class="hexo-article-recommender-reading-time">
+            <i class="fas fa-clock"></i>
+            8分钟
+          </div>
+        </div>
+        <div class="hexo-article-recommender-card-content">
+          <h4 class="hexo-article-recommender-post-title">
+            <a href="/what-ace-scan/">腾讯游戏 ACE 反作弊系统简解析・什么是 ACE 、运行机制与作用</a>
+          </h4>
+          <p class="hexo-article-recommender-post-excerpt">
+            想搞懂腾讯游戏背后的 “反挂卫士”？本文将带你全面吃透腾讯 ACE 反作弊系统，从其 “反作弊专家” 的官方定义与内核级防护定位说起，逐一解析 SGuard64
+          </p>
+          <div class="hexo-article-recommender-author">
+            <div class="hexo-article-recommender-author-avatar" style="background: #3dc1d3;">
+              3
+            </div>
+            <div class="hexo-article-recommender-author-info">
+              <div class="hexo-article-recommender-author-name">Jackie</div>
+              <div class="hexo-article-recommender-author-title">探索区块链、自动化与开源技术</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+  <h2 class="hexo-article-recommender-section-over">--- over ---</h2>
+</div>
+
+<style>
+.hexo-article-recommender-section {
+  margin-top: 60px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hexo-article-recommender-section-divider {
+  position: relative;
+  margin: 60px 0;
+}
+
+.hexo-article-recommender-divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #6a89cc, transparent);
+}
+
+.hexo-article-recommender-divider-text {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 0 15px;
+}
+
+.hexo-article-recommender-divider-text span {
+  color: #6a89cc;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.hexo-article-recommender-section-over {
+  text-align: center;
+  margin: 30px;
+  color: #9e9e9e;
+}
+
+.hexo-article-recommender-posts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}
+
+.hexo-article-recommender-post-card {
+  width: 280px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 270px;
+  position: relative;
+}
+
+.hexo-article-recommender-post-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.hexo-article-recommender-card-header {
+  height: 60px;
+  position: relative;
+  background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite alternate;
+}
+
+.hexo-article-recommender-post-card[data-bg^="#6a89cc"] .hexo-article-recommender-card-header {
+  --bg-start: #6a89cc; --bg-end: #4a69bd;
+}
+.hexo-article-recommender-post-card[data-bg^="#e55039"] .hexo-article-recommender-card-header {
+  --bg-start: #e55039; --bg-end: #eb2f06;
+}
+.hexo-article-recommender-post-card[data-bg^="#3dc1d3"] .hexo-article-recommender-card-header {
+  --bg-start: #3dc1d3; --bg-end: #0fb9b1;
+}
+.hexo-article-recommender-post-card[data-bg^="#f6b93b"] .hexo-article-recommender-card-header {
+  --bg-start: #f6b93b; --bg-end: #e55039;
+}
+
+.hexo-article-recommender-reading-time {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(4px);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.hexo-article-recommender-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 60px);
+  justify-content: space-between;
+}
+
+.hexo-article-recommender-post-title {
+  margin-top: 0;
+  font-size: 1.2em;
+  line-height: 1.4;
+  color: #2c3e50;
+}
+
+.hexo-article-recommender-post-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.hexo-article-recommender-post-title a:hover {
+  color: #6a89cc;
+}
+
+.hexo-article-recommender-post-excerpt {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.hexo-article-recommender-author {
+  display: flex;
+  align-items: center;
+}
+
+.hexo-article-recommender-author-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.hexo-article-recommender-author-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.hexo-article-recommender-author-title {
+  font-size: 12px;
+  color: #888;
+}
+
+/* ========== 左上角：站内标签 ========== */
+.hexo-article-recommender-site-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(42, 170, 138, 0.9);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 0 0 8px 0;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ========== 左下角：关系类型标签 ========== */
+.hexo-article-recommender-relation-tag {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 0 8px 0 0;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hexo-article-recommender-relation-tag.related {
+  background-color: rgba(42, 170, 138, 0.9); /* 绿色：相关 */
+}
+
+.hexo-article-recommender-relation-tag.fallback {
+  background-color: rgba(229, 80, 57, 0.9); /* 橙红：推荐 */
+}
+
+.hexo-article-recommender-post-card:hover .hexo-article-recommender-relation-tag {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 相关度分数样式 */
+.hexo-article-recommender-relation-tag .hexo-article-recommender-score {
+  font-size: 10px;
+  opacity: 0.8;
+  margin-left: 4px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .hexo-article-recommender-posts {
+    flex-direction: column;
+    align-items: center;
+  }
+  .hexo-article-recommender-post-card {
+    width: calc(100% - 30px);
+    max-width: 400px;
+  }
+}
+</style>
+
+</div>
+
+
+
+
+
+
+      <!-- 评论区 -->
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <!-- 多语言切换 -->
+<!-- 页脚公共内容（缓存控制） -->
+      
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jackie</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">68k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:02</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+
+      <!-- 站点数据（居中显示） -->
+      <div style="text-align: center;">
+        <a href="https://www.blogsclub.org/rank.html" target="_blank">
+          <img 
+            src="https://www.blogsclub.org/badge/jackie.openenet.cn" 
+            style="height:60px!important" 
+            loading="lazy"
+            alt="统计数据">
+        </a>
+      </div>
+        
+      <!-- 运行时长统计展示行（新增分钟显示） -->
+      <div class="uptime-row">
+        本站已经稳定运行了 
+        <span class="uptime-num" id="days">00</span> 天 
+        <span class="uptime-num" id="hours">00</span> 小时 
+        <span class="uptime-num" id="minutes">00</span> 分钟 
+        <span class="uptime-num" id="seconds">00</span> 秒
+      </div>
+
+      <!-- ICP备案 -->
+      <div style="text-align: center; margin: 8px 0;">
+        <a href="https://icp.gov.moe/?keyword=20260177" target="_blank">萌ICP备20260177号</a>
+      </div>
+
+      <!-- 广告脚本（仅保留一次引入） -->
+      <!-- <script async="async" data-cfasync="false" src="https://pl28675819.effectivegatecpm.com/0f2aeb03ec930e47193f4782e446c5b6/invoke.js"></script> -->
+      <!-- <div id="container-0f2aeb03ec930e47193f4782e446c5b6"></div> -->
+
+    </div>
+  </footer>
+
+  <!-- 页面组件（缓存控制） -->
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/PyXMR2025" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  <!-- 框架注入的页面底部内容 --><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"PyXMR2025","repo":"blog-talk","client_id":"Ov23liwFgKqqzMwetvZo","admin_user":"PyXMR2025","distraction_free_mode":true,"proxy":"https://gitalk.openenet.cn/get_accesstoken","language":"zh-CN","js":{"url":"https://s4.zstatic.net/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"592bb620bd51252fe74d4fa0ca73d258"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+
+  <!-- 运行时长统计逻辑（优化版） -->
+  <script>
+    // 站点启动时间（GMT+8 2025-12-15 10:47:19）
+    const startTime = new Date('2025-12-15T10:47:19+08:00');
+    // 缓存DOM元素，避免重复查询
+    const uptimeElements = {
+      days: document.getElementById('days'),
+      hours: document.getElementById('hours'),
+      minutes: document.getElementById('minutes'),
+      seconds: document.getElementById('seconds')
+    };
+    // 定时器标识，用于页面卸载时清理
+    let uptimeTimer = null;
+
+    /**
+     * 数字补零：单位数补0，如 5 → 05
+     * @param {number} num 要补零的数字
+     * @returns {string} 补零后的字符串
+     */
+    function padZero(num) {
+      return num.toString().padStart(2, '0');
+    }
+
+    /**
+     * 计算并更新站点运行时长
+     */
+    function updateUptime() {
+      const now = new Date();
+      const diffMs = now - startTime;
+
+      // 处理当前时间早于启动时间的边界情况
+      if (diffMs < 0) {
+        uptimeElements.days.textContent = '00';
+        uptimeElements.hours.textContent = '00';
+        uptimeElements.minutes.textContent = '00';
+        uptimeElements.seconds.textContent = '00';
+        return;
+      }
+
+      // 时间单位转换（毫秒 -> 天/小时/分钟/秒）
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const days = Math.floor(totalSeconds / (24 * 60 * 60));
+      const remainingSecondsAfterDays = totalSeconds % (24 * 60 * 60);
+      const hours = Math.floor(remainingSecondsAfterDays / (60 * 60));
+      const remainingSecondsAfterHours = remainingSecondsAfterDays % (60 * 60);
+      const minutes = Math.floor(remainingSecondsAfterHours / 60);
+      const seconds = remainingSecondsAfterHours % 60;
+
+      // 更新页面显示（补零后）
+      uptimeElements.days.textContent = padZero(days);
+      uptimeElements.hours.textContent = padZero(hours);
+      uptimeElements.minutes.textContent = padZero(minutes);
+      uptimeElements.seconds.textContent = padZero(seconds);
+    }
+
+    // 初始化执行 + 每秒更新一次
+    updateUptime();
+    uptimeTimer = setInterval(updateUptime, 1000);
+
+    // 页面卸载时清理定时器，避免内存泄漏
+    window.addEventListener('beforeunload', () => {
+      clearInterval(uptimeTimer);
+    });
+  </script>
+</body>
+</html>

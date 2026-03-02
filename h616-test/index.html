@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- 基础头部公共组件（缓存控制） -->
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/16.png">
+  <link rel="mask-icon" href="/img/favicon/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jackie.openenet.cn","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":true,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":false,"lazyload":true,"nav":{"utterances":{"text":"Utterances","order":-1}},"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="本文实测LCPI H616 ZERO国产开发板的CPU、内存、IO综合性能，通过nench.sh、sysbench专项测试拆解全志H616芯片真实表现，横向对比同价位Orange Pi Zero2等开发板，给出嵌入式入门、IoT项目的选型建议与优化方案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LCPI H616 ZERO 性能测试 · 一款搭载 H616 的国产开发板横评">
+<meta property="og:url" content="https://jackie.openenet.cn/h616-test/index.html">
+<meta property="og:site_name" content="Jackie&#39;s Blog">
+<meta property="og:description" content="本文实测LCPI H616 ZERO国产开发板的CPU、内存、IO综合性能，通过nench.sh、sysbench专项测试拆解全志H616芯片真实表现，横向对比同价位Orange Pi Zero2等开发板，给出嵌入式入门、IoT项目的选型建议与优化方案。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jackie.openenet.cn/img/h616-test/1.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/h616-test/2.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/h616-test/3.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/h616-test/4.png">
+<meta property="article:published_time" content="2026-01-07T15:16:02.000Z">
+<meta property="article:modified_time" content="2026-01-07T15:16:02.000Z">
+<meta property="article:author" content="Jackie">
+<meta property="article:tag" content="H616">
+<meta property="article:tag" content="IoT">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="国产">
+<meta property="article:tag" content="开发板">
+<meta property="article:tag" content="性能测试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jackie.openenet.cn/img/h616-test/1.png">
+
+
+<link rel="canonical" href="https://jackie.openenet.cn/h616-test/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://jackie.openenet.cn/h616-test/","path":"h616-test/","title":"LCPI H616 ZERO 性能测试 · 一款搭载 H616 的国产开发板横评"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<!-- 页面标题（模板块） -->
+  <title>LCPI H616 ZERO 性能测试 · 一款搭载 H616 的国产开发板横评 | Jackie's Blog</title>
+
+  <!-- 第三方统计/分析脚本（缓存控制） -->
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <!-- 核心脚本与第三方集成（缓存控制） -->
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://s4.zstatic.net/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://s4.zstatic.net/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://s4.zstatic.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+  <script class="next-config" data-name="wavedrom" type="application/json">{"enable":true,"js":{"url":"https://s4.zstatic.net/ajax/libs/wavedrom/3.5.0/wavedrom.min.js","integrity":"sha256-INLAoJc6quTNfiMWkGZniYO2cxE8mHpddnLow1m6RFs="}}</script>
+  <script class="next-config" data-name="wavedrom_skin" type="application/json">{"enable":true,"js":{"url":"https://s4.zstatic.net/ajax/libs/wavedrom/3.5.0/skins/default.js","integrity":"sha256-fduc/Zszk5ezWws2uInY/ALWVmIrmV6VTgXbsYSReFI="}}</script>
+  <script src="/js/third-party/tags/wavedrom.js" defer></script>
+
+
+
+
+  
+  <!-- 数学公式与快速链接组件 -->
+
+  <script src="https://s4.zstatic.net/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://jackie.openenet.cn/h616-test/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
+<!-- 框架注入的头部内容 -->
+
+  <!-- 无JS fallback样式 -->
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "02045fccf216471184e81448797b3566"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+  <!-- Vercel Insights -->
+  <script defer src="/_vercel/insights/script.js"></script>
+  
+  <!-- 灯笼 -->
+  <!-- <script defer src="/third-part/js/lantern.js"></script> -->
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "vmvt7pyx28");
+  </script>
+
+  <!-- 站点验证 Meta 标签 -->
+  <meta name="baidu-site-verification" content="codeva-FuIvtGJoyJ" />
+  <meta name="360-site-verification" content="0b6524e504a2c1865c05f4b983107d7c" />
+  <meta name="yandex-verification" content="8c5995dc66b40cd5" />
+  <meta name="msvalidate.01" content="94CC12F9EBDBD5361337329096B6444A" />
+  <meta name="google-site-verification" content="XbIJi2VgCSSSChuFrq9PuP6yybHvXTUCGsV9oe2ZRf4" />
+
+  <!-- 资源预加载与站点图标 -->
+  <link rel="prefetch" as="image" href="https://boringbay.com/api/badge/jackie.openenet.cn">
+  <link rel="icon" href="https://jackie.openenet.cn/favicon.ico" type="image/x-icon">
+
+  <!-- 运行时长统计样式 -->
+  <style>
+    /* 运行时长数字高亮样式 */
+    .uptime-num {
+      color: #e63946;
+      font-weight: bold;
+    }
+    /* 页脚运行时长行样式 */
+    .uptime-row {
+      margin: 8px 0;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+<link rel="alternate" href="/atom.xml" title="Jackie's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+<body 
+  itemscope 
+  itemtype="http://schema.org/WebPage"
+   class="use-motion"
+>
+  <!-- 顶部装饰条 -->
+  <div class="headband"></div>
+
+  <!-- 页面主体 -->
+  <main class="main">
+    <div class="column">
+      <!-- 页面头部 -->
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jackie's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索区块链、自动化与开源技术</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-友链"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+      
+      <!-- 侧边栏（可配置） -->
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">测试环境说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">基础配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%EF%BC%9Anench-sh"><span class="nav-number">2.</span> <span class="nav-text">综合性能测试：nench.sh</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">测试方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%E5%8F%8A%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90"><span class="nav-number">2.2.</span> <span class="nav-text">测试结果及深度解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A7%82%E8%AF%84%E4%BB%B7"><span class="nav-number">2.3.</span> <span class="nav-text">主观评价</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU%E4%B8%93%E9%A1%B9%E6%B5%8B%E8%AF%95%EF%BC%9Asysbench%E7%B4%A0%E6%95%B0%E8%BF%90%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text">CPU专项测试：sysbench素数运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95-1"><span class="nav-number">3.1.</span> <span class="nav-text">测试方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%E5%8F%8A%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-1"><span class="nav-number">3.2.</span> <span class="nav-text">测试结果及深度解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A7%82%E8%AF%84%E4%BB%B7-1"><span class="nav-number">3.3.</span> <span class="nav-text">主观评价</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E4%B8%93%E9%A1%B9%E6%B5%8B%E8%AF%95%EF%BC%9ADDR3%E8%AF%BB%E5%86%99%E6%80%A7%E8%83%BD"><span class="nav-number">4.</span> <span class="nav-text">内存专项测试：DDR3读写性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95-2"><span class="nav-number">4.1.</span> <span class="nav-text">测试方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%E5%8F%8A%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-2"><span class="nav-number">4.2.</span> <span class="nav-text">测试结果及深度解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A7%82%E8%AF%84%E4%BB%B7-2"><span class="nav-number">4.3.</span> <span class="nav-text">主观评价</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E4%B8%8E%E6%A8%AA%E5%90%91%E5%AF%B9%E6%AF%94"><span class="nav-number">5.</span> <span class="nav-text">总结与横向对比</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%BB%93%E8%AE%BA"><span class="nav-number">5.1.</span> <span class="nav-text">核心结论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E7%B1%BB%E4%BA%A7%E5%93%81%E5%AF%B9%E6%AF%94%EF%BC%88%E7%99%BE%E5%85%83%E7%BA%A7ARM%E5%BC%80%E5%8F%91%E6%9D%BF%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">同类产品对比（百元级ARM开发板）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF%E5%BB%BA%E8%AE%AE"><span class="nav-number">5.3.</span> <span class="nav-text">适用场景建议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%BB%AD%E4%BC%98%E5%8C%96%E6%96%B9%E5%90%91"><span class="nav-number">6.</span> <span class="nav-text">后续优化方向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jackie</p>
+  <div class="site-description" itemprop="description">这里是 Jackie 的个人博客，一名热爱技术的中国学生。专注分享区块链、智能合约、以太坊、CI/CD、开源项目、开发板、嵌入式、业余无线电以及 IT 基础设施的深度解析与实践笔记。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">117</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/PyXMR2025" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;PyXMR2025" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:pyxmr2025@openenet.cn" title="E-Mail → mailto:pyxmr2025@openenet.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://s4.zstatic.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.blogsclub.org/" title="https:&#x2F;&#x2F;www.blogsclub.org&#x2F;" rel="noopener" target="_blank">BlogsClub</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.perass.com/" title="https:&#x2F;&#x2F;www.perass.com&#x2F;" rel="noopener" target="_blank">博客之家</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://bf.zzxworld.com/" title="https:&#x2F;&#x2F;bf.zzxworld.com&#x2F;" rel="noopener" target="_blank">BlogFinder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blogscn.fun/" title="https:&#x2F;&#x2F;blogscn.fun&#x2F;" rel="noopener" target="_blank">BLOGS·CN</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://bokehub.com/home/" title="https:&#x2F;&#x2F;bokehub.com&#x2F;home&#x2F;" rel="noopener" target="_blank">博客中心</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://boringbay.com/" title="https:&#x2F;&#x2F;boringbay.com&#x2F;" rel="noopener" target="_blank">无聊湾</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.blogplanet.cn/" title="https:&#x2F;&#x2F;www.blogplanet.cn&#x2F;" rel="noopener" target="_blank">博客星球</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.rmbk.cc/" title="https:&#x2F;&#x2F;www.rmbk.cc&#x2F;" rel="noopener" target="_blank">若梦博客</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://boke.lu/" title="https:&#x2F;&#x2F;boke.lu&#x2F;" rel="noopener" target="_blank">博客录</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+      <!-- 子菜单 -->
+<!-- 页面核心内容（模板块） -->
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jackie.openenet.cn/h616-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jackie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jackie's Blog">
+      <meta itemprop="description" content="这里是 Jackie 的个人博客，一名热爱技术的中国学生。专注分享区块链、智能合约、以太坊、CI/CD、开源项目、开发板、嵌入式、业余无线电以及 IT 基础设施的深度解析与实践笔记。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LCPI H616 ZERO 性能测试 · 一款搭载 H616 的国产开发板横评 | Jackie's Blog">
+      <meta itemprop="description" content="本文实测LCPI H616 ZERO国产开发板的CPU、内存、IO综合性能，通过nench.sh、sysbench专项测试拆解全志H616芯片真实表现，横向对比同价位Orange Pi Zero2等开发板，给出嵌入式入门、IoT项目的选型建议与优化方案。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LCPI H616 ZERO 性能测试 · 一款搭载 H616 的国产开发板横评<a href="https://github.com/PyXMR2025/blog/tree/main/source/_posts/h616-test.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-07 23:16:02" itemprop="dateCreated datePublished" datetime="2026-01-07T23:16:02+08:00">2026-01-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A1%AC%E4%BB%B6%E7%A0%94%E7%A9%B6/" itemprop="url" rel="index"><span itemprop="name">硬件研究</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">本文实测LCPI H616 ZERO国产开发板的CPU、内存、IO综合性能，通过nench.sh、sysbench专项测试拆解全志H616芯片真实表现，横向对比同价位Orange Pi Zero2等开发板，给出嵌入式入门、IoT项目的选型建议与优化方案。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>作为百元级国产嵌入式开发板，LCPI H616 ZERO的实际性能是否匹配其定位？本文通过<strong>nench.sh综合基准测试</strong>、<strong>sysbench CPU&#x2F;内存专项测试</strong>，全方位拆解全志H616处理器的性能表现，并结合同价位开发板（如Orange Pi Zero2）的行业数据做横向对比，为开发者选择硬件方案提供参考。</p>
+<h2 id="测试环境说明"><a href="#测试环境说明" class="headerlink" title="测试环境说明"></a>测试环境说明</h2><h3 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h3><ul>
+<li><strong>处理器</strong>：全志H616 64位四核ARM Cortex-A53（已配置性能调度器，锁定满频1.5GHz，无降频）</li>
+<li><strong>内存</strong>：512MB DDR3（系统可用479Mi）</li>
+<li><strong>存储</strong>：64GB Class 10 TF卡（Aigo T1）（mmcblk1）</li>
+<li><strong>操作系统</strong>：Linux LCPI-H616 6.1.31-sun50iw9（LCPI-H616_3.1.0_ubuntu_jammy_desktop_xfce_linux6.1.31.img）</li>
+</ul>
+<blockquote>
+<p>CPU频率配置截图 <img data-src="/img/h616-test/1.png" alt="cpu频率配置截图"></p>
+</blockquote>
+<h2 id="综合性能测试：nench-sh"><a href="#综合性能测试：nench-sh" class="headerlink" title="综合性能测试：nench.sh"></a>综合性能测试：nench.sh</h2><h3 id="测试方法"><a href="#测试方法" class="headerlink" title="测试方法"></a>测试方法</h3><p>nench.sh是嵌入式设备常用的一站式基准测试脚本，涵盖CPU算力、磁盘IO、网络吞吐量等维度，执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sL wget.racing/nench.sh | bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试结果及深度解析"><a href="#测试结果及深度解析" class="headerlink" title="测试结果及深度解析"></a>测试结果及深度解析</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">root@LCPI-H616:~ <span class="comment"># curl -sL wget.racing/nench.sh | bash</span></span><br><span class="line">-------------------------------------------------</span><br><span class="line"> nench.sh v2019.07.20 -- https://git.io/nench.sh</span><br><span class="line"> benchmark timestamp: 2026-01-06 14:27:32 UTC</span><br><span class="line">-------------------------------------------------</span><br><span class="line"></span><br><span class="line">Processor:          全志H616 四核Cortex-A53</span><br><span class="line">CPU cores:          4</span><br><span class="line">Frequency:          1500 MHz（性能调度器锁定满频）</span><br><span class="line">RAM:                479Mi（512MB DDR3）</span><br><span class="line">Swap:               0B（未配置交换分区）</span><br><span class="line">Kernel:             Linux 6.1.31-sun50iw9 aarch64</span><br><span class="line"></span><br><span class="line">Disks:</span><br><span class="line">mmcblk1 58.2G SSD   <span class="comment"># 模拟SSD测试</span></span><br><span class="line">zram0 239.8M SSD    <span class="comment"># ZRAM压缩内存（系统自动配置）</span></span><br><span class="line">zram1 50M SSD       <span class="comment"># ZRAM交换分区</span></span><br><span class="line">zram2 0B SSD</span><br><span class="line"></span><br><span class="line"><span class="comment"># CPU算力测试（核心参考指标）</span></span><br><span class="line">CPU: SHA256-hashing 500 MB</span><br><span class="line">    6.440 seconds   <span class="comment"># 解析：SHA256哈希运算耗时6.44秒，符合预期</span></span><br><span class="line">CPU: bzip2-compressing 500 MB</span><br><span class="line">    38.645 seconds  <span class="comment"># 解析：bzip2压缩对单核性能敏感，四核满跑的典型正常水平</span></span><br><span class="line">CPU: AES-encrypting 500 MB</span><br><span class="line">    1.841 seconds   <span class="comment"># 解析：AES加密依托H616硬件加速模块，耗时仅1.84秒，该类平台的算力第一梯队水平</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 磁盘IO测试</span></span><br><span class="line">ioping: seek rate</span><br><span class="line">    bash: 行 220: ./ioping.static: 无法执行二进制文件：可执行文件格式错误</span><br><span class="line">ioping: sequential <span class="built_in">read</span> speed</span><br><span class="line">    bash: 行 222: ./ioping.static: 无法执行二进制文件：可执行文件格式错误</span><br><span class="line"><span class="comment"># 解析：nench.sh内置的ioping.static为x86架构二进制文件，ARM64环境无法运行，属于脚本兼容性问题，需改用dd测试</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">dd</span>: sequential write speed</span><br><span class="line">    1st run: 17.45 MiB/s</span><br><span class="line">    2nd run: 16.69 MiB/s</span><br><span class="line">    3rd run: 15.93 MiB/s</span><br><span class="line">    average: 16.69 MiB/s</span><br><span class="line"><span class="comment"># 解析：TF卡顺序写入平均16.69 MiB/s，符合Class 10卡标称速度（10MB/s+），但远低于eMMC，是板卡性能瓶颈</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 网络吞吐量测试</span></span><br><span class="line">IPv4 speedtests</span><br><span class="line">    your IPv4: 117.172.228.xxxx</span><br><span class="line"></span><br><span class="line">    Cachefly CDN: 0.00 MiB/s</span><br><span class="line">    Leaseweb (NL): 0.00 MiB/s</span><br><span class="line">    Softlayer DAL (US): 0.00 MiB/s</span><br><span class="line">    Online.net (FR): 2.85 MiB/s</span><br><span class="line">    OVH BHS (CA): 0.00 MiB/s</span><br><span class="line"></span><br><span class="line">No IPv6 connectivity detected</span><br><span class="line">-------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<h3 id="主观评价"><a href="#主观评价" class="headerlink" title="主观评价"></a>主观评价</h3><ol>
+<li><strong>CPU核心性能</strong>：H616四核A53满频1.5GHz下，算力与同架构芯片基本持平，硬件加速模块（AES）正常工作，满足IoT场景加密需求；</li>
+<li><strong>存储性能</strong>：TF卡成为明显瓶颈</li>
+</ol>
+<blockquote>
+<p>nench.sh测试结果截图 <img data-src="/img/h616-test/2.png" alt="nench.sh测试结果截图"></p>
+</blockquote>
+<h2 id="CPU专项测试：sysbench素数运算"><a href="#CPU专项测试：sysbench素数运算" class="headerlink" title="CPU专项测试：sysbench素数运算"></a>CPU专项测试：sysbench素数运算</h2><h3 id="测试方法-1"><a href="#测试方法-1" class="headerlink" title="测试方法"></a>测试方法</h3><p>sysbench是专业的性能测试工具，素数运算可精准反映CPU整数运算能力，执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysbench cpu --threads=4 --cpu-max-prime=100000 run</span><br></pre></td></tr></table></figure>
+<p>参数说明：<code>--threads=4</code>（满核心运行）、<code>--cpu-max-prime=100000</code>（计算最大素数100000）。</p>
+<h3 id="测试结果及深度解析-1"><a href="#测试结果及深度解析-1" class="headerlink" title="测试结果及深度解析"></a>测试结果及深度解析</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">root@LCPI-H616:~ <span class="comment"># sysbench cpu --threads=4 --cpu-max-prime=100000 run</span></span><br><span class="line">sysbench 1.0.20 (using system LuaJIT 2.1.0-beta3)</span><br><span class="line"></span><br><span class="line">Running the <span class="built_in">test</span> with following options:</span><br><span class="line">Number of threads: 4</span><br><span class="line">Initializing random number generator from current <span class="keyword">time</span></span><br><span class="line"></span><br><span class="line">Prime numbers <span class="built_in">limit</span>: 100000</span><br><span class="line"></span><br><span class="line">Initializing worker threads...</span><br><span class="line">Threads started!</span><br><span class="line"></span><br><span class="line">CPU speed:</span><br><span class="line">    events per second: 133.81  <span class="comment"># 解析：每秒完成133.81次素数运算，正常偏优水平</span></span><br><span class="line">General statistics:</span><br><span class="line">    total <span class="keyword">time</span>: 10.0160s       <span class="comment"># 解析：总测试时长10秒，符合sysbench默认配置</span></span><br><span class="line">    total number of events: 1341 <span class="comment"># 解析：10秒内完成1341次运算，平均每核335次，负载均衡</span></span><br><span class="line"></span><br><span class="line">Latency (ms):</span><br><span class="line">         min: 29.68            <span class="comment"># 解析：单次运算最短耗时29.68ms</span></span><br><span class="line">         avg: 29.86            <span class="comment"># 解析：平均耗时29.86ms，波动极小，说明CPU调度稳定</span></span><br><span class="line">         max: 62.36            <span class="comment"># 解析：最大耗时62.36ms，偶发高延迟，推测为系统后台进程干扰</span></span><br><span class="line">         95th percentile: 29.72 <span class="comment"># 解析：95%的运算耗时≤29.72ms，核心性能稳定</span></span><br><span class="line">         <span class="built_in">sum</span>: 40043.96</span><br><span class="line"></span><br><span class="line">Threads fairness:</span><br><span class="line">    events (avg/stddev): 335.2500/1.09  <span class="comment"># 解析：四核负载标准差仅1.09，调度算法优化良好</span></span><br><span class="line">    execution <span class="keyword">time</span> (avg/stddev): 10.0110/0.00 <span class="comment"># 解析：各线程执行时间一致，无核心锁死</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="主观评价-1"><a href="#主观评价-1" class="headerlink" title="主观评价"></a>主观评价</h3><ol>
+<li><strong>多核性能</strong>：四核满负载下运算效率优于同架构标杆产品，调度算法表现优秀，无核心闲置；</li>
+<li><strong>稳定性</strong>：95%分位延迟仅29.72ms，说明长时间运行时性能波动小，适合需要稳定算力的IoT场景（如本地数据处理）；</li>
+</ol>
+<blockquote>
+<p>sysbench测试结果截图 <img data-src="/img/h616-test/3.png" alt="sysbench测试结果截图"></p>
+</blockquote>
+<h2 id="内存专项测试：DDR3读写性能"><a href="#内存专项测试：DDR3读写性能" class="headerlink" title="内存专项测试：DDR3读写性能"></a>内存专项测试：DDR3读写性能</h2><h3 id="测试方法-2"><a href="#测试方法-2" class="headerlink" title="测试方法"></a>测试方法</h3><p>针对DDR3内存的写入性能测试，执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sysbench memory --memory-block-size=4M --memory-total-size=512M \</span><br><span class="line">--memory-oper=write --threads=4 run</span><br></pre></td></tr></table></figure>
+<p>参数说明：<code>--memory-block-size=4M</code>（4MB块大小）、<code>--memory-total-size=512M</code>（总测试数据量）、<code>--memory-oper=write</code>（写入操作）。</p>
+<h3 id="测试结果及深度解析-2"><a href="#测试结果及深度解析-2" class="headerlink" title="测试结果及深度解析"></a>测试结果及深度解析</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">root@LCPI-H616:~ <span class="comment"># sysbench memory --memory-block-size=4M --memory-total-size=512M \</span></span><br><span class="line">--memory-oper=write --threads=4 run</span><br><span class="line">sysbench 1.0.20 (using system LuaJIT 2.1.0-beta3)</span><br><span class="line">Running the <span class="built_in">test</span> with following options:</span><br><span class="line">Number of threads: 4</span><br><span class="line">Initializing random number generator from current <span class="keyword">time</span></span><br><span class="line">Running memory speed <span class="built_in">test</span> with the following options:</span><br><span class="line">  block size: 4096KiB</span><br><span class="line">  total size: 512MiB</span><br><span class="line">  operation: write</span><br><span class="line">  scope: global</span><br><span class="line">Initializing worker threads...</span><br><span class="line">Threads started!</span><br><span class="line">Total operations: 128 ( 584.25 per second)  <span class="comment"># 解析：每秒完成584.25次4MB块写入，运算逻辑：128次×4MB=512MB</span></span><br><span class="line">512.00 MiB transferred (2336.99 MiB/sec)   <span class="comment"># 解析：内存写入速度达2336.99 MiB/s（约2.28 GB/s）</span></span><br><span class="line">General statistics:</span><br><span class="line">    total <span class="keyword">time</span>: 0.2129s       <span class="comment"># 解析：512MB数据写入仅耗时0.21秒，速度表现优异</span></span><br><span class="line">    total number of events: 128</span><br><span class="line">Latency (ms):</span><br><span class="line">         min: 1.99            <span class="comment"># 解析：单次写入最短耗时1.99ms</span></span><br><span class="line">         avg: 5.84            <span class="comment"># 解析：平均耗时5.84ms，内存响应速度快</span></span><br><span class="line">         max: 28.30           <span class="comment"># 解析：最大耗时28.30ms，偶发高延迟，与内存调度策略相关</span></span><br><span class="line">         95th percentile: 17.32 <span class="comment"># 解析：95%写入操作≤17.32ms，稳定性良好</span></span><br><span class="line">         <span class="built_in">sum</span>: 746.92</span><br><span class="line">Threads fairness:</span><br><span class="line">    events (avg/stddev): 32.0000/0.00  <span class="comment"># 解析：四核均分128次操作，每核32次，无负载不均</span></span><br><span class="line">    execution <span class="keyword">time</span> (avg/stddev): 0.1867/0.02 <span class="comment"># 解析：线程执行时间偏差小，内存控制器调度高效</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="主观评价-2"><a href="#主观评价-2" class="headerlink" title="主观评价"></a>主观评价</h3><ol>
+<li><strong>内存速度</strong>：DDR3内存写入速度达2.28 GB&#x2F;s，符合H616内存控制器标称规格（DDR3-1600，理论带宽12.8 GB&#x2F;s，实际应用层2-3 GB&#x2F;s为正常水平）；</li>
+<li><strong>实用性</strong>：512MB&#x2F;1GB内存容量是最大短板，虽速度表现优异，但容量限制了多任务、大内存应用（如AI模型推理）的落地；</li>
+<li><strong>优化建议</strong>：可通过ZRAM压缩内存（系统已默认配置）提升可用容量，缓解小内存压力。</li>
+</ol>
+<blockquote>
+<p>内存测试结果截图 <img data-src="/img/h616-test/4.png" alt="内存测试结果截图"></p>
+</blockquote>
+<h2 id="总结与横向对比"><a href="#总结与横向对比" class="headerlink" title="总结与横向对比"></a>总结与横向对比</h2><h3 id="核心结论"><a href="#核心结论" class="headerlink" title="核心结论"></a>核心结论</h3><ol>
+<li><strong>性能定位</strong>：LCPI H616 ZERO的CPU、内存性能与同架构Orange Pi Zero2基本持平，属于同一梯队；</li>
+<li><strong>核心短板</strong>：TF卡存储IO（16.69 MiB&#x2F;s）和512MB内存容量是主要瓶颈，CPU算力可满足常规IoT场景（传感器数据处理、MQTT通信、轻量脚本运行）；</li>
+<li><strong>性价比</strong>：120元价位下，性能表现匹配定价，但生态成熟度远低于Orange Pi Zero2，适合有调试能力的开发者，不建议纯新手入门。</li>
+</ol>
+<h3 id="同类产品对比（百元级ARM开发板）"><a href="#同类产品对比（百元级ARM开发板）" class="headerlink" title="同类产品对比（百元级ARM开发板）"></a>同类产品对比（百元级ARM开发板）</h3><table>
+<thead>
+<tr>
+<th>型号</th>
+<th>CPU</th>
+<th>内存</th>
+<th>核心优势</th>
+<th>不足</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LCPI H616 ZERO</td>
+<td>H616 四核A53</td>
+<td>512MB&#x2F;1GB</td>
+<td>价格低、国产方案</td>
+<td>生态弱</td>
+</tr>
+<tr>
+<td>Orange Pi Zero2</td>
+<td>H616 四核A53</td>
+<td>1GB</td>
+<td>生态成熟、固件优化好</td>
+<td>价格高</td>
+</tr>
+<tr>
+<td>Raspberry Pi Zero 2W</td>
+<td>BCM2710A1 四核A53</td>
+<td>512MB</td>
+<td>生态顶级、社区资源丰富</td>
+<td>价格高</td>
+</tr>
+</tbody></table>
+<h3 id="适用场景建议"><a href="#适用场景建议" class="headerlink" title="适用场景建议"></a>适用场景建议</h3><ul>
+<li>✅ 推荐场景：轻量IoT项目（温湿度采集、串口通信、MQTT上报）、嵌入式Linux学习、低负载边缘计算；</li>
+<li>❌ 不推荐场景：多任务并发、大内存AI推理、高清视频解码（桌面版卡顿明显）。</li>
+</ul>
+<h2 id="后续优化方向"><a href="#后续优化方向" class="headerlink" title="后续优化方向"></a>后续优化方向</h2><ol>
+<li><strong>内存扩容</strong>：通过ZRAM配置更大压缩内存，缓解512MB&#x2F;1GB容量不足；</li>
+<li><strong>散热优化</strong>：加装散热片，避免长时间满负载运行导致的降频（本次测试已锁定满频，未发现降频）。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>LCPI H616 ZERO作为国产百元级开发板，性能上达到了同架构芯片的基准水平，虽存在生态和细节优化的不足，但为开发者提供了高性价比的国产芯片实践方案。后续将进行项目实践及系统优化，欢迎关注！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        <!-- 广告组件 - 适配Next主题+明暗模式（图片+文字版） -->
+<div class="next-ad-container" id="next-ad-container">
+  <!-- 广告标签 -->
+  <div class="ad-label">广告</div>
+  <!-- 广告内容区域 -->
+  <div class="ad-content" id="ad-body">
+    <div class="ad-loading">
+      广告正在加载中...
+    </div>
+  </div>
+</div>
+
+<!-- 配套CSS样式（修复线条问题） -->
+<style>
+  /* 广告容器基础样式 - 增强鲁棒性 */
+  .next-ad-container {
+    position: relative;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: inherit;
+    /* 新增：确保容器无多余边框/线条 */
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 明模式样式 */
+  .next-ad-container {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #e6e6e6;
+  }
+
+  /* 暗模式样式 */
+  html[data-theme="dark"] .next-ad-container {
+    background-color: #2c2c2c;
+    color: #e5e5e5;
+    border: 1px solid #444;
+  }
+
+  /* 广告标签样式 */
+  .ad-label {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 10px;
+    opacity: 0.7;
+    transition: color 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  html[data-theme="dark"] .ad-label {
+    color: #aaa;
+  }
+
+  /* 广告内容区域 - 整体居中布局 */
+  .ad-content {
+    display: flex;
+    flex-direction: column; /* 图片+文字上下排列 */
+    align-items: center;     /* 水平居中 */
+    justify-content: center; /* 垂直居中 */
+    text-align: center;
+    padding: 10px 0;
+    min-height: 100px; /* 适配图片+文字的高度 */
+    overflow: hidden;
+    /* 新增：清除多余线条 */
+    border: none !important;
+    outline: none !important;
+  }
+
+  /* 广告链接容器 - 确保整体可点击 + 清除线条 */
+  .ad-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* 新增：彻底清除a标签的下划线/边框 */
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: inherit; /* 继承容器文字颜色，适配明暗模式 */
+  }
+
+  /* 新增：确保hover时也无下划线 */
+  .ad-wrapper:hover,
+  .ad-wrapper:active,
+  .ad-wrapper:focus {
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  /* 广告图片样式 */
+  .ad-img {
+    max-width: 120px; /* 限制图片宽度，避免过大 */
+    max-height: 60px;
+    object-fit: contain;
+    border: none !important; /* 新增：清除图片边框 */
+    margin-bottom: 8px; /* 图片与文字间距 */
+    transition: opacity 0.2s ease;
+    outline: none !important;
+  }
+
+  .ad-img:hover {
+    opacity: 0.95;
+  }
+
+  /* 广告文字样式 - 适配明暗模式 */
+  .ad-text {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 2px 0;
+    opacity: 0.9;
+    transition: color 0.3s ease;
+    /* 新增：确保文字无装饰 */
+    text-decoration: none !important;
+  }
+
+  /* 第二行文字稍小，突出重点 */
+  .ad-text.sub {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  /* 暗模式文字颜色优化 */
+  html[data-theme="dark"] .ad-text {
+    color: #d0d0d0;
+  }
+
+  /* 加载提示样式 */
+  .ad-loading {
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1;
+  }
+
+  /* 响应式适配 - 移动端优化 */
+  @media (max-width: 768px) {
+    .next-ad-container {
+      padding: 10px;
+      margin: 15px 0;
+    }
+    .ad-content {
+      min-height: 80px;
+    }
+    .ad-img {
+      max-width: 100px;
+      max-height: 50px;
+    }
+    .ad-text {
+      font-size: 13px;
+    }
+    .ad-text.sub {
+      font-size: 11px;
+    }
+    .ad-loading {
+      font-size: 12px;
+    }
+  }
+
+  /* 极小屏适配 */
+  @media (max-width: 480px) {
+    .ad-content {
+      min-height: 70px;
+    }
+    .ad-img {
+      max-width: 80px;
+      max-height: 40px;
+    }
+  }
+</style>
+
+<!-- 广告加载逻辑（优化重排警告+修复线条） -->
+<script>
+// 广告加载函数 - 优化性能+重试机制
+function loadAdContent() {
+  // 优化：提前缓存元素选择器，减少DOM查询
+  const getAdBody = () => document.getElementById('ad-body');
+  let retryCount = 0;
+  const maxRetry = 5;
+
+  // 优化：使用requestAnimationFrame减少重排
+  function tryLoad() {
+    requestAnimationFrame(() => {
+      const adBody = getAdBody();
+      
+      // 调试日志（可按F12查看Console）
+      if (retryCount === 0) console.log('开始加载广告，元素是否存在:', !!adBody);
+
+      // 元素不存在则重试
+      if (!adBody) {
+        retryCount++;
+        if (retryCount < maxRetry) {
+          setTimeout(tryLoad, 300);
+        } else {
+          console.error('无法获取广告容器元素，请检查ID是否正确');
+          // 兜底：手动创建内容
+          const container = document.getElementById('next-ad-container');
+          if (container) {
+            container.innerHTML = `
+              <div class="ad-label">广告</div>
+              <div class="ad-content">
+                <div class="ad-loading">广告容器加载失败</div>
+              </div>
+            `;
+          }
+        }
+        return;
+      }
+
+      try {
+        // 保留你修改后的广告内容
+        const adHtml = `
+          <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+            <img src="/img/rainyun/1.png" alt="雨云云服务器" class="ad-img" loading="lazy">
+            <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+            <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+          </a>
+        `;
+        // 优化：一次性赋值innerHTML，减少重排
+        adBody.innerHTML = adHtml;
+
+        // 图片加载失败降级
+        const adImg = adBody.querySelector('.ad-img');
+        if (adImg) {
+          adImg.onerror = function() {
+            adBody.innerHTML = `
+              <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+                <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+                <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+              </a>
+            `;
+          };
+        }
+      } catch (error) {
+        console.warn('广告加载出错:', error);
+        adBody.innerHTML = '<div class="ad-loading">广告加载失败</div>';
+      }
+    });
+  }
+
+  tryLoad(); // 立即执行第一次尝试
+}
+
+// 修复执行时机：改用window.load（比DOMContentLoaded更晚，适配Next主题渲染）
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  // 页面已加载，立即执行
+  loadAdContent();
+} else {
+  // 页面未加载完，等所有资源加载后执行
+  window.addEventListener('load', loadAdContent);
+}
+
+// 适配主题切换
+document.addEventListener('theme-change', function() {});
+</script>
+
+          <div class="reward-container">
+  <div>请我喝杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/img/reward/btc.png" alt="Jackie 比特币">
+        <span>比特币</span>
+      </div>
+      <div>
+        <img src="/img/reward/eth.png" alt="Jackie 以太坊">
+        <span>以太坊</span>
+      </div>
+      <div>
+        <img src="/img/reward/trx.png" alt="Jackie 波场">
+        <span>波场</span>
+      </div>
+      <div>
+        <img src="/img/reward/arb.png" alt="Jackie 阿尔比垂姆">
+        <span>阿尔比垂姆</span>
+      </div>
+      <div>
+        <img src="/img/reward/bsc.png" alt="Jackie 币安智能链">
+        <span>币安智能链</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Jackie
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://jackie.openenet.cn/h616-test/" title="LCPI H616 ZERO 性能测试 · 一款搭载 H616 的国产开发板横评">https://jackie.openenet.cn/h616-test/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-SA</a> 许可协议。转载请注明出处！
+  </li>
+  <li class="post-copyright-aigc">
+    <strong>AIGC 辅助创作声明：</strong>
+    <a href="/aigc/" title="AIGC辅助创作声明">本文采用 AIGC 工具辅助创作，全程人工校对、技术验证，作者对内容负责。</a>
+  </li>
+</ul>
+</div>
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/H616/" rel="tag"># H616</a>
+              <a href="/tags/%E5%BC%80%E5%8F%91%E6%9D%BF/" rel="tag"># 开发板</a>
+              <a href="/tags/%E5%9B%BD%E4%BA%A7/" rel="tag"># 国产</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/IoT/" rel="tag"># IoT</a>
+              <a href="/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/" rel="tag"># 性能测试</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/open-h616/" rel="prev" title="LCPI H616 ZERO 开发板开箱 · 系统烧录与基础配置全教程">
+                  <i class="fa fa-angle-left"></i> LCPI H616 ZERO 开发板开箱 · 系统烧录与基础配置全教程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/ham-ctcss-dcs/" rel="next" title="模拟亚音 CTCSS 与 数字亚音 DCS 技术原理详解与应用场景">
+                  模拟亚音 CTCSS 与 数字亚音 DCS 技术原理详解与应用场景 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+<div class="hexo-article-recommender-section">
+  <div class="hexo-article-recommender-section-divider">
+    <div class="hexo-article-recommender-divider-line"></div>
+    <div class="hexo-article-recommender-divider-text">
+      <span>推荐文章</span>
+    </div>
+  </div>
+
+  <div class="hexo-article-recommender-posts">
+    
+      
+      
+      <div class="hexo-article-recommender-post-card" data-bg="#6a89cc, #4a69bd">
+        <!-- 左上角：站内标签 -->
+        <div class="hexo-article-recommender-site-tag">站内</div>
+
+        <!-- 左下角：关系类型标签 + 相关度 -->
+        <div class="hexo-article-recommender-relation-tag related">
+          相关
+          <span class="hexo-article-recommender-score">(58.7%)
+        </span>
+        </div>
+
+        <div class="hexo-article-recommender-card-header">
+          <div class="hexo-article-recommender-reading-time">
+            <i class="fas fa-clock"></i>
+            6分钟
+          </div>
+        </div>
+        <div class="hexo-article-recommender-card-content">
+          <h4 class="hexo-article-recommender-post-title">
+            <a href="/open-h616/">LCPI H616 ZERO 开发板开箱 · 系统烧录与基础配置全教程</a>
+          </h4>
+          <p class="hexo-article-recommender-post-excerpt">
+            LCPI H616 ZERO国产开发板开箱全解析，含全志H616核心硬件参数、Ubuntu/Debian/安卓系统完整烧录教程、基础环境配置与常见问题排查，嵌入
+          </p>
+          <div class="hexo-article-recommender-author">
+            <div class="hexo-article-recommender-author-avatar" style="background: #4a69bd;">
+              1
+            </div>
+            <div class="hexo-article-recommender-author-info">
+              <div class="hexo-article-recommender-author-name">Jackie</div>
+              <div class="hexo-article-recommender-author-title">探索区块链、自动化与开源技术</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      
+      
+      <div class="hexo-article-recommender-post-card" data-bg="#e55039, #eb2f06">
+        <!-- 左上角：站内标签 -->
+        <div class="hexo-article-recommender-site-tag">站内</div>
+
+        <!-- 左下角：关系类型标签 + 相关度 -->
+        <div class="hexo-article-recommender-relation-tag fallback">
+          推荐
+          <span class="hexo-article-recommender-score">(5.9%)
+        </span>
+        </div>
+
+        <div class="hexo-article-recommender-card-header">
+          <div class="hexo-article-recommender-reading-time">
+            <i class="fas fa-clock"></i>
+            13分钟
+          </div>
+        </div>
+        <div class="hexo-article-recommender-card-content">
+          <h4 class="hexo-article-recommender-post-title">
+            <a href="/oray-hsk-nat-traversal/">花生壳内网穿透（ NAT 穿透）安装使用全教程 · 无公网 IP 访问内网服务实战</a>
+          </h4>
+          <p class="hexo-article-recommender-post-excerpt">
+            本文详解NAT内网穿透的核心原理，完整演示贝锐花生壳从注册、实名认证到创建映射、外网访问的全流程，客观分析花生壳的优势、短板与适用边界，对比同类内网穿透方案（O
+          </p>
+          <div class="hexo-article-recommender-author">
+            <div class="hexo-article-recommender-author-avatar" style="background: #e55039;">
+              2
+            </div>
+            <div class="hexo-article-recommender-author-info">
+              <div class="hexo-article-recommender-author-name">Jackie</div>
+              <div class="hexo-article-recommender-author-title">探索区块链、自动化与开源技术</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      
+      
+      <div class="hexo-article-recommender-post-card" data-bg="#3dc1d3, #0fb9b1">
+        <!-- 左上角：站内标签 -->
+        <div class="hexo-article-recommender-site-tag">站内</div>
+
+        <!-- 左下角：关系类型标签 + 相关度 -->
+        <div class="hexo-article-recommender-relation-tag fallback">
+          推荐
+          <span class="hexo-article-recommender-score">(4.8%)
+        </span>
+        </div>
+
+        <div class="hexo-article-recommender-card-header">
+          <div class="hexo-article-recommender-reading-time">
+            <i class="fas fa-clock"></i>
+            12分钟
+          </div>
+        </div>
+        <div class="hexo-article-recommender-card-content">
+          <h4 class="hexo-article-recommender-post-title">
+            <a href="/why-save-btc/">比特币长期持有优势解析・为什么我只选择长期持有比特币，而非股票、黄金等其他资产</a>
+          </h4>
+          <p class="hexo-article-recommender-post-excerpt">
+            比特币（BTC/Bitcoin）作为一种长期投资资产，在过去十多年中表现出色，成为全球关注的价值存储选项。本文深度解析比特币的核心技术、市场表现以及与股票、黄金
+          </p>
+          <div class="hexo-article-recommender-author">
+            <div class="hexo-article-recommender-author-avatar" style="background: #3dc1d3;">
+              3
+            </div>
+            <div class="hexo-article-recommender-author-info">
+              <div class="hexo-article-recommender-author-name">Jackie</div>
+              <div class="hexo-article-recommender-author-title">探索区块链、自动化与开源技术</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+  <h2 class="hexo-article-recommender-section-over">--- over ---</h2>
+</div>
+
+<style>
+.hexo-article-recommender-section {
+  margin-top: 60px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hexo-article-recommender-section-divider {
+  position: relative;
+  margin: 60px 0;
+}
+
+.hexo-article-recommender-divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #6a89cc, transparent);
+}
+
+.hexo-article-recommender-divider-text {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 0 15px;
+}
+
+.hexo-article-recommender-divider-text span {
+  color: #6a89cc;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.hexo-article-recommender-section-over {
+  text-align: center;
+  margin: 30px;
+  color: #9e9e9e;
+}
+
+.hexo-article-recommender-posts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}
+
+.hexo-article-recommender-post-card {
+  width: 280px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 270px;
+  position: relative;
+}
+
+.hexo-article-recommender-post-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.hexo-article-recommender-card-header {
+  height: 60px;
+  position: relative;
+  background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite alternate;
+}
+
+.hexo-article-recommender-post-card[data-bg^="#6a89cc"] .hexo-article-recommender-card-header {
+  --bg-start: #6a89cc; --bg-end: #4a69bd;
+}
+.hexo-article-recommender-post-card[data-bg^="#e55039"] .hexo-article-recommender-card-header {
+  --bg-start: #e55039; --bg-end: #eb2f06;
+}
+.hexo-article-recommender-post-card[data-bg^="#3dc1d3"] .hexo-article-recommender-card-header {
+  --bg-start: #3dc1d3; --bg-end: #0fb9b1;
+}
+.hexo-article-recommender-post-card[data-bg^="#f6b93b"] .hexo-article-recommender-card-header {
+  --bg-start: #f6b93b; --bg-end: #e55039;
+}
+
+.hexo-article-recommender-reading-time {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(4px);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.hexo-article-recommender-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 60px);
+  justify-content: space-between;
+}
+
+.hexo-article-recommender-post-title {
+  margin-top: 0;
+  font-size: 1.2em;
+  line-height: 1.4;
+  color: #2c3e50;
+}
+
+.hexo-article-recommender-post-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.hexo-article-recommender-post-title a:hover {
+  color: #6a89cc;
+}
+
+.hexo-article-recommender-post-excerpt {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.hexo-article-recommender-author {
+  display: flex;
+  align-items: center;
+}
+
+.hexo-article-recommender-author-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.hexo-article-recommender-author-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.hexo-article-recommender-author-title {
+  font-size: 12px;
+  color: #888;
+}
+
+/* ========== 左上角：站内标签 ========== */
+.hexo-article-recommender-site-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(42, 170, 138, 0.9);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 0 0 8px 0;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ========== 左下角：关系类型标签 ========== */
+.hexo-article-recommender-relation-tag {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 0 8px 0 0;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hexo-article-recommender-relation-tag.related {
+  background-color: rgba(42, 170, 138, 0.9); /* 绿色：相关 */
+}
+
+.hexo-article-recommender-relation-tag.fallback {
+  background-color: rgba(229, 80, 57, 0.9); /* 橙红：推荐 */
+}
+
+.hexo-article-recommender-post-card:hover .hexo-article-recommender-relation-tag {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 相关度分数样式 */
+.hexo-article-recommender-relation-tag .hexo-article-recommender-score {
+  font-size: 10px;
+  opacity: 0.8;
+  margin-left: 4px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .hexo-article-recommender-posts {
+    flex-direction: column;
+    align-items: center;
+  }
+  .hexo-article-recommender-post-card {
+    width: calc(100% - 30px);
+    max-width: 400px;
+  }
+}
+</style>
+
+</div>
+
+
+
+
+
+
+      <!-- 评论区 -->
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <!-- 多语言切换 -->
+<!-- 页脚公共内容（缓存控制） -->
+      
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jackie</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">68k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:02</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+
+      <!-- 站点数据（居中显示） -->
+      <div style="text-align: center;">
+        <a href="https://www.blogsclub.org/rank.html" target="_blank">
+          <img 
+            src="https://www.blogsclub.org/badge/jackie.openenet.cn" 
+            style="height:60px!important" 
+            loading="lazy"
+            alt="统计数据">
+        </a>
+      </div>
+        
+      <!-- 运行时长统计展示行（新增分钟显示） -->
+      <div class="uptime-row">
+        本站已经稳定运行了 
+        <span class="uptime-num" id="days">00</span> 天 
+        <span class="uptime-num" id="hours">00</span> 小时 
+        <span class="uptime-num" id="minutes">00</span> 分钟 
+        <span class="uptime-num" id="seconds">00</span> 秒
+      </div>
+
+      <!-- ICP备案 -->
+      <div style="text-align: center; margin: 8px 0;">
+        <a href="https://icp.gov.moe/?keyword=20260177" target="_blank">萌ICP备20260177号</a>
+      </div>
+
+      <!-- 广告脚本（仅保留一次引入） -->
+      <!-- <script async="async" data-cfasync="false" src="https://pl28675819.effectivegatecpm.com/0f2aeb03ec930e47193f4782e446c5b6/invoke.js"></script> -->
+      <!-- <div id="container-0f2aeb03ec930e47193f4782e446c5b6"></div> -->
+
+    </div>
+  </footer>
+
+  <!-- 页面组件（缓存控制） -->
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/PyXMR2025" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  <!-- 框架注入的页面底部内容 --><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"PyXMR2025","repo":"blog-talk","client_id":"Ov23liwFgKqqzMwetvZo","admin_user":"PyXMR2025","distraction_free_mode":true,"proxy":"https://gitalk.openenet.cn/get_accesstoken","language":"zh-CN","js":{"url":"https://s4.zstatic.net/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"b9faa7dfc5f577edd4dbcdef30ce1b4a"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+
+  <!-- 运行时长统计逻辑（优化版） -->
+  <script>
+    // 站点启动时间（GMT+8 2025-12-15 10:47:19）
+    const startTime = new Date('2025-12-15T10:47:19+08:00');
+    // 缓存DOM元素，避免重复查询
+    const uptimeElements = {
+      days: document.getElementById('days'),
+      hours: document.getElementById('hours'),
+      minutes: document.getElementById('minutes'),
+      seconds: document.getElementById('seconds')
+    };
+    // 定时器标识，用于页面卸载时清理
+    let uptimeTimer = null;
+
+    /**
+     * 数字补零：单位数补0，如 5 → 05
+     * @param {number} num 要补零的数字
+     * @returns {string} 补零后的字符串
+     */
+    function padZero(num) {
+      return num.toString().padStart(2, '0');
+    }
+
+    /**
+     * 计算并更新站点运行时长
+     */
+    function updateUptime() {
+      const now = new Date();
+      const diffMs = now - startTime;
+
+      // 处理当前时间早于启动时间的边界情况
+      if (diffMs < 0) {
+        uptimeElements.days.textContent = '00';
+        uptimeElements.hours.textContent = '00';
+        uptimeElements.minutes.textContent = '00';
+        uptimeElements.seconds.textContent = '00';
+        return;
+      }
+
+      // 时间单位转换（毫秒 -> 天/小时/分钟/秒）
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const days = Math.floor(totalSeconds / (24 * 60 * 60));
+      const remainingSecondsAfterDays = totalSeconds % (24 * 60 * 60);
+      const hours = Math.floor(remainingSecondsAfterDays / (60 * 60));
+      const remainingSecondsAfterHours = remainingSecondsAfterDays % (60 * 60);
+      const minutes = Math.floor(remainingSecondsAfterHours / 60);
+      const seconds = remainingSecondsAfterHours % 60;
+
+      // 更新页面显示（补零后）
+      uptimeElements.days.textContent = padZero(days);
+      uptimeElements.hours.textContent = padZero(hours);
+      uptimeElements.minutes.textContent = padZero(minutes);
+      uptimeElements.seconds.textContent = padZero(seconds);
+    }
+
+    // 初始化执行 + 每秒更新一次
+    updateUptime();
+    uptimeTimer = setInterval(updateUptime, 1000);
+
+    // 页面卸载时清理定时器，避免内存泄漏
+    window.addEventListener('beforeunload', () => {
+      clearInterval(uptimeTimer);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- 基础头部公共组件（缓存控制） -->
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/16.png">
+  <link rel="mask-icon" href="/img/favicon/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"jackie.openenet.cn","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":true,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":false,"lazyload":true,"nav":{"utterances":{"text":"Utterances","order":-1}},"activeClass":"gitalk"},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="本文详解NAT内网穿透的核心原理，完整演示贝锐花生壳从注册、实名认证到创建映射、外网访问的全流程，客观分析花生壳的优势、短板与适用边界，对比同类内网穿透方案（Oray HSK vs Cloudflare Tunnel），帮你无公网IP也能稳定访问内网服务。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="花生壳内网穿透（ NAT 穿透）安装使用全教程 · 无公网 IP 访问内网服务实战">
+<meta property="og:url" content="https://jackie.openenet.cn/oray-hsk-nat-traversal/index.html">
+<meta property="og:site_name" content="Jackie&#39;s Blog">
+<meta property="og:description" content="本文详解NAT内网穿透的核心原理，完整演示贝锐花生壳从注册、实名认证到创建映射、外网访问的全流程，客观分析花生壳的优势、短板与适用边界，对比同类内网穿透方案（Oray HSK vs Cloudflare Tunnel），帮你无公网IP也能稳定访问内网服务。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jackie.openenet.cn/img/oray-hsk-nat-traversal/1.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/oray-hsk-nat-traversal/2.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/oray-hsk-nat-traversal/3.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/oray-hsk-nat-traversal/4.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/oray-hsk-nat-traversal/5.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/oray-hsk-nat-traversal/6.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/oray-hsk-nat-traversal/7.png">
+<meta property="og:image" content="https://jackie.openenet.cn/img/oray-hsk-nat-traversal/8.png">
+<meta property="article:published_time" content="2026-02-12T18:15:45.000Z">
+<meta property="article:modified_time" content="2026-02-12T18:15:45.000Z">
+<meta property="article:author" content="Jackie">
+<meta property="article:tag" content="IoT">
+<meta property="article:tag" content="NAS外网访问">
+<meta property="article:tag" content="NAT穿透">
+<meta property="article:tag" content="内网穿透">
+<meta property="article:tag" content="外网访问内网服务">
+<meta property="article:tag" content="无外网IP">
+<meta property="article:tag" content="网络技术">
+<meta property="article:tag" content="贝锐花生壳">
+<meta property="article:tag" content="运营商">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jackie.openenet.cn/img/oray-hsk-nat-traversal/1.png">
+
+
+<link rel="canonical" href="https://jackie.openenet.cn/oray-hsk-nat-traversal/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://jackie.openenet.cn/oray-hsk-nat-traversal/","path":"oray-hsk-nat-traversal/","title":"花生壳内网穿透（ NAT 穿透）安装使用全教程 · 无公网 IP 访问内网服务实战"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<!-- 页面标题（模板块） -->
+  <title>花生壳内网穿透（ NAT 穿透）安装使用全教程 · 无公网 IP 访问内网服务实战 | Jackie's Blog</title>
+
+  <!-- 第三方统计/分析脚本（缓存控制） -->
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <!-- 核心脚本与第三方集成（缓存控制） -->
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://s4.zstatic.net/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://s4.zstatic.net/ajax/libs/pdfobject/2.3.1/pdfobject.min.js","integrity":"sha256-jI72I8ZLVflVOisZIOaLvRew3tyvzeu6aZXFm7P7dEo="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js" defer></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://s4.zstatic.net/ajax/libs/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+  <script class="next-config" data-name="wavedrom" type="application/json">{"enable":true,"js":{"url":"https://s4.zstatic.net/ajax/libs/wavedrom/3.5.0/wavedrom.min.js","integrity":"sha256-INLAoJc6quTNfiMWkGZniYO2cxE8mHpddnLow1m6RFs="}}</script>
+  <script class="next-config" data-name="wavedrom_skin" type="application/json">{"enable":true,"js":{"url":"https://s4.zstatic.net/ajax/libs/wavedrom/3.5.0/skins/default.js","integrity":"sha256-fduc/Zszk5ezWws2uInY/ALWVmIrmV6VTgXbsYSReFI="}}</script>
+  <script src="/js/third-party/tags/wavedrom.js" defer></script>
+
+
+
+
+  
+  <!-- 数学公式与快速链接组件 -->
+
+  <script src="https://s4.zstatic.net/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://jackie.openenet.cn/oray-hsk-nat-traversal/"}</script>
+  <script src="/js/third-party/quicklink.js" defer></script>
+<!-- 框架注入的头部内容 -->
+
+  <!-- 无JS fallback样式 -->
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "02045fccf216471184e81448797b3566"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+  <!-- Vercel Insights -->
+  <script defer src="/_vercel/insights/script.js"></script>
+  
+  <!-- 灯笼 -->
+  <!-- <script defer src="/third-part/js/lantern.js"></script> -->
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "vmvt7pyx28");
+  </script>
+
+  <!-- 站点验证 Meta 标签 -->
+  <meta name="baidu-site-verification" content="codeva-FuIvtGJoyJ" />
+  <meta name="360-site-verification" content="0b6524e504a2c1865c05f4b983107d7c" />
+  <meta name="yandex-verification" content="8c5995dc66b40cd5" />
+  <meta name="msvalidate.01" content="94CC12F9EBDBD5361337329096B6444A" />
+  <meta name="google-site-verification" content="XbIJi2VgCSSSChuFrq9PuP6yybHvXTUCGsV9oe2ZRf4" />
+
+  <!-- 资源预加载与站点图标 -->
+  <link rel="prefetch" as="image" href="https://boringbay.com/api/badge/jackie.openenet.cn">
+  <link rel="icon" href="https://jackie.openenet.cn/favicon.ico" type="image/x-icon">
+
+  <!-- 运行时长统计样式 -->
+  <style>
+    /* 运行时长数字高亮样式 */
+    .uptime-num {
+      color: #e63946;
+      font-weight: bold;
+    }
+    /* 页脚运行时长行样式 */
+    .uptime-row {
+      margin: 8px 0;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+<link rel="alternate" href="/atom.xml" title="Jackie's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+<body 
+  itemscope 
+  itemtype="http://schema.org/WebPage"
+   class="use-motion"
+>
+  <!-- 顶部装饰条 -->
+  <div class="headband"></div>
+
+  <!-- 页面主体 -->
+  <main class="main">
+    <div class="column">
+      <!-- 页面头部 -->
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jackie's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">探索区块链、自动化与开源技术</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-归档"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-友链"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-关于"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+      
+      <!-- 侧边栏（可配置） -->
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFNAT%E7%A9%BF%E9%80%8F%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是NAT穿透？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81NAT%E7%A9%BF%E9%80%8F%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么需要NAT穿透？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.1.</span> <span class="nav-text">常见使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E9%80%89%E6%8B%A9%E8%8A%B1%E7%94%9F%E5%A3%B3%EF%BC%88%E5%AF%B9%E6%AF%94Cloudflare-Tunnel%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">为何选择花生壳（对比Cloudflare Tunnel）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8A%B1%E7%94%9F%E5%A3%B3%E7%9A%84%E5%AE%A2%E8%A7%82%E7%BC%BA%E7%82%B9%E4%B8%8E%E4%BD%BF%E7%94%A8%E5%B1%80%E9%99%90%EF%BC%88%E9%87%8D%E8%A6%81%E5%8F%82%E8%80%83%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">花生壳的客观缺点与使用局限（重要参考）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8A%B1%E7%94%9F%E5%A3%B3%E5%AE%9E%E7%8E%B0NAT%E7%A9%BF%E9%80%8F%E7%9A%84%E5%AE%9E%E6%93%8D%E6%AD%A5%E9%AA%A4"><span class="nav-number">4.</span> <span class="nav-text">花生壳实现NAT穿透的实操步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E8%B4%9D%E9%94%90%E8%B4%A6%E5%8F%B7"><span class="nav-number">4.1.</span> <span class="nav-text">注册贝锐账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%88%90%E5%AE%9E%E5%90%8D%E8%AE%A4%E8%AF%81"><span class="nav-number">4.2.</span> <span class="nav-text">完成实名认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E8%8A%B1%E7%94%9F%E5%A3%B3%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0"><span class="nav-number">4.3.</span> <span class="nav-text">进入花生壳管理平台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%98%A0%E5%B0%84"><span class="nav-number">4.4.</span> <span class="nav-text">创建内网穿透映射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E9%A1%B9%E5%A1%AB%E5%86%99%E8%AF%B4%E6%98%8E"><span class="nav-number">4.4.1.</span> <span class="nav-text">核心配置项填写说明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E8%8A%B1%E7%94%9F%E5%A3%B3%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">4.5.</span> <span class="nav-text">安装花生壳客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%8A%B1%E7%94%9F%E5%A3%B3%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">4.6.</span> <span class="nav-text">配置花生壳客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F"><span class="nav-number">4.7.</span> <span class="nav-text">启动内网穿透</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E7%BD%91%E8%AE%BF%E9%97%AE%E5%86%85%E7%BD%91%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.8.</span> <span class="nav-text">外网访问内网服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">5.</span> <span class="nav-text">使用注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jackie</p>
+  <div class="site-description" itemprop="description">这里是 Jackie 的个人博客，一名热爱技术的中国学生。专注分享区块链、智能合约、以太坊、CI/CD、开源项目、开发板、嵌入式、业余无线电以及 IT 基础设施的深度解析与实践笔记。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">117</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/PyXMR2025" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;PyXMR2025" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:pyxmr2025@openenet.cn" title="E-Mail → mailto:pyxmr2025@openenet.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://s4.zstatic.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.blogsclub.org/" title="https:&#x2F;&#x2F;www.blogsclub.org&#x2F;" rel="noopener" target="_blank">BlogsClub</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.perass.com/" title="https:&#x2F;&#x2F;www.perass.com&#x2F;" rel="noopener" target="_blank">博客之家</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://bf.zzxworld.com/" title="https:&#x2F;&#x2F;bf.zzxworld.com&#x2F;" rel="noopener" target="_blank">BlogFinder</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://blogscn.fun/" title="https:&#x2F;&#x2F;blogscn.fun&#x2F;" rel="noopener" target="_blank">BLOGS·CN</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://bokehub.com/home/" title="https:&#x2F;&#x2F;bokehub.com&#x2F;home&#x2F;" rel="noopener" target="_blank">博客中心</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://boringbay.com/" title="https:&#x2F;&#x2F;boringbay.com&#x2F;" rel="noopener" target="_blank">无聊湾</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.blogplanet.cn/" title="https:&#x2F;&#x2F;www.blogplanet.cn&#x2F;" rel="noopener" target="_blank">博客星球</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.rmbk.cc/" title="https:&#x2F;&#x2F;www.rmbk.cc&#x2F;" rel="noopener" target="_blank">若梦博客</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://boke.lu/" title="https:&#x2F;&#x2F;boke.lu&#x2F;" rel="noopener" target="_blank">博客录</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+      <!-- 子菜单 -->
+<!-- 页面核心内容（模板块） -->
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jackie.openenet.cn/oray-hsk-nat-traversal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jackie">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jackie's Blog">
+      <meta itemprop="description" content="这里是 Jackie 的个人博客，一名热爱技术的中国学生。专注分享区块链、智能合约、以太坊、CI/CD、开源项目、开发板、嵌入式、业余无线电以及 IT 基础设施的深度解析与实践笔记。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="花生壳内网穿透（ NAT 穿透）安装使用全教程 · 无公网 IP 访问内网服务实战 | Jackie's Blog">
+      <meta itemprop="description" content="本文详解NAT内网穿透的核心原理，完整演示贝锐花生壳从注册、实名认证到创建映射、外网访问的全流程，客观分析花生壳的优势、短板与适用边界，对比同类内网穿透方案（Oray HSK vs Cloudflare Tunnel），帮你无公网IP也能稳定访问内网服务。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          花生壳内网穿透（ NAT 穿透）安装使用全教程 · 无公网 IP 访问内网服务实战<a href="https://github.com/PyXMR2025/blog/tree/main/source/_posts/oray-hsk-nat-traversal.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-13 02:15:45" itemprop="dateCreated datePublished" datetime="2026-02-13T02:15:45+08:00">2026-02-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">网络技术</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">本文详解NAT内网穿透的核心原理，完整演示贝锐花生壳从注册、实名认证到创建映射、外网访问的全流程，客观分析花生壳的优势、短板与适用边界，对比同类内网穿透方案（Oray HSK vs Cloudflare Tunnel），帮你无公网IP也能稳定访问内网服务。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>当下家用及中小企业网络环境中，运营商为节省公网IP资源，大多不会分配固定公网IP，内网设备因此无法被外网直接访问，NAT穿透（内网穿透）技术则成为解决这一问题的核心方案。贝锐花生壳作为国内成熟的内网穿透工具，无需公网IP、无需复杂的路由器端口配置，即可快速建立外网到内网的通信通道，实现内网服务的外网访问。该工具适配Windows、Mac、Linux、NAS、OpenWRT、树莓派等多系统多设备，同时支持TCP&#x2F;UDP&#x2F;HTTP&#x2F;HTTPS等多种协议，能满足个人NAS外网访问、家庭监控查看、企业ERP远程办公等多场景需求，上手门槛极低。但在长期使用、生产环境或大流量场景下，花生壳也存在<strong>明显的成本、性能与功能限制</strong>。本文将从NAT穿透基础讲起，分析花生壳的选型优势与竞品差异，完整演示内网穿透实操流程，并客观点明其短板与适用边界，帮你高效、理性地完成工具选择。</p>
+<h2 id="什么是NAT穿透？"><a href="#什么是NAT穿透？" class="headerlink" title="什么是NAT穿透？"></a>什么是NAT穿透？</h2><p>NAT穿透也叫内网穿透，是一种突破网络NAT地址转换限制的网络技术，其核心原理是通过公网中转服务器做数据转发，打通外网设备与无公网IP的内网设备之间的通信链路，让外网设备能够稳定访问内网中的各类服务（如Web站点、ERP系统、NAS、远程桌面等），实现内网服务的公网化发布。</p>
+<h2 id="为什么需要NAT穿透？"><a href="#为什么需要NAT穿透？" class="headerlink" title="为什么需要NAT穿透？"></a>为什么需要NAT穿透？</h2><h3 id="常见使用场景"><a href="#常见使用场景" class="headerlink" title="常见使用场景"></a>常见使用场景</h3><ul>
+<li><strong>个人用户</strong>：实现NAS外网访问、家庭监控远程查看、个人内网Web站点&#x2F;私人云盘的公网发布、内网游戏服务器的外网联机；</li>
+<li><strong>企业用户</strong>：员工居家&#x2F;出差远程访问公司内网ERP&#x2F;CRM系统、分支机构协同访问企业内网服务器、小型企业无公网IP下的办公系统外网接入。</li>
+</ul>
+<h3 id="为何选择花生壳（对比Cloudflare-Tunnel）"><a href="#为何选择花生壳（对比Cloudflare-Tunnel）" class="headerlink" title="为何选择花生壳（对比Cloudflare Tunnel）"></a>为何选择花生壳（对比Cloudflare Tunnel）</h3><p>花生壳针对国内网络环境做了深度优化，相比Cloudflare Tunnel更适配国内用户的使用需求，对比如下：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>贝锐花生壳</th>
+<th>Cloudflare Tunnel</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>国内网络适配性</td>
+<td>完全适配，访问速度稳定</td>
+<td>服务器在国外，国内稳定性差</td>
+</tr>
+<tr>
+<td>协议支持</td>
+<td>全面支持TCP&#x2F;UDP&#x2F;HTTP&#x2F;HTTPS，适配各类内网应用</td>
+<td>支持协议多，但以七层服务为主（国内基本只适合 HTTP&#x2F;HTTPS，不适合 UDP、游戏、远程桌面。）</td>
+</tr>
+<tr>
+<td>平台兼容性</td>
+<td>支持Windows&#x2F;Mac&#x2F;Linux、NAS、Docker、OpenWRT、树莓派、安卓等全平台</td>
+<td>开源守护进程，编译适配几乎所有平台</td>
+</tr>
+<tr>
+<td>证书部署</td>
+<td>HTTPS映射自动部署SSL证书，本地无需额外配置</td>
+<td>免费SSL证书</td>
+</tr>
+<tr>
+<td>企业级服务</td>
+<td>提供SLA全年99.9%保障、24小时专家服务，支持访问策略&#x2F;黑白名单配置</td>
+<td>国内售后较差</td>
+</tr>
+<tr>
+<td>操作门槛</td>
+<td>可视化界面，新手可快速上手</td>
+<td>以命令行为主，配置对新手不友好</td>
+</tr>
+</tbody></table>
+<h2 id="花生壳的客观缺点与使用局限（重要参考）"><a href="#花生壳的客观缺点与使用局限（重要参考）" class="headerlink" title="花生壳的客观缺点与使用局限（重要参考）"></a>花生壳的客观缺点与使用局限（重要参考）</h2><p>在正式上手前，你需要清楚花生壳在<strong>长期使用、生产环境、大流量&#x2F;低延迟场景</strong>下的真实短板，避免踩坑：</p>
+<ol>
+<li><p><strong>免费版限制极严，仅适合测试</strong><br>免费版只有 <strong>1Mbps</strong> 带宽、<strong>1GB&#x2F;月</strong>流量、<strong>2条</strong>映射、<strong>动态随机</strong>端口，高峰期<strong>延迟高</strong>、<strong>易断连</strong>，基本<strong>无法满足</strong>日常稳定使用。</p>
+</li>
+<li><p><strong>付费成本偏高，性价比一般</strong><br>5Mbps 带宽年付近 <strong>900</strong> 元，20Mbps <strong>超千元</strong>；固定端口、HTTPS多域名、多设备等基础能力都需要付费解锁，流量包、独立IP等增值服务<strong>溢价明显</strong>。</p>
+</li>
+<li><p><strong>中转架构带来性能瓶颈</strong><br>所有流量经过花生壳服务器中转，延迟会增加 30~100ms；带宽为共享模式，晚高峰<strong>实际速率会缩水</strong>，对游戏、实时视频等<strong>低延迟场景不友好</strong>。</p>
+</li>
+<li><p><strong>功能限制多，灵活度不足</strong></p>
+<ul>
+<li>同一账号异地登录会导致本地映射失效</li>
+<li>一个域名只能做一条 HTTPS 映射</li>
+<li>部分付费版绑定单硬件设备，多设备需重复购买</li>
+<li>第三方域名配置、自定义规则不如开源工具灵活</li>
+</ul>
+</li>
+<li><p><strong>安全与可控性偏弱</strong><br>流量经过第三方中转，核心数据建议额外加密；免费版无IP白名单等安全策略；后台管理页面分散，客户端偶有卡顿、崩溃问题。</p>
+</li>
+<li><p><strong>与开源&#x2F;国际方案对比劣势</strong><br>对比 FRP、Cloudflare Tunnel 等方案，花生壳<strong>闭源、成本高、自定义能力弱</strong>，更适合“开箱即用”的轻量场景，不适合追求极致可控与低成本的用户。</p>
+</li>
+</ol>
+<p>简单总结：<br><strong>花生壳胜在简单、稳定、国内适配好；输在贵、限制多、性能上限低、不够灵活。</strong></p>
+<h2 id="花生壳实现NAT穿透的实操步骤"><a href="#花生壳实现NAT穿透的实操步骤" class="headerlink" title="花生壳实现NAT穿透的实操步骤"></a>花生壳实现NAT穿透的实操步骤</h2><p>使用花生壳实现内网穿透的核心流程为<strong>账号注册与实名认证→管理平台创建映射→内网设备安装客户端→配置并启动穿透→外网访问内网服务</strong>，以下为详细操作步骤。</p>
+<h3 id="注册贝锐账号"><a href="#注册贝锐账号" class="headerlink" title="注册贝锐账号"></a>注册贝锐账号</h3><p>花生壳依托贝锐账号体系，需先完成账号注册，注册地址：<a target="_blank" rel="noopener" href="https://passport.oray.com/register">https://passport.oray.com/register</a></p>
+<ul>
+<li>选择<strong>个人&#x2F;企业</strong>类型，按提示输入手机号&#x2F;邮箱、密码等信息完成注册；</li>
+<li>若收不到验证码，可按以下方式解决：<ol>
+<li>网络异常导致延迟，10分钟未收到可重新发送；</li>
+<li>手机验证需检查是否欠费、屏蔽系统短信，邮箱验证需检查垃圾邮箱；</li>
+<li>携号转网、手机&#x2F;邮箱丢失停用等情况，联系400-008-5211转4解决。<blockquote>
+<p>注册页面截图<br><img data-src="/img/oray-hsk-nat-traversal/1.png" alt="注册页面截图"></p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="完成实名认证"><a href="#完成实名认证" class="headerlink" title="完成实名认证"></a>完成实名认证</h3><p>实名认证是使用花生壳内网穿透功能的前提，完成注册后按平台提示提交身份信息（个人为身份证、企业为营业执照），审核通过后即可使用全部功能。</p>
+<blockquote>
+<p>实名认证成功页面截图<br><img data-src="/img/oray-hsk-nat-traversal/2.png" alt="实名认证成功页面截图"></p>
+</blockquote>
+<h3 id="进入花生壳管理平台"><a href="#进入花生壳管理平台" class="headerlink" title="进入花生壳管理平台"></a>进入花生壳管理平台</h3><p>实名认证后，访问花生壳管理平台：<a target="_blank" rel="noopener" href="https://console.hsk.oray.com/">https://console.hsk.oray.com/</a></p>
+<ul>
+<li>支持<strong>贝锐APP扫码登录</strong>、<strong>微信扫码登录</strong>、<strong>账号&#x2F;手机号密码登录</strong>三种方式；</li>
+<li>登录即视为同意贝锐用户协议、隐私政策及使用规则。</li>
+</ul>
+<h3 id="创建内网穿透映射"><a href="#创建内网穿透映射" class="headerlink" title="创建内网穿透映射"></a>创建内网穿透映射</h3><p>映射是花生壳实现外网访问内网的核心配置，需根据内网服务类型填写对应信息，创建地址为管理平台【内网穿透】板块的<strong>添加映射</strong>按钮。</p>
+<blockquote>
+<p>创建映射截图<br><img data-src="/img/oray-hsk-nat-traversal/3.png" alt="创建映射截图"></p>
+</blockquote>
+<h4 id="核心配置项填写说明"><a href="#核心配置项填写说明" class="headerlink" title="核心配置项填写说明"></a>核心配置项填写说明</h4><ol>
+<li><strong>映射类型</strong>：分<strong>网站应用</strong>和<strong>常规应用</strong>，网站应用适配网页类服务，常规应用适配ERP、远程桌面等TCP&#x2F;UDP应用；</li>
+<li><strong>应用名称</strong>：自定义填写，用于区分不同映射（如“内网Web服务”“公司ERP”）；</li>
+<li><strong>映射协议</strong>：根据服务类型选择，<strong>HTTP&#x2F;HTTPS</strong>对应网页服务（默认80&#x2F;443端口），<strong>TCP</strong>对应ERP、远程桌面、数据库（准确性要求高的传输），<strong>UDP</strong>对应游戏、视频流等；</li>
+<li><strong>外网域名</strong>：选择账号下拥有的花生壳域名，HTTPS映射需选择带证书的域名；</li>
+<li><strong>外网端口</strong>：HTTP&#x2F;HTTPS默认80&#x2F;443，TCP&#x2F;UDP可选择动态端口（系统随机，删除后不可恢复）或固定端口（可重复使用）；</li>
+<li><strong>内网主机</strong>：填写需要映射的内网设备IP（如10.128.1.2、192.168.38.128），可通过<code>ipconfig</code>&#x2F;<code>ifconfig</code>命令查询；</li>
+<li><strong>内网端口</strong>：填写内网服务的端口号（如Web服务80、ERP系统8089、远程桌面3389）。</li>
+</ol>
+<p><strong>示例</strong>：博主配置内网Web服务（80端口，IP10.128.1.2），选择<strong>网站应用</strong>+<strong>HTTP协议</strong>+默认域名，配置完成后即可生成外网访问地址。</p>
+<blockquote>
+<p>创建完毕截图<br><img data-src="/img/oray-hsk-nat-traversal/4.png" alt="创建完毕截图"></p>
+</blockquote>
+<h3 id="安装花生壳客户端"><a href="#安装花生壳客户端" class="headerlink" title="安装花生壳客户端"></a>安装花生壳客户端</h3><p>需在**需要被访问的内网设备上（或同内网的任意设备）**安装花生壳客户端，客户端下载地址：<a target="_blank" rel="noopener" href="https://hsk.oray.com/download">https://hsk.oray.com/download</a></p>
+<ul>
+<li>下载对应系统版本，博主使用Windows11(64位)，下载版本为HskDDNS_9.3.1.1313.exe；</li>
+<li>花生壳支持全平台：Windows&#x2F;Mac&#x2F;Linux、NAS、Docker、OpenWRT、树莓派、SDK嵌入、安卓等，小众系统可前往Web下载页获取安装包；</li>
+<li>注意：部分杀毒软件可能会误报，可放心安装。<blockquote>
+<p>Edge下载截图<br><img data-src="/img/oray-hsk-nat-traversal/5.png" alt="Edge下载截图"><br>Windows安装客户端截图<br><img data-src="/img/oray-hsk-nat-traversal/6.png" alt="Windows安装客户端截图"></p>
+</blockquote>
+</li>
+</ul>
+<p>下载后双击安装包，点击<strong>立即安装</strong>，安装完成后点击<strong>立即进入</strong>即可。</p>
+<h3 id="配置花生壳客户端"><a href="#配置花生壳客户端" class="headerlink" title="配置花生壳客户端"></a>配置花生壳客户端</h3><p>客户端是花生壳实现内网穿透的本地载体，需完成账号登录与映射关联：</p>
+<ol>
+<li>打开客户端，支持<strong>扫码登录</strong>和<strong>账号&#x2F;密码登录</strong>两种方式，选择与管理平台一致的贝锐账号；<blockquote>
+<p>输入账号密码截图<br><img data-src="/img/oray-hsk-nat-traversal/7.png" alt="输入账号密码截图"></p>
+</blockquote>
+</li>
+<li>输入账号密码后点击<strong>登录</strong>，等待客户端与管理平台同步映射信息，此过程约10-30秒，无需额外配置。</li>
+</ol>
+<h3 id="启动内网穿透"><a href="#启动内网穿透" class="headerlink" title="启动内网穿透"></a>启动内网穿透</h3><p>客户端登录成功后，会自动加载管理平台创建的映射，<strong>默认自动启动穿透</strong>，可在客户端或管理平台查看映射状态：</p>
+<ul>
+<li>管理平台可点击映射左下角<strong>诊断</strong>，查看内网服务连接状态、域名解析是否正常；</li>
+<li>若诊断提示“连接成功”，则说明内网穿透通道已建立。</li>
+</ul>
+<h3 id="外网访问内网服务"><a href="#外网访问内网服务" class="headerlink" title="外网访问内网服务"></a>外网访问内网服务</h3><p>穿透通道建立后，即可在外网环境下通过花生壳生成的<strong>外网域名+端口</strong>（HTTP&#x2F;HTTPS可直接使用域名）访问内网服务：</p>
+<ul>
+<li><strong>网页服务</strong>：在浏览器输入外网域名，直接访问内网Web站点&#x2F;云盘；</li>
+<li><strong>ERP&#x2F;远程桌面</strong>：在对应客户端中，将服务器地址填写为外网域名，端口填写为花生壳映射的外网端口，完成连接后即可使用。<blockquote>
+<p>访问内网Web服务截图<br><img data-src="/img/oray-hsk-nat-traversal/8.png" alt="访问内网Web服务截图"></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="使用注意事项"><a href="#使用注意事项" class="headerlink" title="使用注意事项"></a>使用注意事项</h2><ol>
+<li>花生壳通过映射本地内网服务实现外网访问，<strong>异地登录花生壳账号会导致已设置的本地映射失效</strong>；</li>
+<li>若有多个地点的内网服务需要发布，建议通过<strong>多个贝锐账号</strong>分别创建映射；</li>
+<li>HTTPS映射有专属限制，<strong>一个域名仅支持添加一条HTTPS映射</strong>，且花生壳已自动部署SSL证书，本地无需额外配置；</li>
+<li>动态端口为系统随机生成，映射删除后无法恢复；固定端口需付费升级，删除后可重复使用；</li>
+<li>花生壳提供<strong>夜间带宽加速</strong>功能，18:00-次日8:00带宽速度提升100%，速率不低于5Mbps，带宽基数越大提速效果越明显；</li>
+<li>企业用户可在映射配置中设置<strong>访问规则</strong>，支持密码二次校验、指定IP&#x2F;区域&#x2F;时间访问，提升内网服务的安全性；</li>
+<li>花生壳建议使用<strong>223.5.5.5</strong>作为DNS服务器；</li>
+<li>大流量、低延迟、高稳定需求场景，不建议长期依赖免费版，按需升级或更换方案。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>贝锐花生壳是<strong>国内网络环境下，最易上手、开箱即用</strong>的内网穿透工具，凭借无需公网IP、全平台适配、可视化配置、国内线路优化等优势，非常适合：</p>
+<ul>
+<li>技术新手</li>
+<li>轻量个人使用（NAS、监控、小网站）</li>
+<li>小微企业临时&#x2F;简单远程办公</li>
+</ul>
+<p>但它的短板也非常明确：<strong>免费版限制大、付费成本高、中转性能有上限、功能灵活度低</strong>，并不适合：</p>
+<ul>
+<li>大流量、高并发、低延迟场景</li>
+<li>企业生产核心业务</li>
+<li>追求低成本&#x2F;开源可控的用户</li>
+</ul>
+<p>如果你只是想<strong>快速搞定外网访问内网</strong>，花生壳依然是现阶段国内最省心的选择之一；如果追求长期成本、性能与自由度，更建议搭配 <strong>FRP 自建</strong> 或 <strong>Cloudflare Tunnel</strong> 使用。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        <!-- 广告组件 - 适配Next主题+明暗模式（图片+文字版） -->
+<div class="next-ad-container" id="next-ad-container">
+  <!-- 广告标签 -->
+  <div class="ad-label">广告</div>
+  <!-- 广告内容区域 -->
+  <div class="ad-content" id="ad-body">
+    <div class="ad-loading">
+      广告正在加载中...
+    </div>
+  </div>
+</div>
+
+<!-- 配套CSS样式（修复线条问题） -->
+<style>
+  /* 广告容器基础样式 - 增强鲁棒性 */
+  .next-ad-container {
+    position: relative;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: inherit;
+    /* 新增：确保容器无多余边框/线条 */
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 明模式样式 */
+  .next-ad-container {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #e6e6e6;
+  }
+
+  /* 暗模式样式 */
+  html[data-theme="dark"] .next-ad-container {
+    background-color: #2c2c2c;
+    color: #e5e5e5;
+    border: 1px solid #444;
+  }
+
+  /* 广告标签样式 */
+  .ad-label {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 10px;
+    opacity: 0.7;
+    transition: color 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  html[data-theme="dark"] .ad-label {
+    color: #aaa;
+  }
+
+  /* 广告内容区域 - 整体居中布局 */
+  .ad-content {
+    display: flex;
+    flex-direction: column; /* 图片+文字上下排列 */
+    align-items: center;     /* 水平居中 */
+    justify-content: center; /* 垂直居中 */
+    text-align: center;
+    padding: 10px 0;
+    min-height: 100px; /* 适配图片+文字的高度 */
+    overflow: hidden;
+    /* 新增：清除多余线条 */
+    border: none !important;
+    outline: none !important;
+  }
+
+  /* 广告链接容器 - 确保整体可点击 + 清除线条 */
+  .ad-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* 新增：彻底清除a标签的下划线/边框 */
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    color: inherit; /* 继承容器文字颜色，适配明暗模式 */
+  }
+
+  /* 新增：确保hover时也无下划线 */
+  .ad-wrapper:hover,
+  .ad-wrapper:active,
+  .ad-wrapper:focus {
+    text-decoration: none !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  /* 广告图片样式 */
+  .ad-img {
+    max-width: 120px; /* 限制图片宽度，避免过大 */
+    max-height: 60px;
+    object-fit: contain;
+    border: none !important; /* 新增：清除图片边框 */
+    margin-bottom: 8px; /* 图片与文字间距 */
+    transition: opacity 0.2s ease;
+    outline: none !important;
+  }
+
+  .ad-img:hover {
+    opacity: 0.95;
+  }
+
+  /* 广告文字样式 - 适配明暗模式 */
+  .ad-text {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 2px 0;
+    opacity: 0.9;
+    transition: color 0.3s ease;
+    /* 新增：确保文字无装饰 */
+    text-decoration: none !important;
+  }
+
+  /* 第二行文字稍小，突出重点 */
+  .ad-text.sub {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  /* 暗模式文字颜色优化 */
+  html[data-theme="dark"] .ad-text {
+    color: #d0d0d0;
+  }
+
+  /* 加载提示样式 */
+  .ad-loading {
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1;
+  }
+
+  /* 响应式适配 - 移动端优化 */
+  @media (max-width: 768px) {
+    .next-ad-container {
+      padding: 10px;
+      margin: 15px 0;
+    }
+    .ad-content {
+      min-height: 80px;
+    }
+    .ad-img {
+      max-width: 100px;
+      max-height: 50px;
+    }
+    .ad-text {
+      font-size: 13px;
+    }
+    .ad-text.sub {
+      font-size: 11px;
+    }
+    .ad-loading {
+      font-size: 12px;
+    }
+  }
+
+  /* 极小屏适配 */
+  @media (max-width: 480px) {
+    .ad-content {
+      min-height: 70px;
+    }
+    .ad-img {
+      max-width: 80px;
+      max-height: 40px;
+    }
+  }
+</style>
+
+<!-- 广告加载逻辑（优化重排警告+修复线条） -->
+<script>
+// 广告加载函数 - 优化性能+重试机制
+function loadAdContent() {
+  // 优化：提前缓存元素选择器，减少DOM查询
+  const getAdBody = () => document.getElementById('ad-body');
+  let retryCount = 0;
+  const maxRetry = 5;
+
+  // 优化：使用requestAnimationFrame减少重排
+  function tryLoad() {
+    requestAnimationFrame(() => {
+      const adBody = getAdBody();
+      
+      // 调试日志（可按F12查看Console）
+      if (retryCount === 0) console.log('开始加载广告，元素是否存在:', !!adBody);
+
+      // 元素不存在则重试
+      if (!adBody) {
+        retryCount++;
+        if (retryCount < maxRetry) {
+          setTimeout(tryLoad, 300);
+        } else {
+          console.error('无法获取广告容器元素，请检查ID是否正确');
+          // 兜底：手动创建内容
+          const container = document.getElementById('next-ad-container');
+          if (container) {
+            container.innerHTML = `
+              <div class="ad-label">广告</div>
+              <div class="ad-content">
+                <div class="ad-loading">广告容器加载失败</div>
+              </div>
+            `;
+          }
+        }
+        return;
+      }
+
+      try {
+        // 保留你修改后的广告内容
+        const adHtml = `
+          <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+            <img src="/img/rainyun/1.png" alt="雨云云服务器" class="ad-img" loading="lazy">
+            <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+            <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+          </a>
+        `;
+        // 优化：一次性赋值innerHTML，减少重排
+        adBody.innerHTML = adHtml;
+
+        // 图片加载失败降级
+        const adImg = adBody.querySelector('.ad-img');
+        if (adImg) {
+          adImg.onerror = function() {
+            adBody.innerHTML = `
+              <a href="https://www.rainyun.com/jackie_" target="_blank" rel="noopener noreferrer" class="ad-wrapper">
+                <div class="ad-text">本站部分构建节点由雨云赞助提供</div>
+                <div class="ad-text sub">通过本站邀请链接注册 → 立享首月5折优惠券+不定期补给福利</div>
+              </a>
+            `;
+          };
+        }
+      } catch (error) {
+        console.warn('广告加载出错:', error);
+        adBody.innerHTML = '<div class="ad-loading">广告加载失败</div>';
+      }
+    });
+  }
+
+  tryLoad(); // 立即执行第一次尝试
+}
+
+// 修复执行时机：改用window.load（比DOMContentLoaded更晚，适配Next主题渲染）
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  // 页面已加载，立即执行
+  loadAdContent();
+} else {
+  // 页面未加载完，等所有资源加载后执行
+  window.addEventListener('load', loadAdContent);
+}
+
+// 适配主题切换
+document.addEventListener('theme-change', function() {});
+</script>
+
+          <div class="reward-container">
+  <div>请我喝杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/img/reward/btc.png" alt="Jackie 比特币">
+        <span>比特币</span>
+      </div>
+      <div>
+        <img src="/img/reward/eth.png" alt="Jackie 以太坊">
+        <span>以太坊</span>
+      </div>
+      <div>
+        <img src="/img/reward/trx.png" alt="Jackie 波场">
+        <span>波场</span>
+      </div>
+      <div>
+        <img src="/img/reward/arb.png" alt="Jackie 阿尔比垂姆">
+        <span>阿尔比垂姆</span>
+      </div>
+      <div>
+        <img src="/img/reward/bsc.png" alt="Jackie 币安智能链">
+        <span>币安智能链</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Jackie
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://jackie.openenet.cn/oray-hsk-nat-traversal/" title="花生壳内网穿透（ NAT 穿透）安装使用全教程 · 无公网 IP 访问内网服务实战">https://jackie.openenet.cn/oray-hsk-nat-traversal/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-SA</a> 许可协议。转载请注明出处！
+  </li>
+  <li class="post-copyright-aigc">
+    <strong>AIGC 辅助创作声明：</strong>
+    <a href="/aigc/" title="AIGC辅助创作声明">本文采用 AIGC 工具辅助创作，全程人工校对、技术验证，作者对内容负责。</a>
+  </li>
+</ul>
+</div>
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/IoT/" rel="tag"># IoT</a>
+              <a href="/tags/%E8%B4%9D%E9%94%90%E8%8A%B1%E7%94%9F%E5%A3%B3/" rel="tag"># 贝锐花生壳</a>
+              <a href="/tags/NAT%E7%A9%BF%E9%80%8F/" rel="tag"># NAT穿透</a>
+              <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" rel="tag"># 内网穿透</a>
+              <a href="/tags/%E5%A4%96%E7%BD%91%E8%AE%BF%E9%97%AE%E5%86%85%E7%BD%91%E6%9C%8D%E5%8A%A1/" rel="tag"># 外网访问内网服务</a>
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" rel="tag"># 网络技术</a>
+              <a href="/tags/%E6%97%A0%E5%A4%96%E7%BD%91IP/" rel="tag"># 无外网IP</a>
+              <a href="/tags/%E8%BF%90%E8%90%A5%E5%95%86/" rel="tag"># 运营商</a>
+              <a href="/tags/NAS%E5%A4%96%E7%BD%91%E8%AE%BF%E9%97%AE/" rel="tag"># NAS外网访问</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/denglong-js/" rel="prev" title="JS&#x2F;CSS 实现 3D 动态灯笼特效・博客网站新年美化教程">
+                  <i class="fa fa-angle-left"></i> JS/CSS 实现 3D 动态灯笼特效・博客网站新年美化教程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/ham-ps-4/" rel="next" title="如何让自己可刑可铐（四）：整活向 · 玩转倒置卡塞格伦天线，空战雷达级 “加刑” 拉满">
+                  如何让自己可刑可铐（四）：整活向 · 玩转倒置卡塞格伦天线，空战雷达级 “加刑” 拉满 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+<div class="hexo-article-recommender-section">
+  <div class="hexo-article-recommender-section-divider">
+    <div class="hexo-article-recommender-divider-line"></div>
+    <div class="hexo-article-recommender-divider-text">
+      <span>推荐文章</span>
+    </div>
+  </div>
+
+  <div class="hexo-article-recommender-posts">
+    
+      
+      
+      <div class="hexo-article-recommender-post-card" data-bg="#6a89cc, #4a69bd">
+        <!-- 左上角：站内标签 -->
+        <div class="hexo-article-recommender-site-tag">站内</div>
+
+        <!-- 左下角：关系类型标签 + 相关度 -->
+        <div class="hexo-article-recommender-relation-tag fallback">
+          推荐
+          <span class="hexo-article-recommender-score">(5.7%)
+        </span>
+        </div>
+
+        <div class="hexo-article-recommender-card-header">
+          <div class="hexo-article-recommender-reading-time">
+            <i class="fas fa-clock"></i>
+            6分钟
+          </div>
+        </div>
+        <div class="hexo-article-recommender-card-content">
+          <h4 class="hexo-article-recommender-post-title">
+            <a href="/open-h616/">LCPI H616 ZERO 开发板开箱 · 系统烧录与基础配置全教程</a>
+          </h4>
+          <p class="hexo-article-recommender-post-excerpt">
+            LCPI H616 ZERO国产开发板开箱全解析，含全志H616核心硬件参数、Ubuntu/Debian/安卓系统完整烧录教程、基础环境配置与常见问题排查，嵌入
+          </p>
+          <div class="hexo-article-recommender-author">
+            <div class="hexo-article-recommender-author-avatar" style="background: #4a69bd;">
+              1
+            </div>
+            <div class="hexo-article-recommender-author-info">
+              <div class="hexo-article-recommender-author-name">Jackie</div>
+              <div class="hexo-article-recommender-author-title">探索区块链、自动化与开源技术</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      
+      
+      <div class="hexo-article-recommender-post-card" data-bg="#e55039, #eb2f06">
+        <!-- 左上角：站内标签 -->
+        <div class="hexo-article-recommender-site-tag">站内</div>
+
+        <!-- 左下角：关系类型标签 + 相关度 -->
+        <div class="hexo-article-recommender-relation-tag fallback">
+          推荐
+          <span class="hexo-article-recommender-score">(5.7%)
+        </span>
+        </div>
+
+        <div class="hexo-article-recommender-card-header">
+          <div class="hexo-article-recommender-reading-time">
+            <i class="fas fa-clock"></i>
+            10分钟
+          </div>
+        </div>
+        <div class="hexo-article-recommender-card-content">
+          <h4 class="hexo-article-recommender-post-title">
+            <a href="/h616-test/">LCPI H616 ZERO 性能测试 · 一款搭载 H616 的国产开发板横评</a>
+          </h4>
+          <p class="hexo-article-recommender-post-excerpt">
+            本文实测LCPI H616 ZERO国产开发板的CPU、内存、IO综合性能，通过nench.sh、sysbench专项测试拆解全志H616芯片真实表现，横向对比
+          </p>
+          <div class="hexo-article-recommender-author">
+            <div class="hexo-article-recommender-author-avatar" style="background: #e55039;">
+              2
+            </div>
+            <div class="hexo-article-recommender-author-info">
+              <div class="hexo-article-recommender-author-name">Jackie</div>
+              <div class="hexo-article-recommender-author-title">探索区块链、自动化与开源技术</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      
+      
+      <div class="hexo-article-recommender-post-card" data-bg="#3dc1d3, #0fb9b1">
+        <!-- 左上角：站内标签 -->
+        <div class="hexo-article-recommender-site-tag">站内</div>
+
+        <!-- 左下角：关系类型标签 + 相关度 -->
+        <div class="hexo-article-recommender-relation-tag fallback">
+          推荐
+          <span class="hexo-article-recommender-score">(4.8%)
+        </span>
+        </div>
+
+        <div class="hexo-article-recommender-card-header">
+          <div class="hexo-article-recommender-reading-time">
+            <i class="fas fa-clock"></i>
+            12分钟
+          </div>
+        </div>
+        <div class="hexo-article-recommender-card-content">
+          <h4 class="hexo-article-recommender-post-title">
+            <a href="/why-save-btc/">比特币长期持有优势解析・为什么我只选择长期持有比特币，而非股票、黄金等其他资产</a>
+          </h4>
+          <p class="hexo-article-recommender-post-excerpt">
+            比特币（BTC/Bitcoin）作为一种长期投资资产，在过去十多年中表现出色，成为全球关注的价值存储选项。本文深度解析比特币的核心技术、市场表现以及与股票、黄金
+          </p>
+          <div class="hexo-article-recommender-author">
+            <div class="hexo-article-recommender-author-avatar" style="background: #3dc1d3;">
+              3
+            </div>
+            <div class="hexo-article-recommender-author-info">
+              <div class="hexo-article-recommender-author-name">Jackie</div>
+              <div class="hexo-article-recommender-author-title">探索区块链、自动化与开源技术</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+  <h2 class="hexo-article-recommender-section-over">--- over ---</h2>
+</div>
+
+<style>
+.hexo-article-recommender-section {
+  margin-top: 60px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hexo-article-recommender-section-divider {
+  position: relative;
+  margin: 60px 0;
+}
+
+.hexo-article-recommender-divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #6a89cc, transparent);
+}
+
+.hexo-article-recommender-divider-text {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 0 15px;
+}
+
+.hexo-article-recommender-divider-text span {
+  color: #6a89cc;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.hexo-article-recommender-section-over {
+  text-align: center;
+  margin: 30px;
+  color: #9e9e9e;
+}
+
+.hexo-article-recommender-posts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}
+
+.hexo-article-recommender-post-card {
+  width: 280px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 270px;
+  position: relative;
+}
+
+.hexo-article-recommender-post-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.hexo-article-recommender-card-header {
+  height: 60px;
+  position: relative;
+  background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite alternate;
+}
+
+.hexo-article-recommender-post-card[data-bg^="#6a89cc"] .hexo-article-recommender-card-header {
+  --bg-start: #6a89cc; --bg-end: #4a69bd;
+}
+.hexo-article-recommender-post-card[data-bg^="#e55039"] .hexo-article-recommender-card-header {
+  --bg-start: #e55039; --bg-end: #eb2f06;
+}
+.hexo-article-recommender-post-card[data-bg^="#3dc1d3"] .hexo-article-recommender-card-header {
+  --bg-start: #3dc1d3; --bg-end: #0fb9b1;
+}
+.hexo-article-recommender-post-card[data-bg^="#f6b93b"] .hexo-article-recommender-card-header {
+  --bg-start: #f6b93b; --bg-end: #e55039;
+}
+
+.hexo-article-recommender-reading-time {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(4px);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.hexo-article-recommender-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 60px);
+  justify-content: space-between;
+}
+
+.hexo-article-recommender-post-title {
+  margin-top: 0;
+  font-size: 1.2em;
+  line-height: 1.4;
+  color: #2c3e50;
+}
+
+.hexo-article-recommender-post-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.hexo-article-recommender-post-title a:hover {
+  color: #6a89cc;
+}
+
+.hexo-article-recommender-post-excerpt {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.hexo-article-recommender-author {
+  display: flex;
+  align-items: center;
+}
+
+.hexo-article-recommender-author-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.hexo-article-recommender-author-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.hexo-article-recommender-author-title {
+  font-size: 12px;
+  color: #888;
+}
+
+/* ========== 左上角：站内标签 ========== */
+.hexo-article-recommender-site-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(42, 170, 138, 0.9);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 0 0 8px 0;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ========== 左下角：关系类型标签 ========== */
+.hexo-article-recommender-relation-tag {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 0 8px 0 0;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hexo-article-recommender-relation-tag.related {
+  background-color: rgba(42, 170, 138, 0.9); /* 绿色：相关 */
+}
+
+.hexo-article-recommender-relation-tag.fallback {
+  background-color: rgba(229, 80, 57, 0.9); /* 橙红：推荐 */
+}
+
+.hexo-article-recommender-post-card:hover .hexo-article-recommender-relation-tag {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 相关度分数样式 */
+.hexo-article-recommender-relation-tag .hexo-article-recommender-score {
+  font-size: 10px;
+  opacity: 0.8;
+  margin-left: 4px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .hexo-article-recommender-posts {
+    flex-direction: column;
+    align-items: center;
+  }
+  .hexo-article-recommender-post-card {
+    width: calc(100% - 30px);
+    max-width: 400px;
+  }
+}
+</style>
+
+</div>
+
+
+
+
+
+
+      <!-- 评论区 -->
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <!-- 多语言切换 -->
+<!-- 页脚公共内容（缓存控制） -->
+      
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jackie</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">68k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:02</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+
+      <!-- 站点数据（居中显示） -->
+      <div style="text-align: center;">
+        <a href="https://www.blogsclub.org/rank.html" target="_blank">
+          <img 
+            src="https://www.blogsclub.org/badge/jackie.openenet.cn" 
+            style="height:60px!important" 
+            loading="lazy"
+            alt="统计数据">
+        </a>
+      </div>
+        
+      <!-- 运行时长统计展示行（新增分钟显示） -->
+      <div class="uptime-row">
+        本站已经稳定运行了 
+        <span class="uptime-num" id="days">00</span> 天 
+        <span class="uptime-num" id="hours">00</span> 小时 
+        <span class="uptime-num" id="minutes">00</span> 分钟 
+        <span class="uptime-num" id="seconds">00</span> 秒
+      </div>
+
+      <!-- ICP备案 -->
+      <div style="text-align: center; margin: 8px 0;">
+        <a href="https://icp.gov.moe/?keyword=20260177" target="_blank">萌ICP备20260177号</a>
+      </div>
+
+      <!-- 广告脚本（仅保留一次引入） -->
+      <!-- <script async="async" data-cfasync="false" src="https://pl28675819.effectivegatecpm.com/0f2aeb03ec930e47193f4782e446c5b6/invoke.js"></script> -->
+      <!-- <div id="container-0f2aeb03ec930e47193f4782e446c5b6"></div> -->
+
+    </div>
+  </footer>
+
+  <!-- 页面组件（缓存控制） -->
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/PyXMR2025" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  <!-- 框架注入的页面底部内容 --><link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"PyXMR2025","repo":"blog-talk","client_id":"Ov23liwFgKqqzMwetvZo","admin_user":"PyXMR2025","distraction_free_mode":true,"proxy":"https://gitalk.openenet.cn/get_accesstoken","language":"zh-CN","js":{"url":"https://s4.zstatic.net/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"f5f96a40a5d2077b8793947c84f31d82"}</script>
+<script src="/js/third-party/comments/gitalk.js" defer></script>
+
+
+  <!-- 运行时长统计逻辑（优化版） -->
+  <script>
+    // 站点启动时间（GMT+8 2025-12-15 10:47:19）
+    const startTime = new Date('2025-12-15T10:47:19+08:00');
+    // 缓存DOM元素，避免重复查询
+    const uptimeElements = {
+      days: document.getElementById('days'),
+      hours: document.getElementById('hours'),
+      minutes: document.getElementById('minutes'),
+      seconds: document.getElementById('seconds')
+    };
+    // 定时器标识，用于页面卸载时清理
+    let uptimeTimer = null;
+
+    /**
+     * 数字补零：单位数补0，如 5 → 05
+     * @param {number} num 要补零的数字
+     * @returns {string} 补零后的字符串
+     */
+    function padZero(num) {
+      return num.toString().padStart(2, '0');
+    }
+
+    /**
+     * 计算并更新站点运行时长
+     */
+    function updateUptime() {
+      const now = new Date();
+      const diffMs = now - startTime;
+
+      // 处理当前时间早于启动时间的边界情况
+      if (diffMs < 0) {
+        uptimeElements.days.textContent = '00';
+        uptimeElements.hours.textContent = '00';
+        uptimeElements.minutes.textContent = '00';
+        uptimeElements.seconds.textContent = '00';
+        return;
+      }
+
+      // 时间单位转换（毫秒 -> 天/小时/分钟/秒）
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const days = Math.floor(totalSeconds / (24 * 60 * 60));
+      const remainingSecondsAfterDays = totalSeconds % (24 * 60 * 60);
+      const hours = Math.floor(remainingSecondsAfterDays / (60 * 60));
+      const remainingSecondsAfterHours = remainingSecondsAfterDays % (60 * 60);
+      const minutes = Math.floor(remainingSecondsAfterHours / 60);
+      const seconds = remainingSecondsAfterHours % 60;
+
+      // 更新页面显示（补零后）
+      uptimeElements.days.textContent = padZero(days);
+      uptimeElements.hours.textContent = padZero(hours);
+      uptimeElements.minutes.textContent = padZero(minutes);
+      uptimeElements.seconds.textContent = padZero(seconds);
+    }
+
+    // 初始化执行 + 每秒更新一次
+    updateUptime();
+    uptimeTimer = setInterval(updateUptime, 1000);
+
+    // 页面卸载时清理定时器，避免内存泄漏
+    window.addEventListener('beforeunload', () => {
+      clearInterval(uptimeTimer);
+    });
+  </script>
+</body>
+</html>
