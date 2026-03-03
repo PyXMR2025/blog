@@ -135,10 +135,10 @@ sidebar:
   # Sidebar display.
   # Applicable to Muse | Mist and mobile of Pisces | Gemini.
   # Available values:
-  #  - post    expand on posts automatically. Default.
-  #  - always  expand for all pages automatically.
-  #  - hide    expand only when click on the sidebar toggle icon.
-  #  - remove  totally remove sidebar including sidebar toggle.
+  # - post expand on posts automatically. Default.
+  # - always expand for all pages automatically.
+  # - hide expand only when click on the sidebar toggle icon.
+  # - remove totally remove sidebar including sidebar toggle.
   display: post
 
   # Sidebar padding in pixels.
@@ -149,9 +149,9 @@ sidebar:
 # Sidebar Avatar
 avatar:
   # Replace the default image and set the url here.
-  url: #/images/avatar.gif
+  url: /img/favicon/image.png
   # If true, the avatar will be displayed in circle.
-  rounded: false
+  rounded: true
   # If true, the avatar will be rotated with the cursor.
   rotated: false
 
@@ -165,8 +165,8 @@ site_state: true
 social:
   GitHub: https://github.com/PyXMR2025 || fab fa-github
   E-Mail: mailto:pyxmr2025@openenet.cn || fa fa-envelope
-  #Weibo: https://weibo.com/yourname || fab fa-weibo
-  #Twitter: https://twitter.com/yourname || fab fa-twitter
+  哔哩哔哩: https://space.bilibili.com/1813025234 || fab fa-bilibili
+  知乎: https://www.zhihu.com/people/zhangyijia2022 || fab fa-zhihu
   #FB Page: https://www.facebook.com/yourname || fab fa-facebook
   #StackOverflow: https://stackoverflow.com/yourname || fab fa-stack-overflow
   #YouTube: https://youtube.com/yourname || fab fa-youtube
@@ -185,15 +185,15 @@ links_settings:
   layout: block
 
 links:
-  BlogsClub: https://www.blogsclub.org/
-  博客之家: https://www.perass.com/
   BlogFinder: https://bf.zzxworld.com/
+  BlogsClub: https://www.blogsclub.org/
   BLOGS·CN: https://blogscn.fun/
+  博客之家: https://www.perass.com/
   博客中心: https://bokehub.com/home/
-  无聊湾: https://boringbay.com/
   博客星球: https://www.blogplanet.cn/
   若梦博客: https://www.rmbk.cc/
   博客录: https://boke.lu/
+  无聊湾: https://boringbay.com/
 
 # Table of Contents in the Sidebar
 # Front-matter variable (nonsupport wrap expand_all).
@@ -219,7 +219,7 @@ language_switcher: false
 
 footer:
   # Specify the year when the site was setup. If not defined, current year will be used.
-  #since: 2021
+  since: 2025
 
   # Icon between year and copyright info.
   icon:
@@ -301,6 +301,11 @@ follow_me:
   #Telegram: https://t.me/channel_name || fab fa-telegram
   #WeChat: /images/wechat_channel.png || fab fa-weixin
   RSS: /atom.xml || fa fa-rss
+  GitHub: https://github.com/PyXMR2025 || fab fa-github
+  E-Mail: mailto:pyxmr2025@openenet.cn || fa fa-envelope
+  哔哩哔哩: https://space.bilibili.com/1813025234 || fab fa-bilibili
+  知乎: https://www.zhihu.com/people/zhangyijia2022 || fab fa-zhihu
+
 
 # Related popular posts
 # Dependencies: https://github.com/next-theme/hexo-posts-embedding
@@ -429,7 +434,7 @@ github_banner:
 # ---------------------------------------------------------------
 # Find fonts on Google Fonts (https://fonts.google.com)
 # All fonts set here will have the following styles:
-#   light | light italic | normal | normal italic | bold | bold italic
+# light | light italic | normal | normal italic | bold | bold italic
 # Be aware that setting too much fonts will cause site loading slowly
 # ---------------------------------------------------------------
 # Web Safe fonts are recommended for `global` (and `title`):
@@ -442,39 +447,40 @@ font:
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
   host: https://fonts.font.im
 
-  # Font options:
-  # `external: true` will load this font family from `host` above.
-  # `family: Times New Roman`. Without any quotes.
-  # `size: x.x`. Use `em` as unit. Default: 1 (16px)
+# Font options:
+# `external: true` will load this font family from `host` above.
+# `family: Times New Roman`. Without any quotes.
+# `size: x.x`. Use `em` as unit. Default: 1 (16px)
 
-  # Global font settings used for all elements inside <body>.
-  global:
-    external: true
-    family: Noto Serif SC
-    size: 
+# Global font settings used for all elements inside <body>.
+global:
+  external: true
+  family: LXGW WenKai GB, Noto Serif CJK SC, STKaiti, KaiTi, Noto Sans CJK SC, PingFang SC, Microsoft YaHei, sans-serif
+  size: 1.0 # 基础基准字号16px，适配所有设备
 
-  # Font settings for site title (.site-title).
-  title:
-    external: true
-    family: Noto Serif SC
-    size:
+# Font settings for site title (.site-title).
+title:
+  external: true
+  family: LXGW WenKai GB, Noto Serif CJK SC, STKaiti, KaiTi, Noto Sans CJK SC, PingFang SC, Bold, sans-serif
+  size: 1.875 # 站点标题30px，霞鹜文楷标题更有风格
 
-  # Font settings for headlines (<h1> to <h6>).
-  headings:
-    external: true
-    family: Noto Serif SC
-    size:
+# Font settings for headlines (<h1> to <h6>).
+headings:
+  external: true
+  family: LXGW WenKai GB, Noto Serif CJK SC, STKaiti, KaiTi, Noto Sans CJK SC, PingFang SC, Medium, sans-serif
+  size: 1.25 # 标题基准20px，h1-h6可按层级微调（如h1:1.5em, h2:1.375em）
 
-  # Font settings for posts (.post-body).
-  posts:
-    external: true
-    family: Noto Serif SC
-    size:
+# Font settings for posts (.post-body).
+posts:
+  external: true
+  family: LXGW WenKai GB, Noto Serif CJK SC, STKaiti, KaiTi, Noto Sans CJK SC, Hiragino Sans GB, Microsoft YaHei, serif
+  size: 1.125 # 文章正文18px，霞鹜文楷最佳阅读字号
 
-  # Font settings for <code> and code blocks.
-  codes:
-    external: true
-    family: Source Code Pro
+# Font settings for <code> and code blocks.
+codes:
+  external: true
+  family: Source Code Pro, Consolas, Monaco, monospace, LXGW WenKai GB
+  size: 0.9375 # 代码字号15px，最后补充霞鹜文楷适配代码注释
 
 # ---------------------------------------------------------------
 # SEO Settings
@@ -515,10 +521,10 @@ baidu_site_verification:
 # Note tag (bootstrap callout)
 note:
   # Note tag style values:
-  #  - simple    bootstrap callout old alert style. Default.
-  #  - modern    bootstrap callout new (v2-v3) alert style.
-  #  - flat      flat callout style with background, like on Mozilla or StackOverflow.
-  #  - disabled  disable all CSS styles import of note tag.
+  # - simple bootstrap callout old alert style. Default.
+  # - modern bootstrap callout new (v2-v3) alert style.
+  # - flat flat callout style with background, like on Mozilla or StackOverflow.
+  # - disabled disable all CSS styles import of note tag.
   style: simple
   icons: false
   # Offset lighter of background in % for modern and flat styles (modern: -12 | 12; flat: -18 | 6).
@@ -691,10 +697,10 @@ comments:
   # Modify texts or order for any naves, here are some examples.
   nav:
     #disqus:
-    #  text: Load Disqus
-    #  order: -1
+    # text: Load Disqus
+    # order: -1
     #gitalk:
-    #  order: -2
+    # order: -2
     utterances:
       text: Utterances
       order: -1
@@ -853,7 +859,7 @@ local_search:
   enable: false
   trigger: auto
   # Show top n results per article, show all results by setting to -1
-  top_n_per_article: 1
+  top_n_per_article: -1
   # Unescape html strings to the readable one.
   unescape: false
   # Preload the search data when the page loads.
@@ -914,9 +920,9 @@ css: css
 js: js
 images: images
 
-post_wordcount: 		# 字数统计
-  item_text: true		# 是否显示文字
-  wordcount: true		# 显示字数
-  min2read: true		# 显示阅读时间
-  totalcount: true		# 显示总数
-  separated_meta: true	# 是否分开
+post_wordcount: # 字数统计
+  item_text: true # 是否显示文字
+  wordcount: true # 显示字数
+  min2read: true # 显示阅读时间
+  totalcount: true # 显示总数
+  separated_meta: true # 是否分开
