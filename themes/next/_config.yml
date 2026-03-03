@@ -455,25 +455,25 @@ font:
 # Global font settings used for all elements inside <body>.
 global:
   external: true
-  family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
+  family: "Microsoft YaHei, LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
   size:
 
 # Font settings for site title (.site-title).
 title:
   external: true
-  family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
+  family: "Microsoft YaHei, LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
   size:
   
 # Font settings for headlines (<h1> to <h6>).
 headings:
   external: true
-  family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
+  family: "Microsoft YaHei, LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
   size:
 
 # Font settings for posts (.post-body).
 posts:
   external: true
-  family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
+  family: "Microsoft YaHei, LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
   size:
 
 # Font settings for <code> and code blocks.
