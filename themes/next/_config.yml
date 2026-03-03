@@ -442,44 +442,44 @@ github_banner:
 # ---------------------------------------------------------------
 
 font:
-  enable: true
-  
+  enable: false
+
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  host:
+  host: https://fonts.font.im
 
-# Font options:
-# `external: true` will load this font family from `host` above.
-# `family: Times New Roman`. Without any quotes.
-# `size: x.x`. Use `em` as unit. Default: 1 (16px)
+  # Font options:
+  # `external: true` will load this font family from `host` above.
+  # `family: Times New Roman`. Without any quotes.
+  # `size: x.x`. Use `em` as unit. Default: 1 (16px)
 
-# Global font settings used for all elements inside <body>.
-global:
-  external: false
-  family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
-  size:
+  # Global font settings used for all elements inside <body>.
+  global:
+    external: true
+    family: Noto Serif SC
+    size: 
 
-# Font settings for site title (.site-title).
-title:
-  external: false
-  family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
-  size:
-  
-# Font settings for headlines (<h1> to <h6>).
-headings:
-  external: false
-  family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
-  size:
+  # Font settings for site title (.site-title).
+  title:
+    external: true
+    family: Noto Serif SC
+    size:
 
-# Font settings for posts (.post-body).
-posts:
-  external: false
-  family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
-  size:
+  # Font settings for headlines (<h1> to <h6>).
+  headings:
+    external: true
+    family: Noto Serif SC
+    size:
 
-# Font settings for <code> and code blocks.
-codes:
-  external: false
-  family: "Source Code Pro, LXGW WenKai Mono, Noto Serif SC, LXGW WenKai, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
+  # Font settings for posts (.post-body).
+  posts:
+    external: true
+    family: Noto Serif SC
+    size:
+
+  # Font settings for <code> and code blocks.
+  codes:
+    external: true
+    family: Source Code Pro
 
 # ---------------------------------------------------------------
 # SEO Settings
