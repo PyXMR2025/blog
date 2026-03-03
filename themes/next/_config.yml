@@ -153,7 +153,7 @@ avatar:
   # If true, the avatar will be displayed in circle.
   rounded: true
   # If true, the avatar will be rotated with the cursor.
-  rotated: false
+  rotated: true
 
 # Posts / Categories / Tags in sidebar.
 site_state: true
@@ -401,7 +401,7 @@ back2top:
   # Back to top in sidebar.
   sidebar: false
   # Scroll percent label in b2t button.
-  scrollpercent: false
+  scrollpercent: true
 
 # Reading progress bar
 reading_progress:
@@ -454,32 +454,32 @@ font:
 
 # Global font settings used for all elements inside <body>.
 global:
-  external: true
-  family: LXGW WenKai GB
+  external: false
+  family: "LXGW WenKai, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
   size:
 
 # Font settings for site title (.site-title).
 title:
-  external: true
-  family: LXGW WenKai GB
+  external: false
+  family: "LXGW WenKai, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
   size:
   
 # Font settings for headlines (<h1> to <h6>).
 headings:
-  external: true
-  family: LXGW WenKai GB
+  external: false
+  family: "LXGW WenKai, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
   size:
 
 # Font settings for posts (.post-body).
 posts:
-  external: true
-  family: LXGW WenKai GB
+  external: false
+  family: "LXGW WenKai, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
   size:
 
 # Font settings for <code> and code blocks.
 codes:
-  external: true
-  family: Source Code Pro
+  external: false
+  family: "Source Code Pro, LXGW WenKai, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
 
 # ---------------------------------------------------------------
 # SEO Settings
