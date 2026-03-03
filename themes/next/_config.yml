@@ -442,10 +442,10 @@ github_banner:
 # ---------------------------------------------------------------
 
 font:
-  enable: true
+  enable: false
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  host:
+  host: https://fonts.googleapis.com
 
 # Font options:
 # `external: true` will load this font family from `host` above.
@@ -455,31 +455,31 @@ font:
 # Global font settings used for all elements inside <body>.
 global:
   external: true
-  family: LXGW WenKai GB, Noto Serif CJK SC, STKaiti, KaiTi, Noto Sans CJK SC, PingFang SC, Microsoft YaHei, sans-serif
+  family: LXGW WenKai GB
   size:
 
 # Font settings for site title (.site-title).
 title:
   external: true
-  family: LXGW WenKai GB, Noto Serif CJK SC, STKaiti, KaiTi, Noto Sans CJK SC, PingFang SC, Bold, sans-serif
+  family: LXGW WenKai GB
   size:
   
 # Font settings for headlines (<h1> to <h6>).
 headings:
   external: true
-  family: LXGW WenKai GB, Noto Serif CJK SC, STKaiti, KaiTi, Noto Sans CJK SC, PingFang SC, Medium, sans-serif
+  family: LXGW WenKai GB
   size:
 
 # Font settings for posts (.post-body).
 posts:
   external: true
-  family: LXGW WenKai GB, Noto Serif CJK SC, STKaiti, KaiTi, Noto Sans CJK SC, Hiragino Sans GB, Microsoft YaHei, serif
+  family: LXGW WenKai GB
   size:
 
 # Font settings for <code> and code blocks.
 codes:
   external: true
-  family: Source Code Pro, Consolas, Monaco, monospace, LXGW WenKai GB
+  family: Source Code Pro
 
 # ---------------------------------------------------------------
 # SEO Settings
