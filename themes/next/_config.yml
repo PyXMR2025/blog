@@ -442,10 +442,10 @@ github_banner:
 # ---------------------------------------------------------------
 
 font:
-  enable: false
+  enable: true
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  host: https://fonts.font.im
+  host:
 
 # Font options:
 # `external: true` will load this font family from `host` above.
@@ -456,31 +456,30 @@ font:
 global:
   external: true
   family: LXGW WenKai GB, Noto Serif CJK SC, STKaiti, KaiTi, Noto Sans CJK SC, PingFang SC, Microsoft YaHei, sans-serif
-  size: 1.0 # 基础基准字号16px，适配所有设备
+  size:
 
 # Font settings for site title (.site-title).
 title:
   external: true
   family: LXGW WenKai GB, Noto Serif CJK SC, STKaiti, KaiTi, Noto Sans CJK SC, PingFang SC, Bold, sans-serif
-  size: 1.875 # 站点标题30px，霞鹜文楷标题更有风格
-
+  size:
+  
 # Font settings for headlines (<h1> to <h6>).
 headings:
   external: true
   family: LXGW WenKai GB, Noto Serif CJK SC, STKaiti, KaiTi, Noto Sans CJK SC, PingFang SC, Medium, sans-serif
-  size: 1.25 # 标题基准20px，h1-h6可按层级微调（如h1:1.5em, h2:1.375em）
+  size:
 
 # Font settings for posts (.post-body).
 posts:
   external: true
   family: LXGW WenKai GB, Noto Serif CJK SC, STKaiti, KaiTi, Noto Sans CJK SC, Hiragino Sans GB, Microsoft YaHei, serif
-  size: 1.125 # 文章正文18px，霞鹜文楷最佳阅读字号
+  size:
 
 # Font settings for <code> and code blocks.
 codes:
   external: true
   family: Source Code Pro, Consolas, Monaco, monospace, LXGW WenKai GB
-  size: 0.9375 # 代码字号15px，最后补充霞鹜文楷适配代码注释
 
 # ---------------------------------------------------------------
 # SEO Settings
