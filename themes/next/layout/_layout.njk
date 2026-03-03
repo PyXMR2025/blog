@@ -74,33 +74,6 @@
       color: #666;
     }
   </style>
-
-  <!-- ========== 新增：字体加载优化样式 ========== -->
-  <style>
-    /* 1. 初始本地字体：复用Next主题CSS变量，优先本地字体 */
-    :root {
-      --font-family-global: "Noto Serif SC", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", "SimHei", sans-serif;
-      --font-family-title: var(--font-family-global);
-      --font-family-headings: var(--font-family-global);
-      --font-family-posts: var(--font-family-global);
-      --font-family-codes: "Source Code Pro", "LXGW WenKai Mono", "Noto Serif SC", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", "SimHei", sans-serif;
-    }
-
-    /* 2. 字体切换过渡：避免闪跳 */
-    body, h1, h2, h3, h4, h5, h6, .site-title, .post-body, code, pre {
-      transition: font-family 0.3s ease;
-    }
-
-    /* 3. 远程字体加载完成后：切换为霞鹜文楷 */
-    .font-loaded {
-      --font-family-global: "LXGW WenKai", "Noto Serif SC", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", "SimHei", sans-serif;
-      --font-family-title: var(--font-family-global);
-      --font-family-headings: var(--font-family-global);
-      --font-family-posts: var(--font-family-global);
-      --font-family-codes: "Source Code Pro", "LXGW WenKai Mono", "LXGW WenKai", "Noto Serif SC", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", "SimHei", sans-serif;
-    }
-  </style>
-  <!-- ========== 字体样式结束 ========== -->
 </head>
 
 <body 
@@ -230,31 +203,5 @@
       clearInterval(uptimeTimer);
     });
   </script>
-
-  <!-- ========== 新增：异步加载霞鹜文楷字体脚本 ========== -->
-  <script>
-    // DOM加载完成后异步加载，不阻塞初始渲染
-    window.addEventListener('DOMContentLoaded', function() {
-      // 创建link标签加载远程字体样式表
-      const lxgwFontLink = document.createElement('link');
-      lxgwFontLink.rel = 'stylesheet';
-      lxgwFontLink.href = 'https://s4.zstatic.net/ajax/libs/lxgw-wenkai-webfont/1.7.0/style.css';
-      
-      // 加载成功：添加类名切换字体
-      lxgwFontLink.onload = function() {
-        document.documentElement.classList.add('font-loaded');
-        console.log('霞鹜文楷字体加载完成，已切换');
-      };
-      
-      // 加载失败：容错处理，保留本地字体
-      lxgwFontLink.onerror = function() {
-        console.warn('远程霞鹜文楷字体加载失败，继续使用本地字体');
-      };
-      
-      // 插入到head中执行加载
-      document.head.appendChild(lxgwFontLink);
-    });
-  </script>
-  <!-- ========== 字体脚本结束 ========== -->
 </body>
 </html>
