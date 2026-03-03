@@ -445,7 +445,7 @@ font:
   enable: true
   
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  host: https://fonts.loli.net
+  host:
 
 # Font options:
 # `external: true` will load this font family from `host` above.
@@ -454,25 +454,25 @@ font:
 
 # Global font settings used for all elements inside <body>.
 global:
-  external: true
+  external: false
   family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
   size:
 
 # Font settings for site title (.site-title).
 title:
-  external: true
+  external: false
   family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
   size:
   
 # Font settings for headlines (<h1> to <h6>).
 headings:
-  external: true
+  external: false
   family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
   size:
 
 # Font settings for posts (.post-body).
 posts:
-  external: true
+  external: false
   family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
   size:
 
