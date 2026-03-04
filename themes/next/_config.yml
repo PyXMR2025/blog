@@ -455,7 +455,7 @@ font:
   # Global font settings used for all elements inside <body>.
   global:
     external: false
-    family: "LXGW WenKai"
+    family: "LXGW WenKai, Noto Serif SC"
     size:
 
   # Font settings for site title (.site-title).
