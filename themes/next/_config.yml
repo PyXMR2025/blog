@@ -443,7 +443,7 @@ github_banner:
 
 font:
   enable: true
-  
+
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
   host: https://fonts.googleapis.com
 
@@ -455,7 +455,7 @@ font:
   # Global font settings used for all elements inside <body>.
   global:
     external: false
-    family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
+    family: "LXGW WenKai"
     size:
 
   # Font settings for site title (.site-title).
@@ -478,7 +478,7 @@ font:
   # Font settings for <code> and code blocks.
   codes:
     external: false
-    family: "LXGW WenKai Mono, Source Code Pro, Noto Serif SC, LXGW WenKai, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
+    family: "LXGW WenKai Mono, Source Code Pro"
 
 # ---------------------------------------------------------------
 # SEO Settings
@@ -854,7 +854,7 @@ algolia_search:
 # Local Search
 # Dependencies: https://github.com/next-theme/hexo-generator-searchdb
 local_search:
-  enable: false
+  enable: true
   trigger: auto
   # Show top n results per article, show all results by setting to -1
   top_n_per_article: -1
