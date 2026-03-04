@@ -442,10 +442,10 @@ github_banner:
 # ---------------------------------------------------------------
 
 font:
-  enable: false
-
+  enable: true
+  
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  host: https://fonts.font.im
+  host: https://fonts.googleapis.com
 
   # Font options:
   # `external: true` will load this font family from `host` above.
@@ -454,32 +454,31 @@ font:
 
   # Global font settings used for all elements inside <body>.
   global:
-    external: true
-    family: Noto Serif SC
-    size: 
+    external: false
+    family: "LXGW WenKai, Noto Serif SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
+    size:
 
   # Font settings for site title (.site-title).
   title:
     external: true
-    family: Noto Serif SC
+    family:
     size:
 
   # Font settings for headlines (<h1> to <h6>).
   headings:
     external: true
-    family: Noto Serif SC
+    family:
     size:
 
   # Font settings for posts (.post-body).
   posts:
     external: true
-    family: Noto Serif SC
-    size:
+    family:
 
   # Font settings for <code> and code blocks.
   codes:
-    external: true
-    family: Source Code Pro
+    external: false
+    family: "LXGW WenKai Mono, Source Code Pro, Noto Serif SC, LXGW WenKai, PingFang SC, Microsoft YaHei, Source Han Sans SC, SimHei, sans-serif"
 
 # ---------------------------------------------------------------
 # SEO Settings
