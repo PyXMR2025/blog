@@ -76,7 +76,7 @@ blog/
 ## 许可证
 
 - 代码协议：MIT License
-- 内容协议：CC BY-SA 4.0
+- 内容协议：CC BY-NC-SA 4.0
 
 ## 贡献
 
