@@ -3,6 +3,9 @@ title: 404 - 页面未找到
 date: 2025-12-18 00:10:00
 updated: 2025-12-18 00:10:00
 layout: 404
+comments: false
+toc:
+  enable: false
 ---
 
 # 抱歉，你访问的页面不存在 😕
