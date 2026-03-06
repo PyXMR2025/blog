@@ -1,9 +1,8 @@
 ---
 title: 关于我
-date: 2026-1-22 21:00:11
-updated: 2026-1-22 21:00:11
+date: 2026-01-22 21:00:11
+updated: 2026-01-22 21:00:11
 layout: about
-comments: false
 toc:
   enable: false
 ---
