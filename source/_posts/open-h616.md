@@ -7,9 +7,6 @@ updated: 2026-1-2 17:53:26
 tags: 
 - H616
 - 开发板
-- 国产
-- Linux
-- IoT
 - 系统烧录
 description: LCPI H616 ZERO国产开发板开箱全解析，含全志H616核心硬件参数、Ubuntu/Debian/安卓系统完整烧录教程、基础环境配置与常见问题排查，嵌入式Linux与IoT开发新手零门槛入门指南
 category: 硬件研究
