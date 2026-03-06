@@ -2,8 +2,8 @@
 title: 模拟亚音 CTCSS 与 数字亚音 DCS 技术原理详解与应用场景
 author_name: "Jackie"
 author_title: "探索区块链、自动化与开源技术"
-date: 2026-2-6 11:16:21
-updated: 2026-2-6 11:16:21
+date: 2026-02-06 11:16:21
+updated: 2026-02-06 11:16:21
 tags: 
 - 模拟/数字亚音
 - 业余无线电

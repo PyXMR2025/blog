@@ -2,8 +2,8 @@
 title: AIGC 辅助创作声明
 type: aigc
 layout: aigc
-date: 2026-2-4 09:32:30
-update: 2026-2-4 09:32:30
+date: 2026-02-04 09:32:30
+update: 2026-02-04 09:32:30
 comments: false
 toc:
   enable: false
