@@ -11,7 +11,6 @@ tags:
 - MoneroGUI
 - 加密货币
 - 钱包
-- OneKey
 - 硬件钱包
 - Monero
 - 隐私安全
