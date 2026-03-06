@@ -8,8 +8,6 @@ tags:
 - Meta Robots
 - SEO 优化
 - 爬虫控制
-- Robots 标签
-- 搜索引擎优化
 description: 本文为 Meta Robots 标签 SEO 优化全攻略，从基础指令、X-Robots-Tag 配置，到与 Robots.txt 的优先级规则、动态页面适配、搜索引擎兼容处理，搭配全场景实战案例与避坑指南，实现搜索引擎抓取与索引的精细化管控，筑牢网站 SEO 排名基础。
 category: 前端开发
 ---

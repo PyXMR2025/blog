@@ -7,8 +7,6 @@ updated: 2026-2-18 16:28:19
 tags: 
 - GitHub Actions
 - SEO
-- CI/CD
-- 博客
 - IndexNow
 description: 本文教你用GitHub Actions实现静态博客内容自动推送到Bing/Yandex IndexNow，无需手动提交，发布即收录，收录效率提升数倍。支持Hexo/Hugo/GitHub Pages/Vercel等所有静态博客，哪怕没有博客代码仓库，空仓库也能配置，完全免费、实时跨引擎，新手友好，附完整代码与GitHub Secrets安全配置。
 category: CI/CD实践
