@@ -5,11 +5,7 @@ author_title: "探索区块链、自动化与开源技术"
 date: 2026-1-7 23:16:02
 updated: 2026-1-7 23:16:02
 tags: 
-- H616
-- 开发板
-- 国产
-- Linux
-- IoT
+- H616 开发板
 - 性能测试
 description: 本文实测LCPI H616 ZERO国产开发板的CPU、内存、IO综合性能，通过nench.sh、sysbench专项测试拆解全志H616芯片真实表现，横向对比同价位Orange Pi Zero2等开发板，给出嵌入式入门、IoT项目的选型建议与优化方案。
 category: 硬件研究
