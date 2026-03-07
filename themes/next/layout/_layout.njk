@@ -142,6 +142,18 @@
       
       <!-- 页脚公共内容（缓存控制） -->
       {{ partial('_partials/footer.njk', {}, {cache: theme.cache.enable}) }}
+
+      <!-- SVG徽章容器 -->
+      <div class="license-badges">
+        <!-- CC BY-NC-SA 徽章 + 跳转链接 -->
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">
+          <img src="https://s4.zstatic.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="CC BY-NC-SA 许可证">
+        </a>
+        <!-- Not by AI 徽章 + 跳转链接 -->
+        <a href="https://notbyai.fyi/cn/" target="_blank" rel="noopener noreferrer">
+          <img src="/favicon/not-by-ai-white.svg" alt="Not by AI">
+        </a>
+      </div>
         
       <!-- 运行时长统计展示行 -->
       <div class="uptime-row">
@@ -150,18 +162,6 @@
         <span class="uptime-num" id="hours">00</span> 小时 
         <span class="uptime-num" id="minutes">00</span> 分钟 
         <span class="uptime-num" id="seconds">00</span> 秒
-      </div>
-
-      <!-- SVG徽章容器（带跳转链接+并排+间隔+居中） -->
-      <div class="license-badges">
-        <!-- CC BY-NC-SA 徽章 + 跳转链接 -->
-        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">
-          <img src="https://s4.zstatic.net/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="CC BY-NC-SA 许可证">
-        </a>
-        <!-- Not by AI 徽章 + 跳转链接 -->
-        <a href="https://notbyai.fyi/cn/" target="_blank" rel="noopener noreferrer">
-          <img src="/img/not-by-ai/not-by-ai-white.svg" alt="Not by AI">
-        </a>
       </div>
 
       <!-- 广告脚本（仅保留一次引入） -->
