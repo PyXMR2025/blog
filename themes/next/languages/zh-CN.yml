@@ -87,10 +87,11 @@ reward:
   paypal: PayPal
   bitcoin: 比特币
   ethereum: 以太坊
+  afdian: 爱发电
   tron: 波场
   arbitrum: 阿尔比垂姆
   bnbsmartchain: 币安智能链
-  comment: 请我喝杯咖啡吧！
+  comment: 如果文章对你有用的话，请支持我持续输出~
 follow_me:
   welcome: 欢迎关注我的其它发布渠道
 accessibility:
