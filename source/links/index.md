@@ -17,17 +17,22 @@ toc:
 document.addEventListener('DOMContentLoaded', function() {
   // 博客列表数据
   const blogList = [
-    {name: "lololowe的博客", url: "https://blog.lololowe.com/", desc: "计网，网安知识分享"},
-    {name: "LiKai Blog", url: "https://tylk.cc/", desc: "云端电波起，星河寄心声"},
-    {name: "运维小弟", url: "https://blog.srebro.cn/", desc: "专注技术积累，探索运维之道"},
-    {name: "杨杨得亿", url: "https://yydy.link:2023/", desc: "关注网络安全，虚拟化，SSLVPN 等相关领域。"},
-    {name: "SRE运维博客", url: "https://www.cnsre.cn/", desc: "专注SRE运维技术分享的博客"},
-    {name: "老王的个人博客", url: "https://blog.oldwang.site/", desc: "这是一个 LinuxSre 相关的技术博客"},
-    {name: "宗宗酱", url: "https://ygz.ink/", desc: "用文字和图片记录生活！"},
-    {name: "我是军爸", url: "https://me.xu19.com/", desc: "记录单片机编程教学、生活与成长点滴"},
-    {name: "朱小呆", url: "https://zhujay.com/", desc: "不是什么技术大佬，完全就是瞎折腾。这里没有技术分享，只有简简单单的生活记录与你分享。"},
-    {name: "西瓜猜字谜", url: "https://www.xiguacaizimi.top/", desc: "记录西瓜猜字谜的日常"},
-    {name: "FatPanda的小站", url: "https://12am.moe/", desc: "Coder&OIer"}
+      {name: "lololowe的博客", url: "https://blog.lololowe.com/", desc: "计网，网安知识分享"},
+      {name: "LiKai Blog", url: "https://tylk.cc/", desc: "云端电波起，星河寄心声"},
+      {name: "运维小弟", url: "https://blog.srebro.cn/", desc: "专注技术积累，探索运维之道"},
+      {name: "杨杨得亿", url: "https://yydy.link:2023/", desc: "关注网络安全，虚拟化，SSLVPN 等相关领域。"},
+      {name: "SRE运维博客", url: "https://www.cnsre.cn/", desc: "专注SRE运维技术分享的博客"},
+      {name: "老王的个人博客", url: "https://blog.oldwang.site/", desc: "这是一个 LinuxSre 相关的技术博客"},
+      {name: "宗宗酱", url: "https://ygz.ink/", desc: "用文字和图片记录生活！"},
+      {name: "我是军爸", url: "https://me.xu19.com/", desc: "记录单片机编程教学、生活与成长点滴"},
+      {name: "朱小呆", url: "https://zhujay.com/", desc: "不是什么技术大佬，完全就是瞎折腾。这里没有技术分享，只有简简单单的生活记录与你分享。"},
+      {name: "西瓜猜字谜", url: "https://www.xiguacaizimi.top/", desc: "记录西瓜猜字谜的日常"},
+      {name: "FatPanda的小站", url: "https://12am.moe/", desc: "Coder&OIer"},
+      {name: "BlogFinder", url: "https://bf.zzxworld.com/", desc: "聚合优秀的个人博客，发掘优质的个人博客文章和内容。"},
+      {name: "BlogsClub", url: "https://www.blogsclub.org/", desc: "BlogsClub是一个互联网独立博客俱乐部"},
+      {name: "BLOGS·CN", url: "https://blogscn.fun/", desc: "致敬还在写博客的我们"},
+      {name: "若梦博客", url: "https://www.rmbk.cc/", desc: "每一个博客，都是精神的驿站。我们不同行，但彼此照亮。在此驻足，便积蓄前行的力量。"},
+      {name: "无聊湾", url: "https://boringbay.com/", desc: "无聊湾 🥱 The Boring Bay"}
   ];
 
   // Fisher-Yates 洗牌算法
