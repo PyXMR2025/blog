@@ -6,6 +6,7 @@ date: 2026-01-20 18:06:39
 update: 2026-01-20 18:06:39
 toc:
   enable: false
+robots: "noindex, follow"
 ---
 
 <!-- 适配Hexo Next主题的友情链接卡片式布局 -->

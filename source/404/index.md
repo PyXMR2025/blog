@@ -6,6 +6,7 @@ layout: 404
 comments: false
 toc:
   enable: false
+robots: "noindex, follow"
 ---
 
 # 抱歉，你访问的页面不存在 😕
