@@ -7,6 +7,7 @@ comments: false
 toc:
   enable: false
 robots: "noindex, follow"
+description: 404 页面未找到。
 ---
 
 # 抱歉，你访问的页面不存在 😕
