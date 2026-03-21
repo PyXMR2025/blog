@@ -1,5 +1,5 @@
 ---
-title: Monero GUI 钱包 Windows 平台安装使用全教程
+title: Monero GUI 钱包 Windows 平台安装使用教程
 author_name: "Jackie"
 author_title: "探索区块链、自动化与开源技术"
 date: 2026-02-07 18:25:07

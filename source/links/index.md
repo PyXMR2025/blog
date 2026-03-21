@@ -7,6 +7,7 @@ update: 2026-01-20 18:06:39
 toc:
   enable: false
 robots: "noindex, follow"
+description: 本页面是友情链接页面，用于展示其他博客的链接。
 ---
 
 <!-- 适配Hexo Next主题的友情链接卡片式布局 -->

@@ -8,6 +8,7 @@ comments: false
 toc:
   enable: false
 robots: "noindex, follow"
+description: 这个页面用于概述 AIGC 辅助创作声明的相关内容。
 ---
 
 ## AIGC 辅助创作声明
