@@ -8,7 +8,6 @@ tags:
 - 介绍
 description: 你好，我是Jackie，一名热爱技术的中国学生。这里是我的技术自留地，专注分享嵌入式开发、区块链、CI/CD、业余无线电的深度解析与实操笔记，希望用我的微光，为同样在技术道路上探索的你提供一份真诚的指引。
 category: 散文杂事
-robots: "noindex, follow"
 ---
 
 ## 我的第一篇博文：Hello World
