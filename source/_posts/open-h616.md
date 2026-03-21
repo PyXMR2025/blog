@@ -1,5 +1,5 @@
 ---
-title: LCPI H616 ZERO 开发板开箱・系统烧录与基础配置全教程
+title: LCPI H616 ZERO 开发板开箱・系统烧录与基础配置教程
 author_name: "Jackie"
 author_title: "探索区块链、自动化与开源技术"
 date: 2026-01-02 17:53:26

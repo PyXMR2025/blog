@@ -1,5 +1,5 @@
 ---
-title: LCPI H616 ZERO 性能测试 · 一款搭载 H616 的国产开发板横评
+title: LCPI H616 ZERO 性能测试及横向对比
 author_name: "Jackie"
 author_title: "探索区块链、自动化与开源技术"
 date: 2026-01-07 23:16:02
