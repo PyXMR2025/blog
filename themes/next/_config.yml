@@ -275,12 +275,10 @@ tag_icon: false
 # Front-matter variable (nonsupport animation).
 reward_settings:
   # If true, a donate button will be displayed in every article by default.
-  enable: true
+  enable: false
   animation: false
 
 reward:
-  bitcoin: /img/reward/btc.png
-  afdian: /img/reward/afd.png
 
 # Subscribe through Telegram Channel, Twitter, etc.
 # Usage: `Key: permalink || icon` (Font Awesome)

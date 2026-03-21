@@ -91,7 +91,6 @@ blog/
 - **博客**: [https://jackie.openenet.cn](https://jackie.openenet.cn)
 - **邮箱**: [pyxmr2025@openenet.cn](mailto:pyxmr2025@openenet.cn)
 - **Matrix**: [@pyxmr2025:mozilla.org](https://matrix.to/#/@pyxmr2025:mozilla.org)
-- **捐赠支持**: Ethereum 地址 `0x0DB7Db25Acf1e72C9eE0aC5ba79aA51761023D09`
 
 > 你的支持，是持续创作与开源分享的最大动力！💪
 
