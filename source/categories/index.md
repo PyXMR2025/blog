@@ -7,4 +7,5 @@ type: categories
 comments: false
 toc:
   enable: false
+robots: "noindex, follow"
 ---

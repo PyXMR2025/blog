@@ -7,6 +7,7 @@ update: 2026-02-04 09:32:30
 comments: false
 toc:
   enable: false
+robots: "noindex, follow"
 ---
 
 ## AIGC 辅助创作声明

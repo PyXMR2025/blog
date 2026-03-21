@@ -5,6 +5,7 @@ updated: 2026-01-22 21:00:11
 layout: about
 toc:
   enable: false
+robots: "noindex, follow"
 ---
 
 <div align="center">

@@ -7,4 +7,5 @@ type: tags
 comments: false
 toc:
   enable: false
+robots: "noindex, follow"
 ---
