@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /tags/
+Disallow: /categories/
+Sitemap: https://jackie.openenet.cn/sitemap.xml
+Sitemap: https://jackie.openenet.cn/baidusitemap.xml
