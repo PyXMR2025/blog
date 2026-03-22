@@ -8,6 +8,8 @@
   <!-- 页面标题（模板块） -->
   <title>{% block title %}{% endblock %}</title>
 
+  <meta name="robots" content="{{ page.robots | default('index,follow') }}" />
+
   <!-- 第三方统计/分析脚本（缓存控制） -->
   {{ partial('_third-party/analytics/index.njk', {}, {cache: theme.cache.enable}) }}
   {{ partial('_third-party/statistics/index.njk', {}, {cache: theme.cache.enable}) }}
