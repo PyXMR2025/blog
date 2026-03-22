@@ -2,6 +2,11 @@
 {% import '_macro/post-collapse.njk' as post_template with context %}
 {% import '_macro/sidebar.njk' as sidebar_template with context %}
 
+{% block head %}
+  {{ super() }} 
+  <meta name="robots" content="noindex,follow">
+{% endblock %}
+
 {% block title %}{{ __('title.category') }}: {{ page.category }} | {{ title }}{% endblock %}
 
 {% block class %}category posts-collapse{% endblock %}
