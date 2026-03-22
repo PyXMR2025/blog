@@ -7,6 +7,5 @@ type: tags
 comments: false
 toc:
   enable: false
-robots: "noindex, follow"
 description: 本页面用于展示所有标签。
 ---
