@@ -63,7 +63,6 @@
   <link rel="prefetch" as="image" href="https://www.blogsclub.org/badge/jackie.openenet.cn">
   <link rel="icon" href="https://jackie.openenet.cn/favicon.ico" type="image/x-icon">
 
-  <!-- 样式整合：运行时长 + SVG徽章（关键修改） -->
   <style>
     /* 运行时长数字高亮样式 */
     .uptime-num {
@@ -161,7 +160,6 @@
         <span class="uptime-num" id="seconds">00</span> 秒
       </div>
 
-      <!-- 广告脚本（仅保留一次引入） -->
       <!-- <script async="async" data-cfasync="false" src="https://pl28675819.effectivegatecpm.com/0f2aeb03ec930e47193f4782e446c5b6/invoke.js"></script> -->
       <!-- <div id="container-0f2aeb03ec930e47193f4782e446c5b6"></div> -->
 
@@ -176,7 +174,7 @@
 
   <!-- 运行时长统计逻辑 -->
   <script>
-    // ========== 修复：控制台输出ASCII艺术字（避免Nunjucks解析冲突） ==========
+    // ========== Jackie's Blog ==========
     console.log(
       '       __       ___       ______  __  ___  __   _______ __     _______.   .______    __        ______     _______ \n' +
       '      |  |     /   \\     /      ||  |/  / |  | |   ____(_ )   /       |   |   _  \\  |  |      /  __  \\   /  _____|\n' +
@@ -185,7 +183,6 @@
       '|  `--\'  |  /  _____  \\ |  `----.|  .  \\  |  | |  |____   .----)   |      |  |_)  | |  `----.|  `--' + "'" + '  | |  |__| | \n' +
       ' \\______/  /__/     \\__\\ \\______||__|\\__\\ |__| |_______|  |_______/       |______/  |_______| \\______/   \\______|'
     );
-    // ========== 修复结束 ==========
 
     // 站点启动时间（GMT+8 2025-12-15 10:47:19）
     const startTime = new Date('2025-12-15T10:47:19+08:00');
