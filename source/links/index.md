@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
       {name: "BlogsClub", url: "https://www.blogsclub.org/", desc: "BlogsClub是一个互联网独立博客俱乐部"},
       {name: "BLOGS·CN", url: "https://blogscn.fun/", desc: "致敬还在写博客的我们"},
       {name: "若梦博客", url: "https://www.rmbk.cc/", desc: "每一个博客，都是精神的驿站。我们不同行，但彼此照亮。在此驻足，便积蓄前行的力量。"},
+      {name: "Chongxiの咖啡屋", url: "https://xice.cx/", desc: "Lose yourself to find yourself"},
       {name: "无聊湾", url: "https://boringbay.com/", desc: "无聊湾 🥱 The Boring Bay"}
   ];
 
