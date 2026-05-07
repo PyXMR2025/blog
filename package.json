@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "eslint": "^10.3.0",
-    "hexo": "^8.1.1",
+    "hexo": "^8.1.2",
     "hexo-article-recommender": "^1.0.5",
     "hexo-asset-image": "^1.0.0",
     "hexo-cli": "^4.3.2",
