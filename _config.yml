@@ -4,16 +4,16 @@
 
 # Site
 title: ZJACKIE's BLOG
-subtitle: '探索区块链、自动化与开源技术'
-description: '这里是 Jackie 的个人博客，一名热爱技术的中国学生。专注分享区块链、智能合约、以太坊、CI/CD、开源项目、开发板、嵌入式、业余无线电以及 IT 基础设施的深度解析与实践笔记。'
-keywords: '区块链, 以太坊, 智能合约, 加密货币, CI/CD, 自动化部署, DevOps, 开源, IT技术, Jackie, 业余无线电, HAM, 开发板, 嵌入式, 物联网'
+subtitle: '深耕信息技术与软硬件，记录实战踩坑经历、沉淀实用避坑方案'
+description: '这里是 Jackie 的博客，聚焦信息技术、软硬件、开源、区块链、物联网、开发板方向。日常输出各类软硬件实测评测、工具使用教程，整理亲身实操遇到的各类踩坑案例，复盘问题成因并给出可行解决办法。全程以第一视角记录真实操作流程，沉淀可复用的实战经验，全部为实测所得，帮助技术爱好者少走弯路，切实提升实操效率。'
+keywords: 'Jackie的博客, 软硬件测评, 开源, 物联网, 开发板, 信息技术, 运维技巧, 工具教程, 实操踩坑, 技术实战, 区块链'
 author: Jackie
 language: zh-CN
 timezone: Asia/Shanghai
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://jackie.openenet.cn
+url: https://blog.zjackie.ink
 permalink: :title/
 permalink_defaults:
 pretty_urls:
