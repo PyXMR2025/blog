@@ -891,12 +891,12 @@ vendors:
   # The default CDN provider of third-party plugins.
   # Available values: local | jsdelivr | unpkg | cdnjs | custom
   # Dependencies for `plugins: local`: https://github.com/next-theme/plugins
-  plugins: jsdelivr
+  plugins: custom
   # Custom CDN URL
   # For example:
   # custom_cdn_url: https://cdn.jsdelivr.net/npm/${npm_name}@${version}/${minified}
   # custom_cdn_url: https://cdnjs.cloudflare.com/ajax/libs/${cdnjs_name}/${version}/${cdnjs_file}
-  custom_cdn_url: https://cdn.jsdelivr.net/npm/${npm_name}@${version}/${minified}
+  custom_cdn_url: https://s4.zstatic.net/ajax/libs/${cdnjs_name}/${version}/${cdnjs_file}
 # Assets
 # Accelerate delivery of static files using a CDN
 # The js option is only valid when vendors.internal is local.
@@ -904,9 +904,9 @@ css: css
 js: js
 images: images
 
-post_wordcount: # 字数统计
-  item_text: true # 是否显示文字
-  wordcount: true # 显示字数
-  min2read: true # 显示阅读时间
-  totalcount: true # 显示总数
-  separated_meta: true # 是否分开
+post_wordcount:
+  item_text: true
+  wordcount: true
+  min2read: true
+  totalcount: true
+  separated_meta: true

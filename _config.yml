@@ -111,9 +111,9 @@ deploy:
   branch: main
 
 prism_plugin:
-  mode: 'preprocess'    # realtime/preprocess
-  theme: 'tomorrow'     #主题选项
-  line_number: false    # default false
+  mode: 'preprocess'    
+  theme: 'tomorrow'  
+  line_number: false   
   custom_css:
 
 permalink_pinyin:
@@ -122,7 +122,7 @@ permalink_pinyin:
 
 feed:
   type: atom
-  path: atom.xml  # RSS 文件路径：/atom.xml（即 /rss 需映射到 /atom.xml）
+  path: atom.xml
   limit: 20
   hub:
   content:
@@ -134,16 +134,16 @@ feed:
   template:
 
 tag_generator:
-  per_page: 10 # 每页显示的文章数量
-  enable_index_page: true # 是否生成标签索引页
-  enable_tagcloud: true # 是否生成标签云（Next 主题已内置，无需额外插件）
+  per_page: 10
+  enable_index_page: true
+  enable_tagcloud: true
 
 symbols_count_time:
-  symbols: true                # 文章字数统计
-  time: true                   # 文章阅读时长
-  total_symbols: true          # 站点总字数统计
-  total_time: true             # 站点总阅读时长
-  exclude_codeblock: false     # 排除代码字数统计
+  symbols: true                
+  time: true                  
+  total_symbols: true         
+  total_time: true            
+  exclude_codeblock: false     
 
 search:
   path: search.xml
@@ -152,13 +152,8 @@ search:
   format: html
 
 article_recommender:
-  # 是否自动将推荐模块注入到文章页面底部（默认 true）
   inject: true
-  # 推荐策略（可选：balanced | title-focused | content-focused，默认 balanced）
   strategy: balanced
-  # 默认推荐文章数量（默认 3）
   default_count: 3
-  # 推荐区域标题（支持中英文）
   recommended_title: "推荐文章"
-  # 时效性衰减系数（值越大，旧文章权重下降越快；默认 0.3）
   recency_decay: 0.3
