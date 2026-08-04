@@ -1,7 +1,7 @@
 ---
 title: 使用 GitHub Actions 自动提交 URL 到 IndexNow
 author_name: "Jackie"
-author_title: "探索区块链、自动化与开源技术"
+author_title: "深耕信息技术与软硬件，记录实战踩坑经历、沉淀实用避坑方案"
 date: 2026-02-18 16:28:19
 updated: 2026-02-18 16:28:19
 tags:
@@ -9,7 +9,7 @@ tags:
 - SEO 优化
 - IndexNow
 description: 本文教你用GitHub Actions实现静态博客内容自动推送到Bing/Yandex IndexNow，无需手动提交，发布即收录，收录效率提升数倍。支持Hexo/Hugo/GitHub Pages/Vercel等所有静态博客，哪怕没有博客代码仓库，空仓库也能配置，完全免费、实时跨引擎，新手友好，附完整代码与GitHub Secrets安全配置。
-category: CI/CD实践
+category: 前端
 ---
 
 作为静态博客（比如Hexo/Hugo搭建的博客或静态网站）博主，你一定遇到过**发布新文章后，搜索引擎迟迟不收录**的问题。手动提交链接到搜索引擎不仅繁琐，还容易遗漏；而IndexNow协议（由Bing/Yandex等搜索引擎推出）能让搜索引擎快速发现并收录你的网站内容，结合GitHub Actions的自动化能力，可实现**博客发布即自动推送多搜索引擎**，彻底解放双手。
@@ -49,17 +49,17 @@ IndexNow是一套开放的协议，核心作用是：**网站内容更新后，�
    创建一个名为`{你的API Key}.txt`的文件（比如`0a1818e0fea342e09e060743f4da9b44.txt`），文件内容仅需填写你的API Key，然后将该文件上传到博客根目录（比如`https://jackie.openenet.cn/0a1818e0fea342e09e060743f4da9b44.txt`），确保能通过浏览器访问。
 3. **准备Sitemap文件**
    确保博客有可访问的Sitemap文件（支持`xml`或`txt`格式）：
-   - `sitemap.txt`：每行一个完整URL（比如`https://jackie.openenet.cn/xxx.html`）；
-   - `sitemap.xml`：符合标准XML格式的站点地图（下文代码已适配两种格式）。
+    - `sitemap.txt`：每行一个完整URL（比如`https://jackie.openenet.cn/xxx.html`）；
+    - `sitemap.xml`：符合标准XML格式的站点地图（下文代码已适配两种格式）。
 
 ### 配置GitHub Secrets
 
 硬编码API Key会有泄露风险，需将敏感信息存到GitHub仓库的Secrets中：
 1. 打开博客仓库 → 「Settings」→ 「Secrets and variables」→ 「Actions」→ 「New repository secret」；
 2. 添加以下两个机密：
-   - 名称：`INDEXNOW_KEY`，值：你的IndexNow API Key（比如`0a1818e0fea342e09e060743f4da9b44`）；
-   - 名称：`INDEXNOW_KEY_LOCATION`，值：Key文件的访问地址（比如`https://jackie.openenet.cn/0a1818e0fea342e09e060743f4da9b44.txt`）；
-   - 可选补充：`INDEXNOW_HOST`（博客域名，比如`jackie.openenet.cn`）、`SITEMAP_URL`（Sitemap地址，比如`https://jackie.openenet.cn/sitemap.txt`）。
+    - 名称：`INDEXNOW_KEY`，值：你的IndexNow API Key（比如`0a1818e0fea342e09e060743f4da9b44`）；
+    - 名称：`INDEXNOW_KEY_LOCATION`，值：Key文件的访问地址（比如`https://jackie.openenet.cn/0a1818e0fea342e09e060743f4da9b44.txt`）；
+    - 可选补充：`INDEXNOW_HOST`（博客域名，比如`jackie.openenet.cn`）、`SITEMAP_URL`（Sitemap地址，比如`https://jackie.openenet.cn/sitemap.txt`）。
 
 > 机密配置截图
 > ![机密配置截图](/img/cicd-actions-indexnow/2.png)
@@ -255,9 +255,9 @@ jobs:
 1. **Key验证失败**：检查`{key}.txt`文件是否能访问、文件内容是否仅为Key、Key是否与Secrets中一致；
 2. **Sitemap解析失败**：确认Sitemap地址可访问、URL格式为完整的`https://`开头、域名与配置的`INDEXNOW_HOST`一致；
 3. **HTTP状态码400/403**：
-   - 400：JSON格式错误（检查URL列表是否为空）；
-   - 403：Key验证失败（重新检查Key文件）；
-   - 429：请求频率超限。
+    - 400：JSON格式错误（检查URL列表是否为空）；
+    - 403：Key验证失败（重新检查Key文件）；
+    - 429：请求频率超限。
 
 ### 优化建议
 

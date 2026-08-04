@@ -42,8 +42,8 @@ jobs:
           # 从GitHub Secrets读取敏感信息（避免硬编码）
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
           INDEXNOW_KEY_LOCATION: ${{ secrets.INDEXNOW_KEY_LOCATION }}
-          INDEXNOW_HOST: ${{ secrets.INDEXNOW_HOST || 'jackie.openenet.cn' }}
-          SITEMAP_URL: ${{ secrets.SITEMAP_URL || 'https://jackie.openenet.cn/sitemap.txt' }}
+          INDEXNOW_HOST: ${{ secrets.INDEXNOW_HOST || 'blog.zjackie.ink' }}
+          SITEMAP_URL: ${{ secrets.SITEMAP_URL || 'https://blog.zjackie.ink/sitemap.txt' }}
         run: |
           # ========== 1. 参数校验 ==========
           echo "=== 校验配置参数 ==="

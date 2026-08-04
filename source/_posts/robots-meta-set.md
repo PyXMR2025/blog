@@ -1,7 +1,7 @@
 ---
 title: Meta Robots 标签精准控制抓取
 author_name: "Jackie"
-author_title: "探索区块链、自动化与开源技术"
+author_title: "深耕信息技术与软硬件，记录实战踩坑经历、沉淀实用避坑方案"
 date: 2026-03-05 11:17:49
 updated: 2026-03-05 11:17:49
 tags:
@@ -9,7 +9,7 @@ tags:
 - SEO 优化
 - 爬虫控制
 description: 本文为 Meta Robots 标签 SEO 优化全攻略，从基础指令、X-Robots-Tag 配置，到与 Robots.txt 的优先级规则、动态页面适配、搜索引擎兼容处理，搭配全场景实战案例与避坑指南，实现搜索引擎抓取与索引的精细化管控，筑牢网站 SEO 排名基础。
-category: 前端开发
+category: 前端
 ---
 
 在前端 SEO 优化中，除了内容、结构、速度等核心维度，**对搜索引擎爬虫的精准控制**同样决定了网站的索引效率与排名效果。Meta Robots 标签作为页面级的爬虫控制指令，无需修改服务器配置，直接通过 HTML 头部即可生效，是前端开发者最易上手、最常用的爬虫管控工具。
@@ -282,15 +282,6 @@ Header set X-Robots-Tag "index,follow,noarchive"
 
 允许索引 PDF，但禁止缓存快照。
 
-### 真实案例：从流量暴跌到恢复
-
-某电商网站因改版错误，给所有产品页加上了 `noindex`，导致一周内有机流量下降 70%。
-**修复步骤**：
-1. 移除所有产品页的 `noindex` 指令，恢复 `index,follow`
-2. 在 Google Search Console 中提交所有产品页的 URL 重新抓取
-3. 优化产品页的 Meta Robots 进阶指令（`max-image-preview:large`）
-**结果**：两周内流量恢复 80%，一个月后超过改版前水平。
-
 ## 不同搜索引擎的支持情况
 
 | 指令 | Google | 百度 | 必应 |
@@ -304,7 +295,7 @@ Header set X-Robots-Tag "index,follow,noarchive"
 | `max-image-preview` | ✅ | ❌ | ✅ |
 | `max-video-preview` | ✅ | ❌ | ✅ |
 
-💡 提示：百度对进阶指令支持有限，核心优化仍以 `index/noindex`、`follow/nofollow` 为主。
+💡 提示：疑似百度对进阶指令支持有限，核心优化仍以 `index/noindex`、`follow/nofollow` 为主。
 
 ## 总结
 
