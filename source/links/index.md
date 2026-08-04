@@ -10,14 +10,12 @@ robots: "noindex, follow"
 description: 本页面是友情链接页面，用于展示其他博客的链接。
 ---
 
-<!-- 适配Hexo Next主题的友情链接卡片式布局 -->
 <div class="links-container" style="max-width: 900px; margin: 0 auto; padding: 20px 15px;">
   <div id="randomBlogList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px;"></div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // 博客列表数据
   const blogList = [
       {name: "lololowe的博客", url: "https://blog.lololowe.com/", desc: "计网，网安知识分享"},
       {name: "LiKai Blog", url: "https://tylk.cc/", desc: "云端电波起，星河寄心声"},
@@ -38,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
       {name: "无聊湾", url: "https://boringbay.com/", desc: "无聊湾 🥱 The Boring Bay"}
   ];
 
-  // Fisher-Yates 洗牌算法
+  // Fisher-Yates
   function shuffleArray(arr) {
     const newArr = [...arr];
     for (let i = newArr.length - 1; i > 0; i--) {
@@ -54,9 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  // 渲染卡片式链接（适配Next主题风格）
   shuffleArray(blogList).forEach(blog => {
-    // 单个链接卡片
     const card = document.createElement("div");
     card.style.cssText = `
       padding: 15px;
@@ -66,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function() {
       border: 1px solid #e9ecef;
     `;
 
-    // 卡片hover效果（Next主题同款过渡）
     card.onmouseover = function() {
       this.style.background = "#f1f3f5";
       this.style.transform = "translateY(-2px)";
@@ -78,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
       this.style.boxShadow = "none";
     };
 
-    // 链接内容（适配Next主题字体和颜色）
     card.innerHTML = `
       <a href="${blog.url}" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
         <h4 style="margin: 0 0 8px 0; color: #2c3e50; font-size: 16px; font-weight: 600;">${blog.name}</h4>
