@@ -9,3 +9,6 @@ robots: "noindex, follow"
 description: 这是 Jackie 的个人介绍页面。
 ---
 
+## 关于
+
+**没啥好写的，有空了再写，需要的可以点右上角我的GitHub主页**

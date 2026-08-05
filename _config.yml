@@ -157,3 +157,19 @@ article_recommender:
   default_count: 3
   recommended_title: "推荐文章"
   recency_decay: 0.3
+
+links:
+  enable: true
+  field: "site"
+# 内链排除配置
+  exclude:
+    - "blog.lololowe.com"
+    - "tylk.cc"
+    - "blog.srebro.cn"
+    - "www.cnsre.cn"
+    - "blog.oldwang.site"
+    - "me.xu19.com"
+    - "zhujay.com"
+    - "12am.moe"
+    - "xice.cx"
+    - "www.xiguacaizimi.top"
