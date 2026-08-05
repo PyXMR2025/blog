@@ -88,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
 |站点简介|深耕信息技术与软硬件，记录实战踩坑经历、沉淀实用避坑方案|
 |站点图标|https://blog.zjackie.ink/img/favcion/image.png|
 |访问链接|https://blog.zjackie.ink/|
+|RSS|https://blog.zjackie.ink/atom.xml|
 
 ### 两种添加方式
 
