@@ -6,7 +6,7 @@ layout: 404
 comments: false
 toc:
   enable: false
-robots: "noindex, follow"
+robots: "noindex, nofollow"
 description: 404 页面未找到。
 ---
 
