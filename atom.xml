@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <author>
+    <name>Jackie</name>
+  </author>
+  <generator uri="https://hexo.io/">Hexo</generator>
+  <icon>https://blog.zjackie.ink/icon.png</icon>
+  <id>https://blog.zjackie.ink/</id>
+  <link href="https://blog.zjackie.ink/" rel="alternate"/>
+  <link href="https://blog.zjackie.ink/atom.xml" rel="self"/>
+  <rights>All rights reserved 2026, Jackie</rights>
+  <subtitle>深耕信息技术与软硬件，记录实战踩坑经历、沉淀实用避坑方案</subtitle>
+  <title>ZJACKIE's BLOG</title>
+  <updated>2026-03-22T01:12:54.000Z</updated>
+  <entry>
+    <author>
+      <name>Jackie</name>
+    </author>
+    <category term="硬件" scheme="https://blog.zjackie.ink/categories/%E7%A1%AC%E4%BB%B6/"/>
+    <category term="区块链" scheme="https://blog.zjackie.ink/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    <category term="加密货币" scheme="https://blog.zjackie.ink/tags/%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/"/>
+    <category term="OneKey" scheme="https://blog.zjackie.ink/tags/OneKey/"/>
+    <category term="硬件钱包" scheme="https://blog.zjackie.ink/tags/%E7%A1%AC%E4%BB%B6%E9%92%B1%E5%8C%85/"/>
+    <category term="Web3" scheme="https://blog.zjackie.ink/tags/Web3/"/>
+    <id>https://blog.zjackie.ink/onekey-used-3m/</id>
+    <link href="https://blog.zjackie.ink/onekey-used-3m/"/>
+    <published>2026-03-22T01:12:54.000Z</published>
+    <summary>深度体验 OneKey 硬件钱包（OneKey Classic 1S 系列）三个月，本文不吹不黑分享软硬件真实优缺点。这款开源硬件钱包主打离线私钥安全存储，多链管理便捷，同时也存在老设备卡顿、部分细节体验不足等问题，为想要升级资产安全方案的 Web3 用户，提供真实选购与使用参考。</summary>
+    <title>OneKey Classic 1S 系列硬件钱包用了三个月，我最喜欢和最烦的几个点</title>
+    <updated>2026-03-22T01:12:54.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Jackie</name>
+    </author>
+    <category term="前端" scheme="https://blog.zjackie.ink/categories/%E5%89%8D%E7%AB%AF/"/>
+    <category term="SEO 优化" scheme="https://blog.zjackie.ink/tags/SEO-%E4%BC%98%E5%8C%96/"/>
+    <category term="Meta Robots" scheme="https://blog.zjackie.ink/tags/Meta-Robots/"/>
+    <category term="爬虫控制" scheme="https://blog.zjackie.ink/tags/%E7%88%AC%E8%99%AB%E6%8E%A7%E5%88%B6/"/>
+    <id>https://blog.zjackie.ink/robots-meta-set/</id>
+    <link href="https://blog.zjackie.ink/robots-meta-set/"/>
+    <published>2026-03-05T03:17:49.000Z</published>
+    <summary>本文为 Meta Robots 标签 SEO 优化全攻略，从基础指令、X-Robots-Tag 配置，到与 Robots.txt 的优先级规则、动态页面适配、搜索引擎兼容处理，搭配全场景实战案例与避坑指南，实现搜索引擎抓取与索引的精细化管控，筑牢网站 SEO 排名基础。</summary>
+    <title>Meta Robots 标签精准控制抓取</title>
+    <updated>2026-03-05T03:17:49.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Jackie</name>
+    </author>
+    <category term="前端" scheme="https://blog.zjackie.ink/categories/%E5%89%8D%E7%AB%AF/"/>
+    <category term="GitHub Actions" scheme="https://blog.zjackie.ink/tags/GitHub-Actions/"/>
+    <category term="SEO 优化" scheme="https://blog.zjackie.ink/tags/SEO-%E4%BC%98%E5%8C%96/"/>
+    <category term="IndexNow" scheme="https://blog.zjackie.ink/tags/IndexNow/"/>
+    <id>https://blog.zjackie.ink/cicd-actions-indexnow/</id>
+    <link href="https://blog.zjackie.ink/cicd-actions-indexnow/"/>
+    <published>2026-02-18T08:28:19.000Z</published>
+    <summary>本文教你用GitHub Actions实现静态博客内容自动推送到Bing/Yandex IndexNow，无需手动提交，发布即收录，收录效率提升数倍。支持Hexo/Hugo/GitHub Pages/Vercel等所有静态博客，哪怕没有博客代码仓库，空仓库也能配置，完全免费、实时跨引擎，新手友好，附完整代码与GitHub Secrets安全配置。</summary>
+    <title>使用 GitHub Actions 自动提交 URL 到 IndexNow</title>
+    <updated>2026-02-18T08:28:19.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Jackie</name>
+    </author>
+    <category term="软件" scheme="https://blog.zjackie.ink/categories/%E8%BD%AF%E4%BB%B6/"/>
+    <category term="贝锐花生壳" scheme="https://blog.zjackie.ink/tags/%E8%B4%9D%E9%94%90%E8%8A%B1%E7%94%9F%E5%A3%B3/"/>
+    <category term="内网穿透" scheme="https://blog.zjackie.ink/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+    <id>https://blog.zjackie.ink/oray-hsk-nat-traversal/</id>
+    <link href="https://blog.zjackie.ink/oray-hsk-nat-traversal/"/>
+    <published>2026-02-12T18:15:45.000Z</published>
+    <summary>本文详解NAT内网穿透的核心原理，完整演示贝锐花生壳从注册、实名认证到创建映射、外网访问的全流程，客观分析花生壳的优势、短板与适用边界，对比同类内网穿透方案（Oray HSK vs Cloudflare Tunnel），帮你无公网IP也能稳定访问内网服务。</summary>
+    <title>花生壳内网穿透安装使用踩坑教程</title>
+    <updated>2026-02-12T18:15:45.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Jackie</name>
+    </author>
+    <category term="前端" scheme="https://blog.zjackie.ink/categories/%E5%89%8D%E7%AB%AF/"/>
+    <category term="JavaScript/CSS" scheme="https://blog.zjackie.ink/tags/JavaScript-CSS/"/>
+    <category term="3D灯笼效果" scheme="https://blog.zjackie.ink/tags/3D%E7%81%AF%E7%AC%BC%E6%95%88%E6%9E%9C/"/>
+    <id>https://blog.zjackie.ink/denglong-js/</id>
+    <link href="https://blog.zjackie.ink/denglong-js/"/>
+    <published>2026-02-10T17:16:29.000Z</published>
+    <summary>本文教你用纯JS+CSS实现网站3D动态灯笼特效，无第三方库依赖，自带自然摆动、自转发光、流苏摇曳效果，支持自定义文字、移动端响应式适配，Hexo、Hugo、WordPress等所有博客均可一键集成，轻松给网站增添新年氛围感。</summary>
+    <title>可直接复制的 3D 动态 JS+CSS 灯笼，为你的网站增添喜气</title>
+    <updated>2026-02-10T17:16:29.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Jackie</name>
+    </author>
+    <category term="软件" scheme="https://blog.zjackie.ink/categories/%E8%BD%AF%E4%BB%B6/"/>
+    <category term="区块链" scheme="https://blog.zjackie.ink/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    <category term="加密货币" scheme="https://blog.zjackie.ink/tags/%E5%8A%A0%E5%AF%86%E8%B4%A7%E5%B8%81/"/>
+    <category term="Monero" scheme="https://blog.zjackie.ink/tags/Monero/"/>
+    <id>https://blog.zjackie.ink/monero-gui-install/</id>
+    <link href="https://blog.zjackie.ink/monero-gui-install/"/>
+    <published>2026-02-07T10:25:07.000Z</published>
+    <summary>本文详解Windows平台下Monero GUI钱包的完整安装、配置与使用全流程，覆盖门罗币核心概念、安装包验证、钱包创建、收发款操作与安全避坑指南，兼顾新手友好性与资产安全性，门罗币XMR钱包入门必看。</summary>
+    <title>Monero GUI 钱包 Windows 平台安装使用教程</title>
+    <updated>2026-02-07T10:25:07.000Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Jackie</name>
+    </author>
+    <category term="硬件" scheme="https://blog.zjackie.ink/categories/%E7%A1%AC%E4%BB%B6/"/>
+    <category term="H616 开发板" scheme="https://blog.zjackie.ink/tags/H616-%E5%BC%80%E5%8F%91%E6%9D%BF/"/>
+    <category term="性能测试" scheme="https://blog.zjackie.ink/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/"/>
+    <id>https://blog.zjackie.ink/h616-test/</id>
+    <link href="https://blog.zjackie.ink/h616-test/"/>
+    <published>2026-01-07T15:16:02.000Z</published>
+    <summary>本文实测LCPI H616 ZERO国产开发板的CPU、内存、IO综合性能，通过nench.sh、sysbench专项测试拆解全志H616芯片真实表现。</summary>
+    <title>LCPI H616 ZERO 性能测试</title>
+    <updated>2026-01-07T15:16:02.000Z</updated>
+  </entry>
+</feed>
