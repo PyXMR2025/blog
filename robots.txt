@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /tags/
+Disallow: /categories/
+Sitemap: https://blog.zjackie.ink/sitemap.xml
